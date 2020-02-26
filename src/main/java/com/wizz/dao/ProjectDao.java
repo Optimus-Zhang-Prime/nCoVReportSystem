@@ -3,7 +3,6 @@ package com.wizz.dao;
 import com.wizz.entity.Project;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import com.wizz.entity.User;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +14,8 @@ public interface ProjectDao {
     String TABLE_NAME = "project";//表名
 
     @Select({"select * " ,"from", TABLE_NAME})
-    List<Project> getAll();
+    List<Project> getAll();//返回所有项目
 
     @Insert({"insert into ", TABLE_NAME, "(", "name", ") values (#{name})"})
-    void addProject(String name);
+    void addProject(String name);//添加项目
 }

@@ -41,6 +41,18 @@ public class AdminService {
     }
 
     public Integer addAdmin(int orgid,int num,String tel){
-        orgdao.addAdmin(orgid,num,tel);
+        try {
+            if (num == 1) {
+                orgdao.addAdmin1(orgid, tel);
+            } else if (num == 2) {
+                orgdao.addAdmin2(orgid, tel);
+            } else if (num == 3) {
+                orgdao.addAdmin3(orgid, tel);
+            }
+            return 1000;
+        }
+        catch (Exception e){
+            return 1006;
+        }
     }
 }

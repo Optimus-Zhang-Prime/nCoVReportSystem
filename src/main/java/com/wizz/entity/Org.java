@@ -9,7 +9,7 @@ public class Org//组织
     private String admin2;
     private String admin3;
     private int grade;//几级组织
-    public
+    public Project father;//所属的项目
 
     public Integer getId() {
         return id;

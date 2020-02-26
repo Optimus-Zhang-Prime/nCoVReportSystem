@@ -1,20 +1,20 @@
 package com.wizz.dao;
 
+import com.wizz.entity.User;
+import com.wizz.entity.report;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import com.wizz.entity.User;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
-public interface UserDao {//管理员
-    String TABLE_NAME = "user";//表名
-    String INSERT_FIELDS = "name,state";//要填入的字段
-    String SELECT_FIELDS = "id,name,password";//可查询的字段
+public interface ReportDao {//汇报信息
 
-    @Select({"select", SELECT_FIELDS, "from", TABLE_NAME, "where name=#{name}"})
-    User getUserByName(String name);
+    @Select({"select * from report where sick=True"})
+    List<report> getIllReport(Integer orgid);
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values (#{name},#{password})"})
     void addUser(User user);
