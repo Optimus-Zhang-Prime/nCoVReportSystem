@@ -21,7 +21,7 @@ public class PassportInterceptor implements HandlerInterceptor {
         try {//try-catch用于处理response.getOutputStream必检异常
             response.setContentType("text/html;charset=utf-8");
             ServletOutputStream out = response.getOutputStream();
-            if (cookies==null)//没有cookie
+            if (cookies == null)//没有cookie
             {
                 out.print("1007");
                 return false;
