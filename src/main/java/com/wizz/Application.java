@@ -1,9 +1,12 @@
 package com.wizz;
 
+import com.wizz.property.DataBaseProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication //标注主程序类
+@SpringBootApplication
 public class Application {
     public static void main(String[] args) {
         //启动spring应用
