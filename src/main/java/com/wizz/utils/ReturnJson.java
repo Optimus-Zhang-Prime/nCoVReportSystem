@@ -4,7 +4,9 @@ public class ReturnJson {
     public Object data;
 
 	public static Object ret(Object data){
-        return json.;
+
+	    //return json.;
+        return null;
     }
 
 }

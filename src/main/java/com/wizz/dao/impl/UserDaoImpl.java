@@ -3,7 +3,6 @@ package com.wizz.dao.impl;
 import com.alibaba.fastjson.JSON;
 import com.wizz.dao.UserDao;
 import com.wizz.entity.User;
-import com.wizz.entity.jsonReturn.AddReturn;
 import com.wizz.entity.jsonReturn.QueryReturn;
 import com.wizz.exception.DbErrorException;
 import com.wizz.property.DataBaseProperties;
@@ -28,13 +27,13 @@ public class UserDaoImpl implements UserDao {
     private TokenUtils tokenUtils;
     RestTemplate restTemplate = new RestTemplate();
     @Override
-    public String getUserByName(String name) {
+    public User getUserById(Integer id) {
         // 获取必须的access_token
         String access_token = tokenUtils.getAccessToken();
         String queryString = dataBaseProperties.getDatabaseQuery()  + access_token;
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
-        map.put("query",String.format("db.collection('user').where({username: '%s'}).get()",name));
+        map.put("query",String.format("db.collection('user').where({_id: '%s'}).get()",id));
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射
@@ -52,25 +51,26 @@ public class UserDaoImpl implements UserDao {
         }
         // 获得唯一的用户信息 json
         String output = strOutput.get(0);
-        return output;
+        User user = JSON.parseObject(output,User.class);
+        return user;
     }
 
-    @Override
-    public void addUser(User user) {
-        String access_token = tokenUtils.getAccessToken();
-        String queryString = dataBaseProperties.getDatabaseAdd()  + access_token;
-        Map<String,Object> map = dataBaseProperties.getDbBody();
-        map.put("query",String.format("db.collection('user').add({data:[{username: '%s', password: '%s'}]})",user.getUsername(),user.getPassword()));
-        // json返回值
-        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
-        // json对象映射
-        AddReturn addReturn = JSON.parseObject(rawOutput, AddReturn.class);
-        // 获得errcode
-        String errcode = addReturn.getErrcode();
-        // 这里实际上可以使用注解进行校验  参考codesheep
-//        System.out.println(rawOutput);
-        if (!"0".equals(errcode)) {
-            throw new DbErrorException(addReturn.getErrmsg());
-        }
-    }
+//    @Override
+//    public void addUser(User user) {
+//        String access_token = tokenUtils.getAccessToken();
+//        String queryString = dataBaseProperties.getDatabaseAdd()  + access_token;
+//        Map<String,Object> map = dataBaseProperties.getDbBody();
+//        map.put("query",String.format("db.collection('user').add({data:[{username: '%s', password: '%s'}]})",user.getUsername(),user.getPassword()));
+//        // json返回值
+//        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+//        // json对象映射
+//        AddReturn addReturn = JSON.parseObject(rawOutput, AddReturn.class);
+//        // 获得errcode
+//        String errcode = addReturn.getErrcode();
+//        // 这里实际上可以使用注解进行校验  参考codesheep
+////        System.out.println(rawOutput);
+//        if (!"0".equals(errcode)) {
+//            throw new DbErrorException(addReturn.getErrmsg());
+//        }
+//    }
 }

@@ -1,15 +1,41 @@
 package com.wizz.entity;
 
+import java.util.ArrayList;
+
 public class Project {
-    private Integer id;
+    private Integer _id;
+    private Integer _openid;
     private String name;
     private Boolean state;
-    private String admin1;
-    private String admin2;
-    private String admin3;
+    private ArrayList<String> admins;
+    private String owner;
 
-    public Integer getId() {
-        return id;
+    public Project() {
+    }
+
+    public Project(Integer _id, Integer _openid, String name, Boolean state, ArrayList<String> admins, String owner) {
+        this._id = _id;
+        this._openid = _openid;
+        this.name = name;
+        this.state = state;
+        this.admins = admins;
+        this.owner = owner;
+    }
+
+    public Integer get_id() {
+        return _id;
+    }
+
+    public void set_id(Integer _id) {
+        this._id = _id;
+    }
+
+    public Integer get_openid() {
+        return _openid;
+    }
+
+    public void set_openid(Integer _openid) {
+        this._openid = _openid;
     }
 
     public String getName() {
@@ -28,27 +54,19 @@ public class Project {
         this.state = state;
     }
 
-    public String getAdmin1() {
-        return admin1;
+    public ArrayList<String> getAdmins() {
+        return admins;
     }
 
-    public void setAdmin1(String admin1) {
-        this.admin1 = admin1;
+    public void setAdmins(ArrayList<String> admins) {
+        this.admins = admins;
     }
 
-    public String getAdmin2() {
-        return admin2;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setAdmin2(String admin2) {
-        this.admin2 = admin2;
-    }
-
-    public String getAdmin3() {
-        return admin3;
-    }
-
-    public void setAdmin3(String admin3) {
-        this.admin3 = admin3;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

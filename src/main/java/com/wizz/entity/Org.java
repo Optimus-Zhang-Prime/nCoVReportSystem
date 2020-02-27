@@ -1,18 +1,48 @@
 package com.wizz.entity;
 
+import java.util.ArrayList;
+
 public class Org//组织
 {
-    private Integer id;
+    private String _id;
+    private String _openid;
     private String name;
-    private Boolean state;
-    private String admin1;
-    private String admin2;
-    private String admin3;
-    private int grade;//几级组织
-    public Project father;//所属的项目
+    private String owner;
+    private ArrayList<String> admins;
+    private Integer grade;//几级组织
+    private Integer father;//所属的组织
+    private Integer classA;
+    private Integer classB;
 
-    public Integer getId() {
-        return id;
+    public Org() {
+    }
+
+    public Org(String _id, String _openid, String name, String owner, ArrayList<String> admins, Integer grade, Integer father, Integer classA, Integer classB) {
+        this._id = _id;
+        this._openid = _openid;
+        this.name = name;
+        this.owner = owner;
+        this.admins = admins;
+        this.grade = grade;
+        this.father = father;
+        this.classA = classA;
+        this.classB = classB;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String get_openid() {
+        return _openid;
+    }
+
+    public void set_openid(String _openid) {
+        this._openid = _openid;
     }
 
     public String getName() {
@@ -23,35 +53,51 @@ public class Org//组织
         this.name = name;
     }
 
-    public Boolean getState() {
-        return state;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setState(Boolean state) {
-        this.state = state;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
-    public String getAdmin1() {
-        return admin1;
+    public ArrayList<String> getAdmins() {
+        return admins;
     }
 
-    public void setAdmin1(String admin1) {
-        this.admin1 = admin1;
+    public void setAdmins(ArrayList<String> admins) {
+        this.admins = admins;
     }
 
-    public String getAdmin2() {
-        return admin2;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setAdmin2(String admin2) {
-        this.admin2 = admin2;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
-    public String getAdmin3() {
-        return admin3;
+    public Integer getFather() {
+        return father;
     }
 
-    public void setAdmin3(String admin3) {
-        this.admin3 = admin3;
+    public void setFather(Integer father) {
+        this.father = father;
+    }
+
+    public Integer getClassA() {
+        return classA;
+    }
+
+    public void setClassA(Integer classA) {
+        this.classA = classA;
+    }
+
+    public Integer getClassB() {
+        return classB;
+    }
+
+    public void setClassB(Integer classB) {
+        this.classB = classB;
     }
 }

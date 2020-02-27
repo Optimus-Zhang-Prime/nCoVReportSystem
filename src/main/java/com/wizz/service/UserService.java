@@ -22,68 +22,68 @@ import javax.servlet.http.HttpServletResponse;
  * 1006：其他错误
  * 1007:用户未登录（没有name的cookie）
  */
-@Component
-public class UserService {
-    @Autowired
-    UserDaoImpl userdao;
-
-    //注册
-    public Integer register(String name, String password) {
-        try {
-            if (password == null | "".equals(password)) {
-                return 1001;
-            }
-            if (name == null | "".equals(name)) {
-                return 1002;
-            }
-
-            String auser = userdao.getUserByName(name);
-            if (auser != null) {
-                return 1003;
-            }
-            User user = new User(name, password);
-            userdao.addUser(user);
-            return 1000;//注册成功
-
-        } catch (Exception e) {
-            return 1006;
-        }
-    }
-
-    //登录
-    public Integer login(String name, String password) {
-        try {
-            if (password == null | "".equals(password)) {
-                return 1001;
-            }
-            if (name == null | "".equals(name)) {
-                return 1002;
-            }
-
-            String auser = userdao.getUserByName(name);
-            User user = JSON.parseObject(auser,User.class);
-            if (auser == null) {
-                return 1004;
-            }
-            if (user.getPassword().equals(password)) {
-                return 1000;//登陆成功
-            }
-            else {
-                return 1005;
-            }
-        } catch (Exception e) {
-            return 1006;
-        }
-    }
-
-    public Integer logout(HttpServletResponse response){
-        try {
-            //CookieUtil.removeCookie(response, "name");
-            return 1000;
-        }
-        catch (Exception e){
-            return 1006;
-        }
-    }
-
-}
+//@Component
+//public class UserService {
+//    @Autowired
+//    UserDaoImpl userdao;
+//
+//    //注册
+//    public Integer register(String name, String password) {
+//        try {
+//            if (password == null | "".equals(password)) {
+//                return 1001;
+//            }
+//            if (name == null | "".equals(name)) {
+//                return 1002;
+//            }
+//
+//            String auser = userdao.getUserByName(name);
+//            if (auser != null) {
+//                return 1003;
+//            }
+//            User user = new User(name, password);
+//            userdao.addUser(user);
+//            return 1000;//注册成功
+//
+//        } catch (Exception e) {
+//            return 1006;
+//        }
+//    }
+//
+//    //登录
+//    public Integer login(String name, String password) {
+//        try {
+//            if (password == null | "".equals(password)) {
+//                return 1001;
+//            }
+//            if (name == null | "".equals(name)) {
+//                return 1002;
+//            }
+//
+//            String auser = userdao.getUserByName(name);
+//            User user = JSON.parseObject(auser,User.class);
+//            if (auser == null) {
+//                return 1004;
+//            }
+//            if (user.getPassword().equals(password)) {
+//                return 1000;//登陆成功
+//            }
+//            else {
+//                return 1005;
+//            }
+//        } catch (Exception e) {
+//            return 1006;
+//        }
+//    }
+//
+//    public Integer logout(HttpServletResponse response){
+//        try {
+//            //CookieUtil.removeCookie(response, "name");
+//            return 1000;
+//        }
+//        catch (Exception e){
+//            return 1006;
+//        }
+//    }
+//
+//}
