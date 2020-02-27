@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface ProjectDao {
+public interface ProjectDao {//项目
     String TABLE_NAME = "project";//表名
 
     @Select({"select * " ,"from", TABLE_NAME})

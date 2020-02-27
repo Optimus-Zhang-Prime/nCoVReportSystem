@@ -1,32 +1,16 @@
 package com.wizz.entity;
 
-public class User {
-    private Integer id;
-    private String password;
-    private String name;
+public class User {//学生教职工
+    public Integer id;
+    public String phone;
+    public String name;
+    public String number;
+    public Integer index;//易感指数
+    public Boolean gender;//性别
+    public Boolean sick;//是否生病
+    public Integer classA;//所属一级组织
+    public Integer classB;
+    public Integer classC;
 
-    public User(String aname,String apassword) {
-        this.password = apassword;
-        this.name = aname;
-    }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
 }
