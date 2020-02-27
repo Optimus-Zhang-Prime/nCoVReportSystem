@@ -15,8 +15,14 @@ public interface OrgDao {//组织
     @Select({"select * from", TABLE_NAME, "where id=#{id}"})
     Org getOrgById(Integer id);//根据id查找组织
 
-    @Insert({"insert into ", TABLE_NAME, "(", "name,grade", ") values (#{name},#{grade})"})
-    void addOrg(String name, int grade);//添加组织，grade为几级组织
+
+    //前端传过来的参数数量不同，若创建的是一级组织则无classA，二级组织无classAB
+    @Insert({"insert into ", TABLE_NAME, "(", "project,name,grade", ") values (#{project},#{name},#{grade})"})
+    void addOrg(Integer project,String name, Integer grade);//添加组织，grade为几级组织
+    @Insert({"insert into ", TABLE_NAME, "(", "project,name,grade", ") values (#{project},#{name},#{grade},#{classA})"})
+    void addOrg(Integer project,String name, Integer grade,Integer classA);//添加组织，grade为几级组织
+    @Insert({"insert into ", TABLE_NAME, "(", "project,name,grade", ") values (#{project},#{name},#{grade},#{classA},#{classB})"})
+    void addOrg(Integer project,String name, Integer grade,Integer classA,Integer classB);//添加组织，grade为几级组织
 
     @Update({"update org set admin1=#{tel} where id=#{orgid}"})
     void addAdmin1(int orgid, String tel);//添加管理员1号

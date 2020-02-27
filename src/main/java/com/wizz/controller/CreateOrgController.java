@@ -16,10 +16,24 @@ public class CreateOrgController {
     @Autowired
     AdminService adminService;
 
+
     @ResponseBody//创建组织
     @RequestMapping(path = "user/createorg/", method = RequestMethod.POST)
-    public String createOrg(@RequestParam("orgName") String orgName, @RequestParam("grade") int grade) throws JSONException {
-        Integer code = adminService.createOrg(orgName, grade);
+    public String createOrg(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") Integer grade) throws JSONException {
+        Integer code = adminService.createOrg(project,orgName, grade);
+        return ForumUtils.toJsonString(code);
+    }
+
+    @ResponseBody//创建组织
+    @RequestMapping(path = "user/createorg/", method = RequestMethod.POST)
+    public String createOrg(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") int grade,@RequestParam("classA")Integer classA ) throws JSONException {
+        Integer code = adminService.createOrg(project,orgName, grade,classA);
+        return ForumUtils.toJsonString(code);
+    }
+    @ResponseBody//创建组织
+    @RequestMapping(path = "user/createorg/", method = RequestMethod.POST)
+    public String createOrg(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") int grade,@RequestParam("classA")Integer classA ,@RequestParam("classB") Integer classB) throws JSONException {
+        Integer code = adminService.createOrg(project,orgName, grade,classA,classB);
         return ForumUtils.toJsonString(code);
     }
 

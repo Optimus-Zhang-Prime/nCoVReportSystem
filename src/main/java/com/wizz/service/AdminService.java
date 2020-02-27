@@ -35,8 +35,16 @@ public class AdminService {
     }
 
 
-    public Integer createOrg(String orgName, int grade) {
-        orgdao.addOrg(orgName,grade);
+    public Integer createOrg(Integer project,String orgName, Integer grade) {
+        orgdao.addOrg(project,orgName,grade);
+        return 1000;//添加组织成功
+    }
+    public Integer createOrg(Integer project,String orgName, Integer grade,Integer classA) {
+        orgdao.addOrg(project,orgName,grade,classA);
+        return 1000;//添加组织成功
+    }
+    public Integer createOrg(Integer project,String orgName, Integer grade,Integer classA,Integer classB) {
+        orgdao.addOrg(project,orgName,grade,classA,classB);
         return 1000;//添加组织成功
     }
 
