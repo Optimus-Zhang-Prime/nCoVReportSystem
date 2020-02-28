@@ -11,22 +11,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-//@Controller
-//public class CreateOrgController {
-//    @Autowired
-//    AdminService adminService;
-//
-//    @ResponseBody//创建组织
-//    @RequestMapping(path = "user/createorg/", method = RequestMethod.POST)
-//    public String createOrg(@RequestParam("orgName") String orgName, @RequestParam("grade") int grade) throws JSONException {
-//        Integer code = adminService.createOrg(orgName, grade);
-//        return ForumUtils.toJsonString(code);
-//    }
-//
-//    @ResponseBody//添加组织管理员
-//    @RequestMapping(path = "user/addAdmin/", method = RequestMethod.POST)
-//    public String addOrgAdmin(@RequestParam("orgid") int orgid,@RequestParam("num") int num,@RequestParam("tel") String tel)  throws JSONException {
-//        Integer code = adminService.addAdmin(orgid,num, tel);
-//        return ForumUtils.toJsonString(code);
-//    }
-//}
+@Controller
+public class CreateOrgController {
+    @Autowired
+    AdminService adminService;
+
+
+    @ResponseBody//创建组织
+    @RequestMapping(path = "user/createorg/", method = RequestMethod.POST)
+    public String createOrg(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") Integer grade) throws JSONException {
+        Integer code = adminService.createOrg(project,orgName, grade);
+        return ForumUtils.toJsonString(code);
+    }
+
+    @ResponseBody//创建组织
+    @RequestMapping(path = "user/createorg/", method = RequestMethod.POST)
+    public String createOrg(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") int grade,@RequestParam("classA")Integer classA ) throws JSONException {
+        Integer code = adminService.createOrg(project,orgName, grade,classA);
+        return ForumUtils.toJsonString(code);
+    }
+    @ResponseBody//创建组织
+    @RequestMapping(path = "user/createorg/", method = RequestMethod.POST)
+    public String createOrg(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") int grade,@RequestParam("classA")Integer classA ,@RequestParam("classB") Integer classB) throws JSONException {
+        Integer code = adminService.createOrg(project,orgName, grade,classA,classB);
+        return ForumUtils.toJsonString(code);
+    }
+
+    @ResponseBody//添加组织管理员
+    @RequestMapping(path = "user/addAdmin/", method = RequestMethod.POST)
+    public String addOrgAdmin(@RequestParam("orgid") int orgid,@RequestParam("tel") String tel)  throws JSONException {
+        Integer code = adminService.addAdmin(orgid, tel);
+        return ForumUtils.toJsonString(code);
+    }
+}

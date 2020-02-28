@@ -12,15 +12,14 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 //@Service
 //public class AdminService {
 //
 //    @Autowired
-//    ProjectDaoImpl projectDao;
+//    ProjectDao projectDao;
 //
 //    @Autowired
-//    OrgDaoImpl orgdao;
+//    OrgDao orgdao;
 //
 //    public Integer createProject(String projectName) {
 //        projectDao.addProject(projectName);
@@ -35,20 +34,22 @@ import java.util.List;
 //    }
 //
 //
-//    public Integer createOrg(String orgName, int grade) {
-//        orgdao.addOrg(orgName,grade);
+//    public Integer createOrg(Integer project,String orgName, Integer grade) {
+//        orgdao.addOrg(project,orgName,grade);
+//        return 1000;//添加组织成功
+//    }
+//    public Integer createOrg(Integer project,String orgName, Integer grade,Integer classA) {
+//        orgdao.addOrg(project,orgName,grade,classA);
+//        return 1000;//添加组织成功
+//    }
+//    public Integer createOrg(Integer project,String orgName, Integer grade,Integer classA,Integer classB) {
+//        orgdao.addOrg(project,orgName,grade,classA,classB);
 //        return 1000;//添加组织成功
 //    }
 //
-//    public Integer addAdmin(int orgid,int num,String tel){
-//        try {
-//            if (num == 1) {
-//                orgdao.addAdmin1(orgid, tel);
-//            } else if (num == 2) {
-//                orgdao.addAdmin2(orgid, tel);
-//            } else if (num == 3) {
-//                orgdao.addAdmin3(orgid, tel);
-//            }
+//    public Integer addAdmin(int orgid,String tel){
+//        try{
+//            orgdao.addAdmin(orgid, tel);
 //            return 1000;
 //        }
 //        catch (Exception e){
@@ -56,3 +57,4 @@ import java.util.List;
 //        }
 //    }
 //}
+

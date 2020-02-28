@@ -20,6 +20,17 @@ import java.util.List;
 public class OrgDaoImpl implements OrgDao {
     @Autowired
     DataBaseUtils dataBaseUtils;
+
+    @Override
+    public List<Org> getAdminUser(String name) {
+        return null;
+    }
+
+    @Override
+    public void addAdmin(int orgid, String tel) {
+
+    }
+
     @Override
     public Org getOrgById(Integer id) {
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').where({_id: '%s'}).get()",id);
@@ -40,22 +51,19 @@ public class OrgDaoImpl implements OrgDao {
     }
 
     @Override
-    public void addOrg(String name, int grade) {
-        dataBaseUtils.addData("db.collection('org').add({data:[{name: '%s', state: %s,owner: '%s'}]})",name);
-    }
-
-    @Override
-    public void addAdmin1(int orgid, String tel) {
+    public void addOrg(Integer project, String name, Integer grade) {
 
     }
 
     @Override
-    public void addAdmin2(int orgid, String tel) {
+    public void addOrg(Integer project, String name, Integer grade, Integer classA) {
 
     }
 
     @Override
-    public void addAdmin3(int orgid, String tel) {
+    public void addOrg(Integer project, String name, Integer grade, Integer classA, Integer classB) {
 
     }
+
+
 }
