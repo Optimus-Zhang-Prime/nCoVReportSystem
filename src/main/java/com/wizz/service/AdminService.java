@@ -2,6 +2,8 @@ package com.wizz.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wizz.dao.UserDao;
+
+import com.wizz.dao.impl.ProjectDaoImpl;
 import com.wizz.entity.Project;
 import com.wizz.entity.User;
 import com.wizz.utils.ReturnJson;
@@ -15,10 +17,10 @@ import java.util.List;
 //public class AdminService {
 //
 //    @Autowired
-//    ProjectDao projectDao;
+//    ProjectDaoImpl projectDao;
 //
 //    @Autowired
-//    OrgDao orgdao;
+//    OrgDaoImpl orgdao;
 //
 //    public Integer createProject(String projectName) {
 //        projectDao.addProject(projectName);

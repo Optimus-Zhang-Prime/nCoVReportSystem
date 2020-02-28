@@ -1,16 +1,20 @@
 package com.wizz.controller;
 
-import com.alibaba.fastjson.JSONArray;
+import com.wizz.dao.impl.ProjectDaoImpl;
+import com.wizz.entity.Project;
 import com.wizz.utils.TempGetIdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 /**
- * @descrip：临时获取ids数据的controller
+ * @descrip：临时获取ids数据的controller，注意只是项目初始化的时候使用，非异步，会很慢，并且需要学校VPN
  * @author: 李佳
  * @create： 2020-02-27-18:57
  **/
@@ -19,8 +23,27 @@ public class TempGetIdsController {
     @Autowired
     TempGetIdsUtils tempGetIdsUtils;
     @ResponseBody
-    @RequestMapping("/ids")
+    @RequestMapping("/ids-lijia-dd-11663")
     public String test () {
         return tempGetIdsUtils.dbTransfer();
+    }
+
+
+
+    // 用来测试
+    @Autowired
+    ProjectDaoImpl projectDao;
+    @ResponseBody
+    @RequestMapping("/project/{name}")
+    public String test1 (@PathVariable ("name") String name) {
+        projectDao.addProject(name);
+        return "成功";
+    }
+    // 用来测试
+    @ResponseBody
+    @RequestMapping("/projects")
+    public List<Project> test2 () {
+        List<Project> all = projectDao.getAll();
+        return all;
     }
 }

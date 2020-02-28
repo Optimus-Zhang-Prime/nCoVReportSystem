@@ -9,6 +9,7 @@ import com.wizz.property.DataBaseProperties;
 import com.wizz.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @author: 李佳
  * @create： 2020-02-26-02:31
  **/
-@Component
+@Repository
 public class UserDaoImpl implements UserDao {
     @Autowired
     private DataBaseProperties dataBaseProperties;

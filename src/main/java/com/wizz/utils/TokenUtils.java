@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 /**
- * @descrip：获取access_token
+ * @descrip：获取云开发数据库的access_token
  * @author: 李佳
  * @create： 2020-02-26-03:02
  **/

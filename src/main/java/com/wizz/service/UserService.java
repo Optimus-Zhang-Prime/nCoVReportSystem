@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 //                return 1002;
 //            }
 //
-//            String auser = userdao.getUserByName(name);
+//            String auser = userdao.getUserById(name);
 //            if (auser != null) {
 //                return 1003;
 //            }

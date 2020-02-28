@@ -10,7 +10,7 @@ public class Org//组织
     private String owner;
     private ArrayList<String> admins;
     private Integer grade;//几级组织
-    private Integer father;//所属的组织
+    private Integer parent;//所属的组织
     private Integer classA;
     private Integer classB;
 
@@ -24,7 +24,7 @@ public class Org//组织
         this.owner = owner;
         this.admins = admins;
         this.grade = grade;
-        this.father = father;
+        this.parent = father;
         this.classA = classA;
         this.classB = classB;
     }
@@ -78,11 +78,11 @@ public class Org//组织
     }
 
     public Integer getFather() {
-        return father;
+        return parent;
     }
 
     public void setFather(Integer father) {
-        this.father = father;
+        this.parent = father;
     }
 
     public Integer getClassA() {

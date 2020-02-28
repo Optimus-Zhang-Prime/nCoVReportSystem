@@ -12,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
- * @descrip：临时获得ids数据
+ * @descrip：临时获得ids数据，注意只是项目初始化的时候，可以使用
  * @author: 李佳
  * @create： 2020-02-27-19:01
  **/
@@ -30,11 +29,18 @@ public class TempGetIdsUtils {
     @Autowired
     private IdsProperties idsProperties;
     RestTemplate restTemplate = new RestTemplate();
+    /** @Description: 获得ids的access_token
+    * @Param: []
+    * @return: java.lang.String
+    * @Author: 李佳
+    * @Date: 2020/2/27
+    */
+    
     String getIdsAccessToken () {
         String url = idsProperties.getIdsAccessToken();
         String rawoutput = restTemplate.getForObject(url,String.class);
         IdsReturn idsReturn = JSON.parseObject(rawoutput, IdsReturn.class);
-        String message = (String) idsReturn.getMessage();
+        String message = idsReturn.getMessage();
         if (!"ok".equals(message)) {
             throw new DbErrorException(message);
         }
@@ -49,6 +55,7 @@ public class TempGetIdsUtils {
         if (result == null) {
             return null;
         } else {
+            // 复杂类型可以使用fastJSON的内置类型
             return (JSONArray) result.get("data");
         }
     }
@@ -79,6 +86,6 @@ public class TempGetIdsUtils {
             }
             page ++;
         }
-        return "成功！";
+        return "成功";
     }
 }

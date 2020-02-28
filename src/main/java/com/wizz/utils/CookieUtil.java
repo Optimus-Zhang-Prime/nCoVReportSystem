@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Cookie工具类
- *
+ * cookie的添加，删除，获取
  */
 @Component
 public class CookieUtil {
