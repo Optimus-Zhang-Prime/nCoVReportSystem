@@ -14,11 +14,11 @@ import java.util.List;
 public interface OrgDao {//组织
     String TABLE_NAME = "org";//表名
 
-
+    //28号新加的
     //这一条因为mongoDB里有数组格式，sql里没有数组格式，所以没写完整
     //mongoDB里查询数组的方法可参考http://www.imooc.com/article/26885
     @Select({"select * from org where admin数组里有该name"})
-    List<Org> getAdminUser(String name);//查询哪些组织里该管理员电话（name）
+    List<Org> getAdminUser(String name);//查询哪些组织里有该管理员电话（name）
 
     //同上
     @Update({"update org 把admin表加上tel where id=#{orgid}"})
