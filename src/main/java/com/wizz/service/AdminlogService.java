@@ -1,12 +1,12 @@
 package com.wizz.service;
 
-import com.wizz.dao.UserDao;
-import com.wizz.entity.User;
-import com.wizz.utils.CookieUtil;
+import com.wizz.dao.OrgDao;
+import com.wizz.entity.Org;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 对每个POST请求返回状态码code
@@ -21,32 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Service
-public class UserService {
+public class AdminlogService {
     @Autowired
-    UserDao userdao;
+    OrgDao orgDao;//管理员电话存在组织表中
 
-    //注册
-    public Integer register(String name, String password) {
-        try {
-            if (password == null | "".equals(password)) {
-                return 1001;
-            }
-            if (name == null | "".equals(name)) {
-                return 1002;
-            }
 
-            User auser = userdao.getUserByName(name);
-            if (auser != null) {
-                return 1003;
-            }
-            User user = new User(name, password);
-            userdao.addUser(user);
-            return 1000;//注册成功
-
-        } catch (Exception e) {
-            return 1006;
-        }
-    }
 
     //登录
     public Integer login(String name, String password) {
@@ -58,12 +37,13 @@ public class UserService {
                 return 1002;
             }
 
-            User auser = userdao.getUserByName(name);
-            if (auser == null) {
+            List<Org> orgList = orgDao.getAdminUser(name);
+            if (orgList == null) {
                 return 1004;
             }
-            if (auser.getPassword().equals(password)) {
-                return 1000;//登陆成功
+            if (     ) {
+                //待定，要发短信
+                //登陆成功
             }
             else {
                 return 1005;

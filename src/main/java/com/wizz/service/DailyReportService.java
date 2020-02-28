@@ -1,0 +1,20 @@
+package com.wizz.service;
+
+import com.wizz.dao.ReportDao;
+import com.wizz.dao.UserStateDao;
+import com.wizz.entity.Report;
+import com.wizz.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class DailyReportService {
+    @Autowired
+    ReportDao reportDao;
+
+    public List<Report> seeUserReport(Integer id) {
+        return reportDao.getReportByUserId(id);
+    }
+}

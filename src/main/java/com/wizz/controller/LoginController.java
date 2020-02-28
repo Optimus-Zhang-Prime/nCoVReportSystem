@@ -1,6 +1,6 @@
 package com.wizz.controller;
 
-import com.wizz.service.UserService;
+import com.wizz.service.AdminlogService;
 import com.wizz.utils.ForumUtils;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @Autowired
-    UserService userService;
-
-    @ResponseBody//注册
-    @RequestMapping(path = "register/", method = RequestMethod.POST)
-    public String register(@RequestParam("name") String name, @RequestParam("password") String password) throws JSONException {
-        Integer code = userService.register(name, password);
-        return ForumUtils.toJsonString(code);
-    }
+    AdminlogService userService;
 
     @ResponseBody//登录
     @RequestMapping(path = "login/", method = RequestMethod.POST)

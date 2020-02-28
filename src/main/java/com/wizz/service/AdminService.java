@@ -48,15 +48,9 @@ public class AdminService {
         return 1000;//添加组织成功
     }
 
-    public Integer addAdmin(int orgid,int num,String tel){
-        try {
-            if (num == 1) {
-                orgdao.addAdmin1(orgid, tel);
-            } else if (num == 2) {
-                orgdao.addAdmin2(orgid, tel);
-            } else if (num == 3) {
-                orgdao.addAdmin3(orgid, tel);
-            }
+    public Integer addAdmin(int orgid,String tel){
+        try{
+            orgdao.addAdmin(orgid, tel);
             return 1000;
         }
         catch (Exception e){

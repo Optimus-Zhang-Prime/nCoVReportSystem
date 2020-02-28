@@ -39,8 +39,8 @@ public class CreateOrgController {
 
     @ResponseBody//添加组织管理员
     @RequestMapping(path = "user/addAdmin/", method = RequestMethod.POST)
-    public String addOrgAdmin(@RequestParam("orgid") int orgid,@RequestParam("num") int num,@RequestParam("tel") String tel)  throws JSONException {
-        Integer code = adminService.addAdmin(orgid,num, tel);
+    public String addOrgAdmin(@RequestParam("orgid") int orgid,@RequestParam("tel") String tel)  throws JSONException {
+        Integer code = adminService.addAdmin(orgid, tel);
         return ForumUtils.toJsonString(code);
     }
 }
