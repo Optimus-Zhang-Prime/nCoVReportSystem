@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import com.wizz.entity.User;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -16,4 +17,7 @@ public interface UserDao {//用户（学生/教职工）
 
     //@Insert({""})
     //void addUser(User user);//添加用户，方式待定
+
+    @Update({"update User set index=90 where id=#{id}"})
+    void setUserIndex90(Integer id);//将该用户的易感指数设为90
 }

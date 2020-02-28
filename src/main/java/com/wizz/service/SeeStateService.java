@@ -1,5 +1,6 @@
 package com.wizz.service;
 
+import com.wizz.dao.ReportDao;
 import com.wizz.dao.UserDao;
 import com.wizz.dao.UserStateDao;
 import com.wizz.entity.User;
@@ -14,6 +15,10 @@ public class SeeStateService {//按组织查看疫情信息
 
     @Autowired
     UserStateDao userStateDao;
+    @Autowired
+    UserDao userDao;
+    @Autowired
+    ReportDao reportDao;
 
     public List<User> getIllUser(Integer orggrade, Integer orgid) {
         if (orggrade == 1) {
@@ -70,7 +75,14 @@ public class SeeStateService {//按组织查看疫情信息
             return userStateDao.getClassCAllUser(orgid);
         }
     }
-}
 
+    public void calculate() {//计算易感系数
+        List<Integer> useridList = reportDao.getSymptomUserid();
+        for(Integer uid:useridList){
+            userDao.setUserIndex90(uid);
+        }
+
+    }
+}
 
 

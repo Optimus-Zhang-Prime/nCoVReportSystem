@@ -26,7 +26,6 @@ public class AdminlogService {
     OrgDao orgDao;//管理员电话存在组织表中
 
 
-
     //登录
     public Integer login(String name, String password) {
         try {
@@ -37,16 +36,14 @@ public class AdminlogService {
                 return 1002;
             }
 
-            List<Org> orgList = orgDao.getAdminUser(name);
+            List<Org> orgList = orgDao.getAdminUser_Org(name);
             if (orgList == null) {
                 return 1004;
             }
-            if (     ) {
+            else  {
                 //待定，要发短信
                 //登陆成功
-            }
-            else {
-                return 1005;
+                return 1000;
             }
         } catch (Exception e) {
             return 1006;

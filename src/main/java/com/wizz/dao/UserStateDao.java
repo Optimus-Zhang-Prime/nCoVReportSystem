@@ -42,7 +42,7 @@ public interface UserStateDao {//按组织查看学生身体状况
     List<User> getClassCLdangeruser(Integer orgid);//三级组织无风险用户
 
     @Select({"select * from user where classA=#{orgid}" })
-    List<User> getClassAAllUser(Integer orgid);//返回一级组织内全部用户
+    List<User> getClassAAllUser(Integer orgid);//返回某一级组织内全部用户
     @Select({"select * from user where classB=#{orgid} "})
     List<User> getClassBAllUser(Integer orgid);//返回二级组织内全部用户
     @Select({"select * from user where classC=#{orgid} "})

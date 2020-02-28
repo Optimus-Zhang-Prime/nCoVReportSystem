@@ -6,7 +6,6 @@ import com.wizz.dao.ProjectDao;
 import com.wizz.dao.UserDao;
 import com.wizz.entity.Project;
 import com.wizz.entity.User;
-import com.wizz.utils.ReturnJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,15 +35,15 @@ public class AdminService {
 
 
     public Integer createOrg(Integer project,String orgName, Integer grade) {
-        orgdao.addOrg(project,orgName,grade);
+        orgdao.addOrg1(project,orgName,grade);
         return 1000;//添加组织成功
     }
     public Integer createOrg(Integer project,String orgName, Integer grade,Integer classA) {
-        orgdao.addOrg(project,orgName,grade,classA);
+        orgdao.addOrg2(project,orgName,grade,classA);
         return 1000;//添加组织成功
     }
     public Integer createOrg(Integer project,String orgName, Integer grade,Integer classA,Integer classB) {
-        orgdao.addOrg(project,orgName,grade,classA,classB);
+        orgdao.addOrg3(project,orgName,grade,classA,classB);
         return 1000;//添加组织成功
     }
 
