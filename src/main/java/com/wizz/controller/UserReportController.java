@@ -24,24 +24,24 @@ public class UserReportController {
         return jsonObject;
     }
     @ResponseBody//代替用户打卡，无出行
-    @RequestMapping(path = "user/adminreport/", method = RequestMethod.POST)
-    public Integer adminHelpReport(@RequestParam("userid")Integer userid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion){
+    @RequestMapping(path = "user/adminreport1/", method = RequestMethod.POST)
+    public Integer adminHelpReport(@RequestParam("userid")Integer userid,@RequestParam("address")String Address,@RequestParam("symptom")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion){
         return dailyReportService.helpReport(userid,Address,symbol,status,subversion);
     }
     @ResponseBody//代替用户打卡,有出行
-    @RequestMapping(path = "user/adminreport/", method = RequestMethod.POST)
-    public Integer adminHelpReport2(@RequestParam("userid")Integer userid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
+    @RequestMapping(path = "user/adminreport2/", method = RequestMethod.POST)
+    public Integer adminHelpReport2(@RequestParam("userid")Integer userid,@RequestParam("address")String Address,@RequestParam("symptom")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
         return dailyReportService.helpReport(userid,Address,symbol,status,subversion,travelNumber);
     }
 
     @ResponseBody//修改用户打卡,无出行
-    @RequestMapping(path = "user/changereport/", method = RequestMethod.POST)
-    public Integer changeReport(@RequestParam("reportid")Integer reportid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion){
+    @RequestMapping(path = "user/changereport1/", method = RequestMethod.POST)
+    public Integer changeReport(@RequestParam("reportid")Integer reportid,@RequestParam("address")String Address,@RequestParam("symptom")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion){
         return dailyReportService.changeReport(reportid,Address,symbol,status,subversion);
     }
     @ResponseBody//修改用户打卡,有出行
-    @RequestMapping(path = "user/changereport/", method = RequestMethod.POST)
-    public Integer changeReport2(@RequestParam("reportid")Integer reportid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
+    @RequestMapping(path = "user/changereport2/", method = RequestMethod.POST)
+    public Integer changeReport2(@RequestParam("reportid")Integer reportid,@RequestParam("address")String Address,@RequestParam("symptom")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
         return dailyReportService.changeReport(reportid,Address,symbol,status,subversion,travelNumber);
     }
 }

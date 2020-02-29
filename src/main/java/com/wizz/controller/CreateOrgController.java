@@ -17,20 +17,20 @@ public class CreateOrgController {
     AdminService adminService;
 
 
-    @ResponseBody//创建组织
+    @ResponseBody//创建一级组织
     @RequestMapping(path = "user/createorg1/", method = RequestMethod.POST)
     public String createOrg(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") Integer grade) throws JSONException {
         Integer code = adminService.createOrg(project,orgName, grade);
         return ForumUtils.toJsonString(code);
     }
 
-    @ResponseBody//创建组织
+    @ResponseBody//创建二级组织
     @RequestMapping(path = "user/createorg2/", method = RequestMethod.POST)
     public String createOrg2(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") int grade,@RequestParam("classA")Integer classA ) throws JSONException {
         Integer code = adminService.createOrg(project,orgName, grade,classA);
         return ForumUtils.toJsonString(code);
     }
-    @ResponseBody//创建组织
+    @ResponseBody//创建三级组织
     @RequestMapping(path = "user/createorg3/", method = RequestMethod.POST)
     public String createOrg3(@RequestParam("project")Integer project,@RequestParam("orgName") String orgName, @RequestParam("grade") int grade,@RequestParam("classA")Integer classA ,@RequestParam("classB") Integer classB) throws JSONException {
         Integer code = adminService.createOrg(project,orgName, grade,classA,classB);
