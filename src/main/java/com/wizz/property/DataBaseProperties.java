@@ -19,6 +19,16 @@ public class DataBaseProperties {
     private Map<String,Object> getTokenParams;
     private String databaseQuery;
     private String databaseAdd;
+
+    public String getDatabaseUpdate() {
+        return databaseUpdate;
+    }
+
+    public void setDatabaseUpdate(String databaseUpdate) {
+        this.databaseUpdate = databaseUpdate;
+    }
+
+    private String databaseUpdate;
     public String getDatabaseAdd() {
         return databaseAdd;
     }

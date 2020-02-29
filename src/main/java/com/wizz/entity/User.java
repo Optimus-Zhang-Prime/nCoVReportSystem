@@ -18,10 +18,10 @@ public class User {
     private Integer index;//易感指数
     private Boolean gender;//性别
     private Boolean sick;//是否生病
-    private Integer classA;//所属一级组织
-    private Integer classB;
-    private Integer classC;
-    private Timestamp createTime;
+    private String classA;//所属一级组织
+    private String classB;
+    private String classC;
+    private String createTime;
     private String userType;
     private String status;
     private ArrayList<IspInfo>ispInfo;
@@ -38,10 +38,46 @@ public class User {
     private String parentPhone;
     private String department;
     private Boolean haveHouse;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "password='" + password + '\'' +
+                ", _id='" + _id + '\'' +
+                ", _openid='" + _openid + '\'' +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", index=" + index +
+                ", gender=" + gender +
+                ", sick=" + sick +
+                ", classA=" + classA +
+                ", classB=" + classB +
+                ", classC=" + classC +
+                ", createTime=" + createTime +
+                ", userType='" + userType + '\'' +
+                ", status='" + status + '\'' +
+                ", ispInfo=" + ispInfo +
+                ", inSchool=" + inSchool +
+                ", idNumber='" + idNumber + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", town='" + town + '\'' +
+                ", location='" + location + '\'' +
+                ", counselor='" + counselor + '\'' +
+                ", school='" + school + '\'' +
+                ", clas='" + clas + '\'' +
+                ", dormitory='" + dormitory + '\'' +
+                ", parentPhone='" + parentPhone + '\'' +
+                ", department='" + department + '\'' +
+                ", haveHouse=" + haveHouse +
+                '}';
+    }
+
     public User() {
     }
 
-    public User(String password, String _id, String _openid, String phone, String name, String number, Integer index, Boolean gender, Boolean sick, Integer classA, Integer classB, Integer classC, Timestamp createTime, String userType, String status, ArrayList<IspInfo> ispInfo, Boolean inSchool, String idNumber, String province, String city, String town, String location, String counselor, String school, String clas, String dormitory, String parentPhone, String department, Boolean haveHouse) {
+    public User(String password, String _id, String _openid, String phone, String name, String number, Integer index, Boolean gender, Boolean sick, String classA, String classB, String classC, String createTime, String userType, String status, ArrayList<IspInfo> ispInfo, Boolean inSchool, String idNumber, String province, String city, String town, String location, String counselor, String school, String clas, String dormitory, String parentPhone, String department, Boolean haveHouse) {
         this.password = password;
         this._id = _id;
         this._openid = _openid;
@@ -145,35 +181,35 @@ public class User {
         this.sick = sick;
     }
 
-    public Integer getClassA() {
+    public String getClassA() {
         return classA;
     }
 
-    public void setClassA(Integer classA) {
+    public void setClassA(String classA) {
         this.classA = classA;
     }
 
-    public Integer getClassB() {
+    public String getClassB() {
         return classB;
     }
 
-    public void setClassB(Integer classB) {
+    public void setClassB(String classB) {
         this.classB = classB;
     }
 
-    public Integer getClassC() {
+    public String getClassC() {
         return classC;
     }
 
-    public void setClassC(Integer classC) {
+    public void setClassC(String classC) {
         this.classC = classC;
     }
 
-    public Timestamp getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

@@ -9,6 +9,17 @@ public class Project {
     private ArrayList<String> admins;
     private String owner;
 
+    @Override
+    public String toString() {
+        return "Project{" +
+                "_id='" + _id + '\'' +
+                ", name='" + name + '\'' +
+                ", state=" + state +
+                ", admins=" + admins +
+                ", owner='" + owner + '\'' +
+                '}';
+    }
+
     public Project() {
     }
 

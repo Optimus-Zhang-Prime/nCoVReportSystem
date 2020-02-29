@@ -10,21 +10,44 @@ public class Org//组织
     private String owner;
     private ArrayList<String> admins;
     private Integer grade;//几级组织
-    private Integer parent;//所属的组织
-    private Integer classA;
-    private Integer classB;
+    private String parent;//所属的项目
+    private String classA;
+    private String classB;
+
+    @Override
+    public String toString() {
+        return "Org{" +
+                "_id='" + _id + '\'' +
+                ", _openid='" + _openid + '\'' +
+                ", name='" + name + '\'' +
+                ", owner='" + owner + '\'' +
+                ", admins=" + admins +
+                ", grade=" + grade +
+                ", parent=" + parent +
+                ", classA=" + classA +
+                ", classB=" + classB +
+                '}';
+    }
 
     public Org() {
     }
 
-    public Org(String _id, String _openid, String name, String owner, ArrayList<String> admins, Integer grade, Integer father, Integer classA, Integer classB) {
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public Org(String _id, String _openid, String name, String owner, ArrayList<String> admins, Integer grade, String parent, String classA, String classB) {
         this._id = _id;
         this._openid = _openid;
         this.name = name;
         this.owner = owner;
         this.admins = admins;
         this.grade = grade;
-        this.parent = father;
+        this.parent = parent;
         this.classA = classA;
         this.classB = classB;
     }
@@ -77,27 +100,27 @@ public class Org//组织
         this.grade = grade;
     }
 
-    public Integer getFather() {
+    public String getFather() {
         return parent;
     }
 
-    public void setFather(Integer father) {
+    public void setFather(String father) {
         this.parent = father;
     }
 
-    public Integer getClassA() {
+    public String getClassA() {
         return classA;
     }
 
-    public void setClassA(Integer classA) {
+    public void setClassA(String classA) {
         this.classA = classA;
     }
 
-    public Integer getClassB() {
+    public String getClassB() {
         return classB;
     }
 
-    public void setClassB(Integer classB) {
+    public void setClassB(String classB) {
         this.classB = classB;
     }
 }

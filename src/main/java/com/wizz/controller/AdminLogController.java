@@ -25,15 +25,15 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
-public class LoginController {
+public class AdminLogController {
 
     @Autowired
-    AdminlogService userService;
+    AdminlogService adminlogService;
 
     @ResponseBody//登录
     @RequestMapping(path = "login/", method = RequestMethod.POST)
     public String login(@RequestParam("tel") String name, @RequestParam("password") String password, HttpServletResponse response) throws JSONException {
-        Integer code = userService.login(name, password);
+        Integer code = adminlogService.login(name, password);
         if (code == 1000) {
             Cookie cookie = new Cookie("name", name);
             response.addCookie(cookie);
@@ -44,7 +44,7 @@ public class LoginController {
     @ResponseBody//退出
     @RequestMapping(path = "user/logout/", method = RequestMethod.POST)
     public String logout(HttpServletRequest request, HttpServletResponse response) throws JSONException {
-        Integer code = userService.logout(response);
+        Integer code = adminlogService.logout(response);
         return ForumUtils.toJsonString(code);
     }
 }

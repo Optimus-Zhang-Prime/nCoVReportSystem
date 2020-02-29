@@ -27,23 +27,4 @@ public class TempGetIdsController {
     public String test () {
         return tempGetIdsUtils.dbTransfer();
     }
-
-
-
-    // 用来测试
-    @Autowired
-    ProjectDaoImpl projectDao;
-    @ResponseBody
-    @RequestMapping("/project/{name}")
-    public String test1 (@PathVariable ("name") String name) {
-        projectDao.addProject(name);
-        return "成功";
-    }
-    // 用来测试
-    @ResponseBody
-    @RequestMapping("/projects")
-    public List<Project> test2 () {
-        List<Project> all = projectDao.getAll();
-        return all;
-    }
 }

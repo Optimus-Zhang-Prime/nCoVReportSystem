@@ -4,11 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.wizz.dao.UserDao;
 import com.wizz.entity.User;
 import com.wizz.entity.jsonReturn.QueryReturn;
+import com.wizz.entity.jsonReturn.UpdateReturn;
 import com.wizz.exception.DbErrorException;
 import com.wizz.property.DataBaseProperties;
 import com.wizz.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,13 +28,13 @@ public class UserDaoImpl implements UserDao {
     private TokenUtils tokenUtils;
     RestTemplate restTemplate = new RestTemplate();
     @Override
-    public User getUserById(Integer id) {
+    public User getUserById(String id) {
         // 获取必须的access_token
         String access_token = tokenUtils.getAccessToken();
         String queryString = dataBaseProperties.getDatabaseQuery()  + access_token;
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
-        map.put("query",String.format("db.collection('user').where({_id: '%s'}).get()",id));
+        map.put("query",String.format("db.collection('user-1').where({_id: '%s'}).get()",id));
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射
@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
         // 这里实际上可以使用注解进行校验  参考codesheep
 //        System.out.println(rawOutput);
         if (!"0".equals(errcode)) {
-            throw new DbErrorException("");
+            throw new DbErrorException(errcode);
         } else if (strOutput.isEmpty()) {
             throw new DbErrorException("查无此人");
         }
@@ -55,6 +55,29 @@ public class UserDaoImpl implements UserDao {
         User user = JSON.parseObject(output,User.class);
         return user;
     }
+//    @Update({"update User set index=90 where id=#{id}"})
+    @Override
+    public void setUserIndex90(String id) {
+        // 获取必须的access_token
+        String access_token = tokenUtils.getAccessToken();
+        String queryString = dataBaseProperties.getDatabaseUpdate()  + access_token;
+        Map<String,Object> map = dataBaseProperties.getDbBody();
+        // 组织post body
+        map.put("query",String.format("db.collection('user-1').where({_id: %s}).update({data:{index: 90}})",id));
+        // json返回值
+        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+        // json对象映射
+        UpdateReturn updateReturn = JSON.parseObject(rawOutput, UpdateReturn.class);
+        // 获得errcode
+        String errcode = updateReturn.getErrcode();
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errcode);
+        }
+    }
+
+
+
+
 
 //    @Override
 //    public void addUser(User user) {

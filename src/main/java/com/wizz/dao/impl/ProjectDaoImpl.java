@@ -31,8 +31,6 @@ public class ProjectDaoImpl  implements ProjectDao {
         // 这里实际上可以使用注解进行校验  参考codesheep
         if (!"0".equals(errcode)) {
             throw new DbErrorException("project数据库访问出错了");
-        } else if (strOutput.isEmpty()) {
-            throw new DbErrorException("project为空");
         }
         List<Project> projectList = new ArrayList<>();
         // 转换包装
