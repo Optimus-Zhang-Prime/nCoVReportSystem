@@ -34,11 +34,11 @@ public interface UserStateDao {//按组织查看学生身体状况
     @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     List<User> getClassCMdangeruser(Integer orgid);//返回三级组织易感用户
 
-    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
+    @Select({"select * from user where (index BETWEEN 0 AND 20) AND (classA=#{orgid})"})
     List<User> getClassALdangeruser(Integer orgid);//返回一级组织无风险用户（指数0-20）
-    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
+    @Select({"select * from user where (index BETWEEN 0 AND 20) AND (classA=#{orgid})"})
     List<User> getClassBLdangeruser(Integer orgid);//二级组织无风险用户
-    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
+    @Select({"select * from user where (index BETWEEN 0 AND 20) AND (classA=#{orgid})"})
     List<User> getClassCLdangeruser(Integer orgid);//三级组织无风险用户
 
     @Select({"select * from user where classA=#{orgid}" })
