@@ -1,10 +1,5 @@
 package com.wizz.entity;
 
-
-
-import java.sql.Timestamp;
-import java.util.Date;
-
 public class Report {//每日报告
     private String _id;
     private String _openid;
@@ -23,6 +18,15 @@ public class Report {//每日报告
     private String travelNumber;
     private String extra;
     private String regionalIndex;
+    private Double createTime_num;
+
+    public Double getCreateTime_num() {
+        return createTime_num;
+    }
+
+    public void setCreateTime_num(Double createTime_num) {
+        this.createTime_num = createTime_num;
+    }
 
     @Override
     public String toString() {
@@ -44,6 +48,7 @@ public class Report {//每日报告
                 ", travelNumber='" + travelNumber + '\'' +
                 ", extra='" + extra + '\'' +
                 ", regionalIndex='" + regionalIndex + '\'' +
+                ", createTime_num=" + createTime_num +
                 '}';
     }
 
@@ -186,7 +191,7 @@ public class Report {//每日报告
     public Report() {
     }
 
-    public Report(String _id, String _openid, String uid, String createTime, String phone, String location, String geoHash, String address, Boolean sick, String subversionStatus, Boolean isSymptom, Boolean isTravel, String status, String travelType, String travelNumber, String extra, String regionalIndex) {
+    public Report(String _id, String _openid, String uid, String createTime, String phone, String location, String geoHash, String address, Boolean sick, String subversionStatus, Boolean isSymptom, Boolean isTravel, String status, String travelType, String travelNumber, String extra, String regionalIndex, Double createTime_num) {
         this._id = _id;
         this._openid = _openid;
         this.uid = uid;
@@ -204,5 +209,6 @@ public class Report {//每日报告
         this.travelNumber = travelNumber;
         this.extra = extra;
         this.regionalIndex = regionalIndex;
+        this.createTime_num = createTime_num;
     }
 }

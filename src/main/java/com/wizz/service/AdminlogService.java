@@ -1,6 +1,5 @@
 package com.wizz.service;
 
-import com.wizz.dao.OrgDao;
 import com.wizz.dao.impl.OrgDaoImpl;
 import com.wizz.entity.Org;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,7 +8,6 @@ public class Project {
     private Boolean state;
     private ArrayList<String> admins;
     private String owner;
-
     @Override
     public String toString() {
         return "Project{" +
