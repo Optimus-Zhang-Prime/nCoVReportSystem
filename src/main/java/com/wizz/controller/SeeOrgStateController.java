@@ -1,43 +1,50 @@
 package com.wizz.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wizz.entity.User;
 import com.wizz.service.SeeStateService;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Controller
 public class SeeOrgStateController {//按组织查看疫情信息
     @Autowired
     SeeStateService seeStateService;
 
     @ResponseBody
     @RequestMapping(path = "user/seeorgstate/", method = RequestMethod.POST)
-    public JSONObject seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid){
+    public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid){
         seeStateService.calculate();//计算易感指数
         List<User> illUsers =seeStateService.getIllUser(orggrade,orgid);//确诊人数
         List<User> HdangerUsers=seeStateService.getHdangerUser(orggrade,orgid);//高度易感
         List<User> MdamgerUsers=seeStateService.getMdangerUser(orggrade,orgid);//易感
         List<User> LdangerUsers=seeStateService.getLdangerUser(orggrade,orgid);//无风险用户
-        JSONObject ajsonObject = new JSONObject();
-        ajsonObject.put("illUsers", illUsers);
-        ajsonObject.put("HdangerUsers", HdangerUsers);
-        ajsonObject.put("MdangerUsers", MdamgerUsers);
-        ajsonObject.put("LdangerUsers", LdangerUsers);
-        return ajsonObject;
+//        JSONObject ajsonObject = new JSONObject();
+        Map<String,List<User>> map = new HashMap<>();
+        map.put("illUsers", illUsers);
+        map.put("HdangerUsers", HdangerUsers);
+        map.put("MdangerUsers", MdamgerUsers);
+        map.put("LdangerUsers", LdangerUsers);
+        String result = JSON.toJSONString(map);
+        return result;
     }
 
     @ResponseBody
     @RequestMapping(path = "user/seealluser/", method = RequestMethod.POST)
-    public JSONObject seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid){
+    public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid){
         List<User> allUsers =seeStateService.getAllUser(orggrade,orgid);//组织内全部用户
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("allUsers", allUsers);
-        return jsonObject;
+//        JSONObject jsonObject = new JSONObject();
+        String result = JSON.toJSONString(allUsers);
+//        jsonObject.put("allUsers", allUsers);
+        return result;
     }
 }

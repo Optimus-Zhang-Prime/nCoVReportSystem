@@ -28,7 +28,7 @@ public class ReportDaoImpl implements ReportDao {
 //    @Select({"select * from report where uid=#{id}"})
     @Override
     public List<Report> getReportByUserId(String id) {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').where({uid: '%s'}).get()", id);
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').where({_openid: '%s'}).get()", id);
 
         List<String> strOutput = queryReturn.getData();
 
@@ -49,19 +49,19 @@ public class ReportDaoImpl implements ReportDao {
 //    @Insert({"insert into report"})//添加填报信息
     @Override
     public void saveReport(String userid, String Address, Boolean symptom, String status, String subversion, String createTime) {
-        dataBaseUtils.addData("db.collection('report').add({data:[{uid: '%s', address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s' ,createTime: '%s'}]})",userid,Address,symptom,status,subversion,createTime);
+        dataBaseUtils.addData("db.collection('report').add({data:[{_openid: '%s', address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s' ,createTime: '%s'}]})",userid,Address,symptom,status,subversion,createTime);
     }
 //    @Insert({"insert into report"})//添加填报信息，重载，多了交通工具班次参数
     @Override
     public void saveReport2(String userid, String Address, Boolean symptom, String status, String subversion, String travelNumber, String createTime) {
-        dataBaseUtils.addData("db.collection('report').add({data:[{uid: '%s', address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s' ,createTime: '%s', travelNumber: '%s'}]})",userid,Address,symptom,status,subversion,createTime,travelNumber);
+        dataBaseUtils.addData("db.collection('report').add({data:[{_openid: '%s', address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s' ,createTime: '%s', travelNumber: '%s'}]})",userid,Address,symptom,status,subversion,createTime,travelNumber);
     }
 
     // 待验证
 //    @Select({"select uid from report where isSymptom=True"})
     @Override
     public List<String> getSymptomUserid() {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').field({uid: true}).where({isSymptom: %s}).get()", true);
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').field({_openid: true}).where({isSymptom: %s}).get()", true);
 
         List<String> strOutput = queryReturn.getData();
         String errcode = queryReturn.getErrcode();

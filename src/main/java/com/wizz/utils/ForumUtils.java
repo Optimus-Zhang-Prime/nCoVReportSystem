@@ -13,6 +13,7 @@ public class ForumUtils {
     public static String toJsonString(Integer code) throws JSONException {
         JSONObject ajson =new JSONObject();
         ajson.put("code",code);
+        System.out.println(ajson.toString());
         return ajson.toString();
     }
 }

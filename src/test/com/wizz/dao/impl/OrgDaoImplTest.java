@@ -44,11 +44,11 @@ public class OrgDaoImplTest {
 
     @Test
     public void addOrg2() {
-        orgDao.addOrg2("12312123","电院",3,56);
+        orgDao.addOrg2("12312123","电院",3,"23");
     }
 
     @Test
     public void addOrg3() {
-        orgDao.addOrg3("12312123","电院",3,23,45);
+        orgDao.addOrg3("12312123","电院",3,"23","45");
     }
 }

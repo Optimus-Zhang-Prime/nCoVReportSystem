@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-@Repository
+
 public interface ProjectDao {
     List<Project> getAll();//返回所有项目
     void addProject(String name);//添加项目

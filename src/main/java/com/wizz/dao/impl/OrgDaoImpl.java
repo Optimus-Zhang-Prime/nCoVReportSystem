@@ -74,11 +74,11 @@ public class OrgDaoImpl implements OrgDao {
     }
 
     @Override
-    public void addOrg2(String project, String name, Integer grade, Integer classA) {
-        dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: %d}]})",project,name,grade,classA);
+    public void addOrg2(String project, String name, Integer grade, String classA) {
+        dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s'}]})",project,name,grade,classA);
     }
     @Override
-    public void addOrg3(String project, String name, Integer grade, Integer classA, Integer classB) {
-        dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: %d,classB:%d}]})",project,name,grade,classA,classB);
+    public void addOrg3(String project, String name, Integer grade, String classA, String classB) {
+        dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s',classB: '%s'}]})",project,name,grade,classA,classB);
     }
 }

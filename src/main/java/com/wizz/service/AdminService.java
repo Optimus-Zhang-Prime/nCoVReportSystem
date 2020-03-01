@@ -1,5 +1,7 @@
 package com.wizz.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wizz.dao.impl.OrgDaoImpl;
 import com.wizz.dao.impl.ProjectDaoImpl;
@@ -22,10 +24,11 @@ public class AdminService {
         return 1000;//添加项目成功
     }
 
-    public JSONObject showProject(){
+    public String showProject(){
         List<Project> allProject=projectDao.getAll();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("allProject", allProject);
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("allProject", allProject);
+        String jsonObject = JSON.toJSONString(allProject);
         return jsonObject;
     }
 
@@ -34,11 +37,11 @@ public class AdminService {
         orgdao.addOrg1(project,orgName,grade);
         return 1000;//添加组织成功
     }
-    public Integer createOrg(String project,String orgName, Integer grade,Integer classA) {
+    public Integer createOrg(String project,String orgName, Integer grade,String classA) {
         orgdao.addOrg2(project,orgName,grade,classA);
         return 1000;//添加组织成功
     }
-    public Integer createOrg(String project,String orgName, Integer grade,Integer classA,Integer classB) {
+    public Integer createOrg(String project,String orgName, Integer grade,String classA,String classB) {
         orgdao.addOrg3(project,orgName,grade,classA,classB);
         return 1000;//添加组织成功
     }

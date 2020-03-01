@@ -1,4 +1,4 @@
-package com.wizz.controller;
+package com.wizz.component;
 
 import com.wizz.exception.DbErrorException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

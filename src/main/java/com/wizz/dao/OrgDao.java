@@ -4,7 +4,7 @@ import com.wizz.entity.Org;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
-@Repository
+
 public interface OrgDao {//组织
 
     //28号新加的
@@ -24,7 +24,7 @@ public interface OrgDao {//组织
 
     void addOrg1(String project,String name, Integer grade);//添加组织，grade为几级组织
 
-    void addOrg2(String project,String name, Integer grade,Integer classA);//添加组织，grade为几级组织
+    void addOrg2(String project,String name, Integer grade,String classA);//添加组织，grade为几级组织
 
-    void addOrg3(String project,String name, Integer grade,Integer classA,Integer classB);//添加组织，grade为几级组织
+    void addOrg3(String project,String name, Integer grade,String classA,String classB);//添加组织，grade为几级组织
 }

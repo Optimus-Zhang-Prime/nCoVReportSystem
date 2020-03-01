@@ -16,7 +16,7 @@ public class ReportDaoImplTest {
     ReportDaoImpl reportDao;
     @Test
     public void getReportByUserId() {
-        List<Report> reportByUserId = reportDao.getReportByUserId("12");
+        List<Report> reportByUserId = reportDao.getReportByUserId("oUFKg4l01yBQKdnaPencPX-jMl5o");
         System.out.println(reportByUserId);
     }
 

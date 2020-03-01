@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
-@Repository
+
 public interface ReportDao {//每日汇报信息
 
      List<Report> getReportByUserId(String id);//查找该用户所有每日填报信息

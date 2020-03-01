@@ -38,7 +38,7 @@ public class AdminlogService {
             }
 
             List<Org> orgList = orgDao.getAdminUser_Org(name);
-            if (orgList == null) {
+            if (orgList.isEmpty()) {
                 return 1004;
             }
             else  {

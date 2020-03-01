@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * @create： 2020-02-26-01:53
  **/
 public class User {
+    private Integer pushTimes;
+    private Boolean isPushed;
     private String password;
     private String _id;
     private String _openid;
@@ -39,10 +41,31 @@ public class User {
     private String department;
     private Boolean haveHouse;
 
+    public Integer getPushTimes() {
+        return pushTimes;
+    }
+
+    public void setPushTimes(Integer pushTimes) {
+        this.pushTimes = pushTimes;
+    }
+
+    public Boolean getPushed() {
+        return isPushed;
+    }
+
+    public void setPushed(Boolean pushed) {
+        isPushed = pushed;
+    }
+
+    public User() {
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "password='" + password + '\'' +
+                "pushTimes=" + pushTimes +
+                ", isPushed=" + isPushed +
+                ", password='" + password + '\'' +
                 ", _id='" + _id + '\'' +
                 ", _openid='" + _openid + '\'' +
                 ", phone='" + phone + '\'' +
@@ -51,10 +74,10 @@ public class User {
                 ", index=" + index +
                 ", gender=" + gender +
                 ", sick=" + sick +
-                ", classA=" + classA +
-                ", classB=" + classB +
-                ", classC=" + classC +
-                ", createTime=" + createTime +
+                ", classA='" + classA + '\'' +
+                ", classB='" + classB + '\'' +
+                ", classC='" + classC + '\'' +
+                ", createTime='" + createTime + '\'' +
                 ", userType='" + userType + '\'' +
                 ", status='" + status + '\'' +
                 ", ispInfo=" + ispInfo +
@@ -74,10 +97,9 @@ public class User {
                 '}';
     }
 
-    public User() {
-    }
-
-    public User(String password, String _id, String _openid, String phone, String name, String number, Integer index, Boolean gender, Boolean sick, String classA, String classB, String classC, String createTime, String userType, String status, ArrayList<IspInfo> ispInfo, Boolean inSchool, String idNumber, String province, String city, String town, String location, String counselor, String school, String clas, String dormitory, String parentPhone, String department, Boolean haveHouse) {
+    public User(Integer pushTimes, Boolean isPushed, String password, String _id, String _openid, String phone, String name, String number, Integer index, Boolean gender, Boolean sick, String classA, String classB, String classC, String createTime, String userType, String status, ArrayList<IspInfo> ispInfo, Boolean inSchool, String idNumber, String province, String city, String town, String location, String counselor, String school, String clas, String dormitory, String parentPhone, String department, Boolean haveHouse) {
+        this.pushTimes = pushTimes;
+        this.isPushed = isPushed;
         this.password = password;
         this._id = _id;
         this._openid = _openid;
