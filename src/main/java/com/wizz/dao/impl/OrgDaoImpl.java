@@ -6,12 +6,12 @@ import com.wizz.dao.OrgDao;
 import com.wizz.entity.Org;
 import com.wizz.entity.jsonReturn.QueryReturn;
 import com.wizz.exception.DbErrorException;
+import com.wizz.utils.CloudFunctionUtils;
 import com.wizz.utils.DataBaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * @descrip：orgDao的实现
@@ -20,6 +20,8 @@ import java.util.List;
  **/
 @Repository
 public class OrgDaoImpl implements OrgDao {
+    @Autowired
+    CloudFunctionUtils cloudFunctionUtils;
     @Autowired
     DataBaseUtils dataBaseUtils;
 //    @Select({"select * from org where admin数组里有该name(电话号码)"})
@@ -84,7 +86,11 @@ public class OrgDaoImpl implements OrgDao {
 // 有问题！！！！
     @Override
     public void deleteAdmin(String orgID, String tel) {
-        dataBaseUtils.updateData("db.collection('org').where({_id:'%s'}).update({data:{admins: _.pop('%s') }})",orgID,tel);
+        Map<String,String> map = new HashMap<>();
+        map.put("orgid",orgID);
+        map.put("tel",tel);
+        String listDelete = cloudFunctionUtils.InvokeFunction("listDelete", map);
+        System.out.println(listDelete);
     }
 
     @Override

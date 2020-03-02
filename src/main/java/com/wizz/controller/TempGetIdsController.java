@@ -27,4 +27,9 @@ public class TempGetIdsController {
     public String test () {
         return tempGetIdsUtils.dbTransfer();
     }
+    @ResponseBody
+    @RequestMapping("/ids-11663343536")
+    public String test1 () {
+        return tempGetIdsUtils.dbTransferDepartment();
+    }
 }

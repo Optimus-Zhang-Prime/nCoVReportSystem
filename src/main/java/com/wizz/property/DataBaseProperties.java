@@ -19,6 +19,15 @@ public class DataBaseProperties {
     private Map<String,Object> getTokenParams;
     private String databaseQuery;
     private String databaseAdd;
+    private String cloudFunction;
+
+    public String getCloudFunction() {
+        return cloudFunction;
+    }
+
+    public void setCloudFunction(String cloudFunction) {
+        this.cloudFunction = cloudFunction;
+    }
 
     public String getDatabaseDelete() {
         return databaseDelete;

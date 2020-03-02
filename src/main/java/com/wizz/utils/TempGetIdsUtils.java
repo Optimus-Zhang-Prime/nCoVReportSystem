@@ -59,6 +59,18 @@ public class TempGetIdsUtils {
             return (JSONArray) result.get("data");
         }
     }
+    public JSONArray getPageDataDepartment (String accessToken, String page) {
+        String url = idsProperties.getGetIdsDepartment() + accessToken + "&per_page=" + idsProperties.getGetIdsTokenParams() +"&page=" + page;
+        String rawOutput = restTemplate.getForObject(url,String.class);
+        IdsReturn idsReturn = JSON.parseObject(rawOutput, IdsReturn.class);
+        Map<String,Object> result = idsReturn.getResult();
+        if (result == null) {
+            return null;
+        } else {
+            // 复杂类型可以使用fastJSON的内置类型
+            return (JSONArray) result.get("data");
+        }
+    }
     public String dbTransfer () {
         String accessToken = getIdsAccessToken();
         Integer page = 1;
@@ -74,6 +86,36 @@ public class TempGetIdsUtils {
                 String number = jsonObject.getString("XH");
                 String classB = jsonObject.getString("YXDM");
                 map.put("query",String.format("db.collection('user-1').add({data:[{number: '%s', name: '%s',classB: '%s'}]})",number,name,classB));
+                // json返回值
+                String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+                // json对象映射
+                AddReturn addReturn = JSON.parseObject(rawOutput, AddReturn.class);
+                // 获得errcode
+                String errcode = addReturn.getErrcode();
+                // 这里实际上可以使用注解进行校验  参考codesheep
+                if (!"0".equals(errcode)) {
+                    throw new DbErrorException(addReturn.getErrmsg());
+                }
+            }
+            page ++;
+        }
+        return "成功";
+    }
+    public String dbTransferDepartment () {
+        String accessToken = getIdsAccessToken();
+        Integer page = 1;
+        while (getPageDataDepartment(accessToken,String.valueOf(page)) != null) {
+            // 这里写的比较烂
+            JSONArray data = getPageDataDepartment(accessToken,String.valueOf(page));
+            String token = tokenUtils.getAccessToken();
+            String queryString = dataBaseProperties.getDatabaseAdd()  + token;
+            Map<String,Object> map = dataBaseProperties.getDbBody();
+            for (Iterator<Object> iterator = data.iterator(); iterator.hasNext();) {
+                JSONObject jsonObject = (JSONObject) iterator.next();
+//                System.out.println(jsonObject);
+                String depID = jsonObject.getString("XSH");
+                String depName = jsonObject.getString("XSM");
+                map.put("query",String.format("db.collection('department').add({data:[{depId: '%s', depName: '%s'}]})",depID,depName));
                 // json返回值
                 String rawOutput = restTemplate.postForObject(queryString,map,String.class);
                 // json对象映射

@@ -73,6 +73,7 @@ public class AdminService {
             return 1000;
         }
         catch (Exception e){
+            System.out.println(e);
             return 1006;
         }
     }

@@ -16,6 +16,15 @@ public class IdsProperties {
     private String idsAccessToken;
     private String getIdsData;
     private String getIdsTokenParams;
+    private String getIdsDepartment;
+
+    public String getGetIdsDepartment() {
+        return getIdsDepartment;
+    }
+
+    public void setGetIdsDepartment(String getIdsDepartment) {
+        this.getIdsDepartment = getIdsDepartment;
+    }
 
     public String getGetIdsData() {
         return getIdsData;
