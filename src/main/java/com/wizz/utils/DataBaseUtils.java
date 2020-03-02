@@ -2,6 +2,7 @@ package com.wizz.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.wizz.entity.jsonReturn.AddReturn;
+import com.wizz.entity.jsonReturn.DeleteReturn;
 import com.wizz.entity.jsonReturn.QueryReturn;
 import com.wizz.entity.jsonReturn.UpdateReturn;
 import com.wizz.exception.DbErrorException;
@@ -72,6 +73,23 @@ public class DataBaseUtils {
         // 获得errcode
         String errcode = updateReturn.getErrcode();
         String errmsg = updateReturn.getErrmsg();
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errmsg);
+        }
+    }
+    public void deleteData (String query,Object ...args) {
+        String access_token = tokenUtils.getAccessToken();
+        String queryString = dataBaseProperties.getDatabaseDelete()  + access_token;
+        Map<String,Object> map = dataBaseProperties.getDbBody();
+        // 组织post body
+        map.put("query",String.format(query,args));
+        // json返回值
+        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+        // json对象映射
+        DeleteReturn deleteReturn = JSON.parseObject(rawOutput, DeleteReturn.class);
+        // 获得errcode
+        String errcode = deleteReturn.getErrcode();
+        String errmsg = deleteReturn.getErrmsg();
         if (!"0".equals(errcode)) {
             throw new DbErrorException(errmsg);
         }

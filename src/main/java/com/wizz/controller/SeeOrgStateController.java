@@ -39,8 +39,8 @@ public class SeeOrgStateController {//按组织查看疫情信息
 
     @ResponseBody
     @RequestMapping(path = "user/seealluser/", method = RequestMethod.POST)
-    public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid){
-        List<User> allUsers =seeStateService.getAllUser(orggrade,orgid);//组织内全部用户
+    public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid,@RequestParam("page")Integer page){
+        List<User> allUsers =seeStateService.getAllUser(orggrade,orgid,page);//组织内全部用户
 //        JSONObject jsonObject = new JSONObject();
         String result = JSON.toJSONString(allUsers);
 //        jsonObject.put("allUsers", allUsers);

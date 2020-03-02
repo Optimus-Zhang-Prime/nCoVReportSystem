@@ -23,7 +23,7 @@ public class ProjectDaoImpl  implements ProjectDao {
     DataBaseUtils dataBaseUtils;
     @Override
     public List<Project> getAll() {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('project').limit(100).get()","");
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('project').limit(1000).get()","");
         // 获得data字段
         List<String> strOutput = queryReturn.getData();
         // 获得errcode
@@ -45,5 +45,15 @@ public class ProjectDaoImpl  implements ProjectDao {
     @Override
     public void addProject(String name) {
         dataBaseUtils.addData("db.collection('project').add({data:[{name: '%s', state: %s,owner: '%s'}]})",name,true,"xdwgzs");
+    }
+
+    @Override
+    public void deleteProject(String projectId) {
+        dataBaseUtils.deleteData("db.collection('project').where({_id:'%s'}).remove()",projectId);
+    }
+    //删除“parent”字段为该projectid的所有组织
+    @Override
+    public void deleteOrgByProject(String projectId) {
+        dataBaseUtils.deleteData("db.collection('org').where({parent:'%s'}).remove()",projectId);
     }
 }

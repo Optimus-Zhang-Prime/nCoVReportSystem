@@ -20,6 +20,16 @@ public class DataBaseProperties {
     private String databaseQuery;
     private String databaseAdd;
 
+    public String getDatabaseDelete() {
+        return databaseDelete;
+    }
+
+    public void setDatabaseDelete(String databaseDelete) {
+        this.databaseDelete = databaseDelete;
+    }
+
+    private String databaseDelete;
+
     public String getDatabaseUpdate() {
         return databaseUpdate;
     }

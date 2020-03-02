@@ -37,10 +37,10 @@ public interface UserStateDao {//按组织查看学生身体状况
     List<User> getClassCLdangeruser(String orgid);//三级组织无风险用户
 
 
-    List<User> getClassAAllUser(String orgid);//返回某一级组织内全部用户
+    List<User> getClassAAllUser(String orgid,Integer page);//返回某一级组织内全部用户
 
-    List<User> getClassBAllUser(String orgid);//返回二级组织内全部用户
+    List<User> getClassBAllUser(String orgid,Integer page);//返回二级组织内全部用户
 
-    List<User> getClassCAllUser(String orgid);//返回三级组织内全部用户
+    List<User> getClassCAllUser(String orgid,Integer page);//返回三级组织内全部用户
 
 }
