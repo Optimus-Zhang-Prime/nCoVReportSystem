@@ -44,4 +44,10 @@ public class CreateOrgController {
         Integer code = adminService.addAdmin(orgid, tel);
         return ForumUtils.toJsonString(code);
     }
+    @ResponseBody//删除组织管理员
+    @RequestMapping(path = "user/deleteAdmin/", method = RequestMethod.POST)
+    public String deleteOrgAdmin(@RequestParam("orgid") String orgid,@RequestParam("tel") String tel)  throws JSONException {
+        Integer code = adminService.deleteAdmin(orgid, tel);
+        return ForumUtils.toJsonString(code);
+    }
 }
