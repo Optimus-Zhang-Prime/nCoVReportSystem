@@ -44,78 +44,78 @@ public class UserStateDaoImpl implements UserStateDao {
 //    @Select({"select * from user where sick=True AND classA=#{orgid}"})
     @Override
     public List<User> getClassAilluser(String orgid) {
-        return getData("db.collection('user-1').where({sick: %s,classA: '%s'}).get()", true, orgid);
+        return getData("db.collection('user-1').limit(100).where({sick: %s,classA: '%s'}).get()", true, orgid);
     }
 //    @Select({"select * from user where sick=True AND classA=#{orgid}"})
     @Override
     public List<User> getClassBilluser(String orgid) {
-        return getData("db.collection('user-1').where({sick: %s,classB: '%s'}).get()", true, orgid);
+        return getData("db.collection('user-1').limit(100).where({sick: %s,classB: '%s'}).get()", true, orgid);
     }
 
     @Override
     public List<User> getClassCilluser(String orgid) {
-        return getData("db.collection('user-1').where({sick: %s,classC: '%s'}).get()", true, orgid);
+        return getData("db.collection('user-1').limit(100).where({sick: %s,classC: '%s'}).get()", true, orgid);
     }
 //    @Select({"select * from user where (index BETWEEN 70 AND 100) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassAHdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(70), _.lte(100)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(70), _.lte(100)),classA: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassBHdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(70), _.lte(100)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(70), _.lte(100)),classB: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassCHdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(70), _.lte(100)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(70), _.lte(100)),classC: '%s'}).get()", orgid);
     }
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassAMdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(21), _.lte(69)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(21), _.lte(69)),classA: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassBMdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(21), _.lte(69)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(21), _.lte(69)),classB: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassCMdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(21), _.lte(69)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(21), _.lte(69)),classC: '%s'}).get()", orgid);
     }
 
     // **************************************指数范围有问题
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassALdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(0), _.lte(20)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(0), _.lte(20)),classA: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassBLdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(0), _.lte(20)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(0), _.lte(20)),classB: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassCLdangeruser(String orgid) {
-        return getData("db.collection('user-1').where({index: _.and(_.gte(0), _.lte(20)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({index: _.and(_.gte(0), _.lte(20)),classC: '%s'}).get()", orgid);
     }
 //    @Select({"select * from user where classA=#{orgid}" })
     @Override
     public List<User> getClassAAllUser(String orgid) {
-        return getData("db.collection('user-1').where({classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({classA: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassBAllUser(String orgid) {
-        return getData("db.collection('user-1').where({classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({classB: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassCAllUser(String orgid) {
-        return getData("db.collection('user-1').where({classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(100).where({classC: '%s'}).get()", orgid);
     }
 }

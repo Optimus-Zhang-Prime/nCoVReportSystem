@@ -25,7 +25,7 @@ public class OrgDaoImpl implements OrgDao {
 //    @Select({"select * from org where admin数组里有该name(电话号码)"})
     @Override
     public List<Org> getAdminUser_Org(String name) {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').where({admins: '%s'}).get()",name);
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(100).where({admins: '%s'}).get()",name);
         // 获得data字段
         List<String> strOutput = queryReturn.getData();
         // 获得errcode
@@ -51,7 +51,7 @@ public class OrgDaoImpl implements OrgDao {
 
     @Override
     public Org getOrgById(String id) {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').where({_id: '%s'}).get()",id);
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(100).where({_id: '%s'}).get()",id);
         // 获得data字段
         List<String> strOutput = queryReturn.getData();
         // 获得errcode

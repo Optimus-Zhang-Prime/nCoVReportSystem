@@ -23,7 +23,7 @@ public class ProjectDaoImpl  implements ProjectDao {
     DataBaseUtils dataBaseUtils;
     @Override
     public List<Project> getAll() {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('project').get()","");
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('project').limit(100).get()","");
         // 获得data字段
         List<String> strOutput = queryReturn.getData();
         // 获得errcode

@@ -28,7 +28,7 @@ public class ReportDaoImpl implements ReportDao {
 //    @Select({"select * from report where uid=#{id}"})
     @Override
     public List<Report> getReportByUserId(String id) {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').where({_openid: '%s'}).get()", id);
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(100).where({_openid: '%s'}).get()", id);
 
         List<String> strOutput = queryReturn.getData();
 
@@ -61,7 +61,7 @@ public class ReportDaoImpl implements ReportDao {
 //    @Select({"select uid from report where isSymptom=True"})
     @Override
     public List<String> getSymptomUserid() {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').field({_openid: true}).where({isSymptom: %s}).get()", true);
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(100).field({_openid: true}).where({isSymptom: %s}).get()", true);
 
         List<String> strOutput = queryReturn.getData();
         String errcode = queryReturn.getErrcode();

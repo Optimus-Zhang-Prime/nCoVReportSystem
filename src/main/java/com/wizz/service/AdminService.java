@@ -29,6 +29,7 @@ public class AdminService {
 //        JSONObject jsonObject = new JSONObject();
 //        jsonObject.put("allProject", allProject);
         String jsonObject = JSON.toJSONString(allProject);
+//        System.out.println(jsonObject);
         return jsonObject;
     }
 

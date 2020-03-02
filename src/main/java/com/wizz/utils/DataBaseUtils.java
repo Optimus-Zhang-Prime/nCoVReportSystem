@@ -32,8 +32,10 @@ public class DataBaseUtils {
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
         map.put("query",String.format(query,args));
+//        System.out.println(map);
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+//        System.out.println(rawOutput);
         // json对象映射
         QueryReturn queryReturn = JSON.parseObject(rawOutput, QueryReturn.class);
         return queryReturn;

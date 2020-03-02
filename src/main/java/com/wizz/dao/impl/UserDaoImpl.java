@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao {
         String queryString = dataBaseProperties.getDatabaseQuery()  + access_token;
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
-        map.put("query",String.format("db.collection('user-1').where({_openid: '%s'}).get()",id));
+        map.put("query",String.format("db.collection('user-1').limit(100).where({_openid: '%s'}).get()",id));
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射
