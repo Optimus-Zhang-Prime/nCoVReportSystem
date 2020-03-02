@@ -46,4 +46,13 @@ public class SeeOrgStateController {//按组织查看疫情信息
 //        jsonObject.put("allUsers", allUsers);
         return result;
     }
+    
+    @ResponseBody
+    @RequestMapping(path = "user/seeorgByproject/", method = RequestMethod.POST)
+    public JSONObject seeOrgInProject(@RequestParam("projectid")String projectid){
+        List<Org> org =seeStateService.getorgByProject(projectid);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Org", org);
+        return jsonObject;
+    }
 }
