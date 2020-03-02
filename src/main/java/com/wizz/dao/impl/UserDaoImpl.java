@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
         User user = JSON.parseObject(output,User.class);
         return user;
     }
-//    @Update({"update User set index=90 where id=#{id}"})
+//    @Update({"update User set index=91 where id=#{id}"})
     @Override
     public void setUserIndex90(String id) {
         // 获取必须的access_token
@@ -63,7 +63,7 @@ public class UserDaoImpl implements UserDao {
         String queryString = dataBaseProperties.getDatabaseUpdate()  + access_token;
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
-        map.put("query",String.format("db.collection('user-1').where({_openid: %s}).update({data:{index: 90}})",id));
+        map.put("query",String.format("db.collection('user-1').where({_openid: %s}).update({data:{index: 91}})",id));
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射
