@@ -23,4 +23,12 @@ public class CreateProjectController {
         Integer code = adminService.createProject(projectName);
         return ForumUtils.toJsonString(code);
     }
+    @ResponseBody//删除项目
+    @RequestMapping(path = "user/deleteproject/", method = RequestMethod.POST)
+    public String deleteProject(@RequestParam("projectid") String projectid) throws JSONException {
+        Integer code = adminService.deleteProject(projectid);
+        return ForumUtils.toJsonString(code);
+    }
+
 }
+
