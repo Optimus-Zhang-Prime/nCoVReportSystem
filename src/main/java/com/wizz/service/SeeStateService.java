@@ -64,14 +64,14 @@ public class SeeStateService {//按组织查看疫情信息
         }
     }
 
-    public List<User> getAllUser(Integer orggrade, String orgid) {
+    public List<User> getAllUser(Integer orggrade, String orgid,Integer page) {
         if (orggrade == 1) {
-            return userStateDao.getClassAAllUser(orgid);//获取一级组织用户
+            return userStateDao.getClassAAllUser(orgid,page);//获取一级组织用户
         }
         if (orggrade == 2) {
-            return userStateDao.getClassBAllUser(orgid);//二级组织用户
+            return userStateDao.getClassBAllUser(orgid,page);//二级组织用户
         } else {
-            return userStateDao.getClassCAllUser(orgid);
+            return userStateDao.getClassCAllUser(orgid,page);
         }
     }
 
