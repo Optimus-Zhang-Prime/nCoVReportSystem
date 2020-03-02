@@ -20,8 +20,8 @@ public class ShowProjectController {
     AdminService adminService;
 
     @ResponseBody//显示项目
-    @RequestMapping(path = "user/showproject/", method = RequestMethod.POST)
-    public String createProject() throws JSONException {
+    @RequestMapping(path = "user/showproject/", method = RequestMethod.GET)
+    public String showProject() throws JSONException {
         return adminService.showProject();
     }
 }
