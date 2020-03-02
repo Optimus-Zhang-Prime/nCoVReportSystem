@@ -1,8 +1,10 @@
 package com.wizz.service;
 
+import com.wizz.dao.impl.OrgDaoImpl;
 import com.wizz.dao.impl.ReportDaoImpl;
 import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.dao.impl.UserStateDaoImpl;
+import com.wizz.entity.Org;
 import com.wizz.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class SeeStateService {//按组织查看疫情信息
     @Autowired
     ReportDaoImpl reportDao;
     @Autowired
-    OrgDao orgDao;
+    OrgDaoImpl orgDao;
 
     public List<User> getIllUser(Integer orggrade, String orgid) {
         if (orggrade == 1) {

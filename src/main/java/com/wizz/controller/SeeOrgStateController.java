@@ -1,6 +1,7 @@
 package com.wizz.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.wizz.entity.Org;
 import com.wizz.entity.User;
 import com.wizz.service.SeeStateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,9 @@ public class SeeOrgStateController {//按组织查看疫情信息
     
     @ResponseBody
     @RequestMapping(path = "user/seeorgByproject/", method = RequestMethod.POST)
-    public JSONObject seeOrgInProject(@RequestParam("projectid")String projectid){
+    public String seeOrgInProject(@RequestParam("projectid")String projectid){
         List<Org> org =seeStateService.getorgByProject(projectid);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Org", org);
-        return jsonObject;
+        String result = JSON.toJSONString(org);
+        return result;
     }
 }

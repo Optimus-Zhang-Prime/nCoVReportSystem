@@ -72,7 +72,8 @@ public class TempGetIdsUtils {
                 JSONObject jsonObject = (JSONObject) iterator.next();
                 String name = jsonObject.getString("XM");
                 String number = jsonObject.getString("XH");
-                map.put("query",String.format("db.collection('user').add({data:[{number: '%s', name: '%s'}]})",number,name));
+                String classB = jsonObject.getString("YXDM");
+                map.put("query",String.format("db.collection('user-1').add({data:[{number: '%s', name: '%s',classB: '%s'}]})",number,name,classB));
                 // json返回值
                 String rawOutput = restTemplate.postForObject(queryString,map,String.class);
                 // json对象映射

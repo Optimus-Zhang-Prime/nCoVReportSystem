@@ -81,4 +81,30 @@ public class OrgDaoImpl implements OrgDao {
     public void addOrg3(String project, String name, Integer grade, String classA, String classB) {
         dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s',classB: '%s'}]})",project,name,grade,classA,classB);
     }
+// 有问题！！！！
+    @Override
+    public void deleteAdmin(String orgID, String tel) {
+        dataBaseUtils.updateData("db.collection('org').where({_id:'%s'}).update({data:{admins: _.pop('%s') }})",orgID,tel);
+    }
+
+    @Override
+    public List<Org> gerOrgByProjectId(String projectID) {
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(1000).where({parent: '%s'}).get()",projectID);
+        // 获得data字段
+        List<String> strOutput = queryReturn.getData();
+        // 获得errcode
+        String errcode = queryReturn.getErrcode();
+        // 这里实际上可以使用注解进行校验  参考codesheep
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException("org数据库访问出错了");
+        }
+        List<Org> tempList = new ArrayList<>();
+        // 转换包装
+        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+            String temp = iterator.next();
+            Org temp1 = JSON.parseObject(temp, Org.class);
+            tempList.add(temp1);
+        }
+        return tempList;
+    }
 }
