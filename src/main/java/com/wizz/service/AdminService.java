@@ -67,4 +67,13 @@ public class AdminService {
             return 1006;
         }
     }
+    public Integer deleteAdmin(String orgid,String tel){
+        try{
+            orgdao.deleteAdmin(orgid,tel);
+            return 1000;
+        }
+        catch (Exception e){
+            return 1006;
+        }
+    }
 }
