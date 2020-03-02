@@ -26,6 +26,7 @@ public class AdminService {
     public Integer deleteProject(String projectid) {
         try{
         projectDao.deleteProject(projectid);
+        projectDao.deleteOrgByProject(projectid);
         return 1000;//删除项目成功
         }
         catch(Exception e){
