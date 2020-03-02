@@ -23,6 +23,16 @@ public class AdminService {
         projectDao.addProject(projectName);
         return 1000;//添加项目成功
     }
+    public Integer deleteProject(String projectid) {
+        try{
+        projectDao.deleteProject(projectid);
+        return 1000;//删除项目成功
+        }
+        catch(Exception e){
+            return 1006;//删除失败
+            }
+    }
+
 
     public String showProject(){
         List<Project> allProject=projectDao.getAll();
