@@ -7,6 +7,7 @@ import com.wizz.entity.jsonReturn.QueryReturn;
 import com.wizz.exception.DbErrorException;
 import com.wizz.utils.DataBasePageUtils;
 import com.wizz.utils.DataBaseUtils;
+import com.wizz.utils.DepartmentMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

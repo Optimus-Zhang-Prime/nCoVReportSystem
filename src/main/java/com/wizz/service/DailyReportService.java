@@ -59,7 +59,4 @@ public class DailyReportService {
             return 1006;
         }
     }
-    public List<Location> getUserLocation(String id){
-            return reportDao.getUserLocation(id);
-    }
 }

@@ -1,8 +1,6 @@
 package com.wizz.service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.wizz.dao.impl.OrgDaoImpl;
 import com.wizz.dao.impl.ProjectDaoImpl;
 import com.wizz.entity.Project;

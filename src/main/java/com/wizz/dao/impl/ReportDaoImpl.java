@@ -2,6 +2,7 @@ package com.wizz.dao.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.wizz.dao.ReportDao;
+import com.wizz.entity.Location;
 import com.wizz.entity.Report;
 
 import com.wizz.entity.ReportStatus;
@@ -130,4 +131,24 @@ public class ReportDaoImpl implements ReportDao {
     public void changeReport2(String reportId, String Address, Boolean symptom, String status, String subversion, String travelNumber) {
         dataBaseUtils.updateData("db.collection('report').where({_id: '%s'}).update({data:{address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s',travelNumber: '%s'}})",reportId,Address,symptom,status,subversion,travelNumber);
     }
+
+//    @Override
+//    public List<Location> getUserLocation(String id) {
+//        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('community').limit(1000).field({_openid: true}).where({isSymptom: %s}).get()", true);
+//
+//        List<String> strOutput = queryReturn.getData();
+//        String errcode = queryReturn.getErrcode();
+//
+//        if (!"0".equals(errcode)) {
+//            throw new DbErrorException(errcode);
+//        }
+//        List<String> tempList = new ArrayList<>();
+//        // 转换包装
+//        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+//            String temp = iterator.next();
+//            Report temp1 = JSON.parseObject(temp, Report.class);
+//            tempList.add(temp1.get_openid());
+//        }
+//        return tempList;
+//    }
 }

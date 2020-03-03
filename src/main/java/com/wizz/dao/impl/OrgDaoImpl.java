@@ -8,6 +8,7 @@ import com.wizz.entity.jsonReturn.QueryReturn;
 import com.wizz.exception.DbErrorException;
 import com.wizz.utils.CloudFunctionUtils;
 import com.wizz.utils.DataBaseUtils;
+import com.wizz.utils.DepartmentMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,8 @@ import java.util.*;
  **/
 @Repository
 public class OrgDaoImpl implements OrgDao {
+    @Autowired
+    DepartmentMapUtils departmentMapUtils;
     @Autowired
     CloudFunctionUtils cloudFunctionUtils;
     @Autowired
@@ -74,10 +77,11 @@ public class OrgDaoImpl implements OrgDao {
     public void addOrg1(String project, String name, Integer grade) {
         dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d}]})",project,name,grade);
     }
-
+// 第二级组织是院系，需要进行院系代码与院系名字的转换
     @Override
     public void addOrg2(String project, String name, Integer grade, String classA) {
-        dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s'}]})",project,name,grade,classA);
+        String departmentid = departmentMapUtils.getDepartmentid(name);
+        dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s',orgIdForClassB: '%s'}]})",project,name,grade,classA,departmentid);
     }
     @Override
     public void addOrg3(String project, String name, Integer grade, String classA, String classB) {
