@@ -3,6 +3,7 @@ package com.wizz.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wizz.entity.Report;
+import com.wizz.entity.Location;
 import com.wizz.service.DailyReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,5 +47,12 @@ public class UserReportController {
     @RequestMapping(path = "user/changereport2/", method = RequestMethod.POST)
     public Integer changeReport2(@RequestParam("reportid")String reportid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
         return dailyReportService.changeReport(reportid,Address,symbol,status,subversion,travelNumber);
+    }
+    @ResponseBody//查看用户地理信息
+    @RequestMapping(path = "user/location/", method = RequestMethod.POST)
+    public String getUserLocation(@RequestParam("id")String id){
+        List<Location> userLocation= dailyReportService.getUserLocation(id);
+        String result = JSON.toJSONString(userLocation);
+        return result;
     }
 }
