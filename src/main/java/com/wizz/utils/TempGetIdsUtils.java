@@ -71,6 +71,7 @@ public class TempGetIdsUtils {
             return (JSONArray) result.get("data");
         }
     }
+    // 从ids导入学生信息
     public String dbTransfer () {
         String accessToken = getIdsAccessToken();
         Integer page = 1;
@@ -85,7 +86,10 @@ public class TempGetIdsUtils {
                 String name = jsonObject.getString("XM");
                 String number = jsonObject.getString("XH");
                 String classB = jsonObject.getString("YXDM");
-                map.put("query",String.format("db.collection('user-1').add({data:[{number: '%s', name: '%s',classB: '%s'}]})",number,name,classB));
+                String classC = number.substring(0,2);
+                String classA = "研究生";
+                map.put("query",String.format("db.collection('user').add({data:[{number: '%s', name: '%s',classB: '%s',classC: '%s',classA: '%s'}]})",number,name,classB,classC,classA));
+                System.out.println(name);
                 // json返回值
                 String rawOutput = restTemplate.postForObject(queryString,map,String.class);
                 // json对象映射
@@ -101,6 +105,7 @@ public class TempGetIdsUtils {
         }
         return "成功";
     }
+    // 用来从ids中导入学院数据
     public String dbTransferDepartment () {
         String accessToken = getIdsAccessToken();
         Integer page = 1;
