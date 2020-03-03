@@ -22,7 +22,7 @@ public class SeeOrgStateController {//按组织查看疫情信息
 
     @ResponseBody
     @RequestMapping(path = "user/seeorgstate/", method = RequestMethod.POST)
-    public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid){
+    public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgname") String orgid){
         seeStateService.calculate();//计算易感指数
         List<User> illUsers =seeStateService.getIllUser(orggrade,orgid);//确诊人数
         List<User> SuspectedUsers=seeStateService.getSuspectedUser(orggrade,orgid);//疑似患者
@@ -42,7 +42,7 @@ public class SeeOrgStateController {//按组织查看疫情信息
 
     @ResponseBody
     @RequestMapping(path = "user/seealluser/", method = RequestMethod.POST)
-    public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid,@RequestParam("page")Integer page){
+    public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgname") String orgid,@RequestParam("page")Integer page){
         List<User> allUsers =seeStateService.getAllUser(orggrade,orgid,page);//组织内全部用户
 //        JSONObject jsonObject = new JSONObject();
         String result = JSON.toJSONString(allUsers);
