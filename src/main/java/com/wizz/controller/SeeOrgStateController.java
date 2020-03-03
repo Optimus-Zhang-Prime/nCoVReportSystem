@@ -25,14 +25,15 @@ public class SeeOrgStateController {//按组织查看疫情信息
     public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid") String orgid){
         seeStateService.calculate();//计算易感指数
         List<User> illUsers =seeStateService.getIllUser(orggrade,orgid);//确诊人数
+        List<User> SuspectedUsers=seeStateService.getSuspectedUser(orggrade,orgid);//疑似患者
         List<User> HdangerUsers=seeStateService.getHdangerUser(orggrade,orgid);//高度易感
-        List<User> MdamgerUsers=seeStateService.getMdangerUser(orggrade,orgid);//易感
+        List<User> MdangerUsers=seeStateService.getMdangerUser(orggrade,orgid);//易感
         List<User> LdangerUsers=seeStateService.getLdangerUser(orggrade,orgid);//无风险用户
 //        JSONObject ajsonObject = new JSONObject();
         Map<String,List<User>> map = new HashMap<>();
         map.put("illUsers", illUsers);
         map.put("HdangerUsers", HdangerUsers);
-        map.put("MdangerUsers", MdamgerUsers);
+        map.put("MdangerUsers", MdangerUsers);
         map.put("LdangerUsers", LdangerUsers);
         String result = JSON.toJSONString(map);
         return result;
