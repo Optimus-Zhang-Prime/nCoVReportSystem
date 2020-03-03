@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.wizz.dao.ReportDao;
 import com.wizz.entity.Report;
 
+import com.wizz.entity.ReportStatus;
 import com.wizz.entity.jsonReturn.QueryReturn;
 
 import com.wizz.exception.DbErrorException;
@@ -25,7 +26,48 @@ import java.util.List;
 public class ReportDaoImpl implements ReportDao {
     @Autowired
     DataBaseUtils dataBaseUtils;
-//    @Select({"select * from report where uid=#{id}"})
+
+    @Override
+    public List<String> getStatus123Userid() {
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(1000).field({_openid: true}).where({status: _.and(_.neq('%s'),_.neq('%s'))}).get()", ReportStatus.FIFTH.toString(),ReportStatus.FOURTH.toString());
+
+        List<String> strOutput = queryReturn.getData();
+        String errcode = queryReturn.getErrcode();
+
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errcode);
+        }
+        List<String> tempList = new ArrayList<>();
+        // 转换包装
+        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+            String temp = iterator.next();
+            Report temp1 = JSON.parseObject(temp, Report.class);
+            tempList.add(temp1.get_openid());
+        }
+        return tempList;
+    }
+
+    @Override
+    public List<String> getStatus4Userid() {
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(1000).field({_openid: true}).where({status: '%s'}).get()", ReportStatus.FOURTH.toString());
+
+        List<String> strOutput = queryReturn.getData();
+        String errcode = queryReturn.getErrcode();
+
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errcode);
+        }
+        List<String> tempList = new ArrayList<>();
+        // 转换包装
+        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+            String temp = iterator.next();
+            Report temp1 = JSON.parseObject(temp, Report.class);
+            tempList.add(temp1.get_openid());
+        }
+        return tempList;
+    }
+
+    //    @Select({"select * from report where uid=#{id}"})
     @Override
     public List<Report> getReportByUserId(String id) {
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(1000).where({_openid: '%s'}).get()", id);
@@ -74,7 +116,7 @@ public class ReportDaoImpl implements ReportDao {
         for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
             String temp = iterator.next();
             Report temp1 = JSON.parseObject(temp, Report.class);
-            tempList.add(temp1.getUid());
+            tempList.add(temp1.get_openid());
         }
         return tempList;
     }

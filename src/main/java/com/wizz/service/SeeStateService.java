@@ -67,6 +67,18 @@ public class SeeStateService {//按组织查看疫情信息
             return userStateDao.getClassCLdangeruser(orgid);
         }
     }
+    public List<User> getSuspectedUser(Integer orggrade, String orgid) {
+        if (orggrade == 1) {
+            return userStateDao.getClassASuspectedUser(orgid);//获取疑似用户，90-100
+        }
+        if (orggrade == 2) {
+            return userStateDao.getClassBSuspectedUser(orgid);
+        } else {
+            return userStateDao.getClassCSuspectedUser(orgid);
+        }
+    }
+
+
 
     public List<User> getAllUser(Integer orggrade, String orgid,Integer page) {
         if (orggrade == 1) {
@@ -80,10 +92,21 @@ public class SeeStateService {//按组织查看疫情信息
     }
 
     public void calculate() {//计算易感系数
-        List<String> useridList = reportDao.getSymptomUserid();
-        for(String uid:useridList){
+
+        List<String> useridList1=reportDao.getStatus123Userid();//获取汇报status为“1/2/3”的用户id
+        /*1.有疫区旅居史。2.接触过流行病高发地区（湖北省）人员。3.接触过疑似患者。*/
+        for(String uid:useridList1){
+            userDao.setUserIndex50(uid);//将id=uid的用户易感指数设为50
+        }
+        List<String> useridList2=reportDao.getStatus4Userid();//获取汇报status为“4.接触过确诊患者”的用户id
+        for(String uid:useridList2){
+            userDao.setUserIndex75(uid);//将id=uid的用户易感指数设为75
+        }
+        List<String> useridList3 = reportDao.getSymptomUserid();//体温高的用户
+        for(String uid:useridList3){
             userDao.setUserIndex90(uid);
         }
+
 
     }
     public List<Org> getorgByProject(String projectid){//获取项目下所有组织

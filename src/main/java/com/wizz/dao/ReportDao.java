@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface ReportDao {//每日汇报信息
 
-     List<Report> getReportByUserId(String id);//查找该用户所有每日填报信息
+    List<String> getStatus123Userid ();////获取汇报status为“1/2/3”的用户id
+    List<String> getStatus4Userid (); ////获取汇报status为“4.接触过确诊患者”的用户id
+    List<Report> getReportByUserId(String id);//查找该用户所有每日填报信息
 
 
      void saveReport(String userid, String Address, Boolean symptom, String status, String subversion, String createTime);

@@ -59,20 +59,39 @@ public class UserStateDaoImpl implements UserStateDao {
     public List<User> getClassCilluser(String orgid) {
         return getData("db.collection('user-1').limit(1000).where({sick: %s,classC: '%s'}).get()", true, orgid);
     }
+
+
+    @Override
+    public List<User> getClassASuspectedUser(String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(90), _.lte(100)),classA: '%s'}).get()", orgid);
+    }
+
+    @Override
+    public List<User> getClassBSuspectedUser(String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(90), _.lte(100)),classB: '%s'}).get()", orgid);
+    }
+
+    @Override
+    public List<User> getClassCSuspectedUser(String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(90), _.lte(100)),classC: '%s'}).get()", orgid);
+    }
+
+
+
 //    @Select({"select * from user where (index BETWEEN 70 AND 100) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassAHdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(90)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(89)),classA: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassBHdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(90)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(89)),classB: '%s'}).get()", orgid);
     }
 
     @Override
     public List<User> getClassCHdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(90)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(89)),classC: '%s'}).get()", orgid);
     }
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     @Override
@@ -90,7 +109,6 @@ public class UserStateDaoImpl implements UserStateDao {
         return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(21), _.lte(69)),classC: '%s'}).get()", orgid);
     }
 
-    // **************************************指数范围有问题
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassALdangeruser(String orgid) {

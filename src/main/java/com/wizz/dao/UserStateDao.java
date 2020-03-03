@@ -16,11 +16,18 @@ public interface UserStateDao {//按组织查看学生身体状况
     List<User> getClassCilluser(String orgid);//返回三级组织确诊用户
 
 
-    List<User> getClassAHdangeruser(String orgid);//返回一级组织高度易感用户（指数70-100）
+    List<User> getClassAHdangeruser(String orgid);//返回一级组织高度易感用户（指数70-89）
 
     List<User> getClassBHdangeruser(String orgid);//返回二级组织高度易感用户
 
     List<User> getClassCHdangeruser(String orgid);//返回三级组织高度易感用户
+
+
+    List<User> getClassASuspectedUser(String orgid);//返回一级组织疑似用户（指数90-100）
+
+    List<User> getClassBSuspectedUser(String orgid);//返回二级组织疑似用户
+
+    List<User> getClassCSuspectedUser(String orgid);//返回三级组织疑似用户
 
 
     List<User> getClassAMdangeruser(String orgid);//返回一级组织易感用户（指数21-69）

@@ -57,13 +57,51 @@ public class UserDaoImpl implements UserDao {
     }
 //    @Update({"update User set index=91 where id=#{id}"})
     @Override
-    public void setUserIndex90(String id) {
+    public void setUserIndex90(String id) {//改成设为91了
         // 获取必须的access_token
         String access_token = tokenUtils.getAccessToken();
         String queryString = dataBaseProperties.getDatabaseUpdate()  + access_token;
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
-        map.put("query",String.format("db.collection('user-1').where({_openid: %s}).update({data:{index: 91}})",id));
+        map.put("query",String.format("db.collection('user-1').where({_openid: '%s'}).update({data:{index: 91}})",id));
+        // json返回值
+        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+        // json对象映射
+        UpdateReturn updateReturn = JSON.parseObject(rawOutput, UpdateReturn.class);
+        // 获得errcode
+        String errcode = updateReturn.getErrcode();
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errcode);
+        }
+    }
+//    @Update({"update User set index=50 where id=#{id}"})
+    @Override
+    public void setUserIndex50(String id) {
+        // 获取必须的access_token
+        String access_token = tokenUtils.getAccessToken();
+        String queryString = dataBaseProperties.getDatabaseUpdate()  + access_token;
+        Map<String,Object> map = dataBaseProperties.getDbBody();
+        // 组织post body
+        map.put("query",String.format("db.collection('user-1').where({_openid: '%s'}).update({data:{index: 50}})",id));
+        // json返回值
+        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+        // json对象映射
+        UpdateReturn updateReturn = JSON.parseObject(rawOutput, UpdateReturn.class);
+        // 获得errcode
+        String errcode = updateReturn.getErrcode();
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errcode);
+        }
+    }
+//    @Update({"update User set index=50 where id=#{id}"})
+    @Override
+    public void setUserIndex75(String id) {
+        // 获取必须的access_token
+        String access_token = tokenUtils.getAccessToken();
+        String queryString = dataBaseProperties.getDatabaseUpdate()  + access_token;
+        Map<String,Object> map = dataBaseProperties.getDbBody();
+        // 组织post body
+        map.put("query",String.format("db.collection('user-1').where({_openid: '%s'}).update({data:{index: 75}})",id));
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射

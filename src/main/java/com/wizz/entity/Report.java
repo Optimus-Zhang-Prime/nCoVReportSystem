@@ -3,7 +3,6 @@ package com.wizz.entity;
 public class Report {//每日报告
     private String _id;
     private String _openid;
-    private String uid;
     private String createTime;
     private String phone;
     private String location;
@@ -33,7 +32,6 @@ public class Report {//每日报告
         return "Report{" +
                 "_id='" + _id + '\'' +
                 ", _openid='" + _openid + '\'' +
-                ", uid='" + uid + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", phone='" + phone + '\'' +
                 ", location='" + location + '\'' +
@@ -82,14 +80,6 @@ public class Report {//每日报告
 
     public void set_openid(String _openid) {
         this._openid = _openid;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public String getCreateTime() {
@@ -191,10 +181,9 @@ public class Report {//每日报告
     public Report() {
     }
 
-    public Report(String _id, String _openid, String uid, String createTime, String phone, String location, String geoHash, String address, Boolean sick, String subversionStatus, Boolean isSymptom, Boolean isTravel, String status, String travelType, String travelNumber, String extra, String regionalIndex, Double createTime_num) {
+    public Report(String _id, String _openid, String createTime, String phone, String location, String geoHash, String address, Boolean sick, String subversionStatus, Boolean isSymptom, Boolean isTravel, String status, String travelType, String travelNumber, String extra, String regionalIndex, Double createTime_num) {
         this._id = _id;
         this._openid = _openid;
-        this.uid = uid;
         this.createTime = createTime;
         this.phone = phone;
         this.location = location;
