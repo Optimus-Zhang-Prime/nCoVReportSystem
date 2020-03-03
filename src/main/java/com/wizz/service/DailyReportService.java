@@ -3,6 +3,7 @@ package com.wizz.service;
 
 import com.wizz.dao.impl.ReportDaoImpl;
 import com.wizz.entity.Report;
+import com.wizz.entity.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +58,8 @@ public class DailyReportService {
         catch (Exception e){
             return 1006;
         }
+    }
+    public List<Location> getUserLocation(String id){
+            return reportDao.getUserLocation(id);
     }
 }
