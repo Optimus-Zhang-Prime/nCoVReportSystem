@@ -57,4 +57,11 @@ public class SeeOrgStateController {//按组织查看疫情信息
         String result = JSON.toJSONString(org);
         return result;
     }
+    @ResponseBody
+    @RequestMapping(path = "user/seeorgbyparent/", method = RequestMethod.POST)
+    public String seeOrgByParent(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid")String orgid){
+        List<Org> org =seeStateService.getorgByParent(orggrade,orgid);
+        String result = JSON.toJSONString(org);
+        return result;
+    }
 }

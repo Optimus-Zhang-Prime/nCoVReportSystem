@@ -113,6 +113,16 @@ public class SeeStateService {//按组织查看疫情信息
         List<Org> orgList=orgDao.gerOrgByProjectId(projectid);
         return orgList;
     }
+
+    public List<Org> getorgByProject(Integer orggrade,String orgid){//获取项目下所有组织
+        if(orggrade==1){
+            List<Org> orgList=orgDao.getClassBOrgByParent(orgid);
+        }
+        else if(orggrade==2){
+            List<Org> orgList=orgDao.getClassCOrgByParent(orgid);
+        }
+        return orgList;
+    }
 }
 
 
