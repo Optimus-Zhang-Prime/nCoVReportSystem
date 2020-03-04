@@ -59,8 +59,8 @@ public class SeeOrgStateController {//按组织查看疫情信息
     }
     @ResponseBody
     @RequestMapping(path = "user/seeorgbyparent/", method = RequestMethod.POST)
-    public String seeOrgByParent(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid")String orgid){
-        List<Org> org =seeStateService.getorgByParent(orggrade,orgid);
+    public String seeOrgByParentClass(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid")String orgid){
+        List<Org> org =seeStateService.getorgByParentClass(orggrade,orgid);
         String result = JSON.toJSONString(org);
         return result;
     }

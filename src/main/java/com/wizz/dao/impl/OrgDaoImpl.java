@@ -120,4 +120,46 @@ public class OrgDaoImpl implements OrgDao {
     public void deleteOrg(String orgId) {
         dataBaseUtils.deleteData("db.collection('org').where({_id:'%s'}).remove()",orgId);
     }
+
+    @Override
+    public List<Org> getClassBOrgByParentClass(String orgId) {
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(1000).where({classA: '%s',grade: %d}).get()",orgId,2);
+        // 获得data字段
+        List<String> strOutput = queryReturn.getData();
+        // 获得errcode
+        String errcode = queryReturn.getErrcode();
+        // 这里实际上可以使用注解进行校验  参考codesheep
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException("org数据库访问出错了");
+        }
+        List<Org> tempList = new ArrayList<>();
+        // 转换包装
+        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+            String temp = iterator.next();
+            Org temp1 = JSON.parseObject(temp, Org.class);
+            tempList.add(temp1);
+        }
+        return tempList;
+    }
+
+    @Override
+    public List<Org> getClassCOrgByParentClass(String orgId) {
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(1000).where({classB: '%s',grade: %d}).get()",orgId,3);
+        // 获得data字段
+        List<String> strOutput = queryReturn.getData();
+        // 获得errcode
+        String errcode = queryReturn.getErrcode();
+        // 这里实际上可以使用注解进行校验  参考codesheep
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException("org数据库访问出错了");
+        }
+        List<Org> tempList = new ArrayList<>();
+        // 转换包装
+        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+            String temp = iterator.next();
+            Org temp1 = JSON.parseObject(temp, Org.class);
+            tempList.add(temp1);
+        }
+        return tempList;
+    }
 }
