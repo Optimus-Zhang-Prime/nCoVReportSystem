@@ -27,35 +27,15 @@ public class AdminlogService {
 
 
     //登录
-    public Integer login(String name, String password) {
-        try {
-            if (password == null | "".equals(password)) {
-                return 1001;
-            }
-            if (name == null | "".equals(name)) {
-                return 1002;
-            }
-
-            List<Org> orgList = orgDao.getAdminUser_Org(name);
-            if (orgList == null) {
-                return 1004;
-            }
-            else  {
-                //待定，要发短信
-                //登陆成功
-                return 1000;
-            }
-        } catch (Exception e) {
-            return 1006;
-        }
+    public List<Org> getOrgByAdmin(String tel) {
+        return orgDao.getAdminUser_Org(tel);
     }
 
-    public Integer logout(HttpServletResponse response){
+    public Integer logout(HttpServletResponse response) {
         try {
             //CookieUtil.removeCookie(response, "name");
             return 1000;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return 1006;
         }
     }
