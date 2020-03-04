@@ -29,4 +29,5 @@ public interface OrgDao {//组织
     void addOrg3(String project,String name, Integer grade,String classA,String classB);//添加组织，grade为几级组织
     void deleteAdmin (String orgID,String tel);
     List<Org> gerOrgByProjectId (String projectID);
+    void deleteOrg (String orgId);
 }

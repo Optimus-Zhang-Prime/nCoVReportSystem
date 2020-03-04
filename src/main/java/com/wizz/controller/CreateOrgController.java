@@ -50,4 +50,10 @@ public class CreateOrgController {
         Integer code = adminService.deleteAdmin(orgid, tel);
         return ForumUtils.toJsonString(code);
     }
+    @ResponseBody//删除组织
+    @RequestMapping(path = "user/deleteorg/", method = RequestMethod.POST)
+    public String deleteOrg(@RequestParam("orgid")String orgid) throws JSONException {
+        Integer code = adminService.deleteOrg(orgid);
+        return ForumUtils.toJsonString(code);
+    }
 }

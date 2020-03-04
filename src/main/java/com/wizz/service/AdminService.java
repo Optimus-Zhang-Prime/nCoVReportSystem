@@ -71,7 +71,15 @@ public class AdminService {
             return 1000;
         }
         catch (Exception e){
-            System.out.println(e);
+//            System.out.println(e);
+            return 1006;
+        }
+    }
+    public Integer deleteOrg (String orgId) {
+        try {
+            orgdao.deleteOrg(orgId);
+            return 1000;
+        } catch (Exception e) {
             return 1006;
         }
     }

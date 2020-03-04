@@ -87,7 +87,6 @@ public class OrgDaoImpl implements OrgDao {
     public void addOrg3(String project, String name, Integer grade, String classA, String classB) {
         dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s',classB: '%s'}]})",project,name,grade,classA,classB);
     }
-// 有问题！！！！
     @Override
     public void deleteAdmin(String orgID, String tel) {
         Map<String,String> map = new HashMap<>();
@@ -116,5 +115,9 @@ public class OrgDaoImpl implements OrgDao {
             tempList.add(temp1);
         }
         return tempList;
+    }
+    @Override
+    public void deleteOrg(String orgId) {
+        dataBaseUtils.deleteData("db.collection('org').where({_id:'%s'}).remove()",orgId);
     }
 }
