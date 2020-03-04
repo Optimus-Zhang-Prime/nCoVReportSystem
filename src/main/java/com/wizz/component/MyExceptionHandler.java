@@ -14,7 +14,7 @@ import java.util.Map;
  * @create： 2020-02-26-00:24
  **/
 @ControllerAdvice
-public class ExceptionController {
+public class MyExceptionHandler {
     /** @Description: 处理上传文件太大的异常
     * @Param: [e]
     * @return: java.util.Map<java.lang.String,java.lang.Object>

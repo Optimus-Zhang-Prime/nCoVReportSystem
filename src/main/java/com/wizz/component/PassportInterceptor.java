@@ -1,4 +1,4 @@
-package com.wizz.interceptors;
+package com.wizz.component;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
