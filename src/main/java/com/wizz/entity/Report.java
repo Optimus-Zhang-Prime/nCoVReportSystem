@@ -18,6 +18,24 @@ public class Report {//每日报告
     private String extra;
     private String regionalIndex;
     private Double createTime_num;
+    private String createTime_str; // 仅仅是为了小程序端方便调试
+    private String adcode;  //行政区划代码
+
+    public String getCreateTime_str() {
+        return createTime_str;
+    }
+
+    public void setCreateTime_str(String createTime_str) {
+        this.createTime_str = createTime_str;
+    }
+
+    public String getAdcode() {
+        return adcode;
+    }
+
+    public void setAdcode(String adcode) {
+        this.adcode = adcode;
+    }
 
     public Double getCreateTime_num() {
         return createTime_num;
@@ -47,6 +65,8 @@ public class Report {//每日报告
                 ", extra='" + extra + '\'' +
                 ", regionalIndex='" + regionalIndex + '\'' +
                 ", createTime_num=" + createTime_num +
+                ", createTime_str='" + createTime_str + '\'' +
+                ", adcode='" + adcode + '\'' +
                 '}';
     }
 
@@ -181,7 +201,7 @@ public class Report {//每日报告
     public Report() {
     }
 
-    public Report(String _id, String _openid, String createTime, String phone, String location, String geoHash, String address, Boolean sick, String subversionStatus, Boolean isSymptom, Boolean isTravel, String status, String travelType, String travelNumber, String extra, String regionalIndex, Double createTime_num) {
+    public Report(String _id, String _openid, String createTime, String phone, String location, String geoHash, String address, Boolean sick, String subversionStatus, Boolean isSymptom, Boolean isTravel, String status, String travelType, String travelNumber, String extra, String regionalIndex, Double createTime_num, String createTime_str, String adcode) {
         this._id = _id;
         this._openid = _openid;
         this.createTime = createTime;
@@ -199,5 +219,7 @@ public class Report {//每日报告
         this.extra = extra;
         this.regionalIndex = regionalIndex;
         this.createTime_num = createTime_num;
+        this.createTime_str = createTime_str;
+        this.adcode = adcode;
     }
 }
