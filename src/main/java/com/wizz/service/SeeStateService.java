@@ -107,6 +107,8 @@ public class SeeStateService {//按组织查看疫情信息
         }
         return orgList;
     }
+    //导出组织内用户打卡消息
+    // 需要注意的问题就是 组织内用户会有很多，全部导出其全部的数据
 }
 
 

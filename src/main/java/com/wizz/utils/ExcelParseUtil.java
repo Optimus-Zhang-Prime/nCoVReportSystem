@@ -1,14 +1,20 @@
 package com.wizz.utils;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @descrip：解析Excel的工具类
@@ -23,8 +29,6 @@ public class ExcelParseUtil {
          *  也可以来源与上传上来的文件的流，也就是MultipartFile的流，
          *  使用getInputStream()方法进行获取。
          */
-
-
         /**
          * 然后再读取文件的时候，应该excel文件的后缀名在不同的版本中对应的解析类不一样
          * 要对fileName进行后缀的解析
@@ -79,5 +83,64 @@ public class ExcelParseUtil {
         }
 
     }
+    public void writeExcel(String fileName, HttpServletResponse httpServletResponse){
+        HSSFWorkbook wb = new HSSFWorkbook();
+        //创建一个工作本
+        HSSFSheet sheet = wb.createSheet("成员信息");
+        setTitle(wb,sheet);
+        for (int i = 0; i < 100; i++) {
+            // 创建HSSFRow对象
+            HSSFRow row = sheet.createRow(i + 1);
+            // 创建HSSFCell对象 设置单元格的值
+            row.createCell(0).setCellValue("xx" + i);
+            row.createCell(1).setCellValue(i);
+            row.createCell(2).setCellValue("xx" + i);
+            row.createCell(3).setCellValue("xx" + i);
+        }
+        // 清空response
+        httpServletResponse.reset();
+        httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ fileName);
+        httpServletResponse.setContentType("application/vnd.ms-excel;charset=gb2312");
+//        response.setHeader("Content-Disposition", "attchement;filename=" + new String("人员信息.xls".getBytes("gb2312"), "ISO8859-1"));
+//        response.setContentType("application/msexcel");
+        try {
+            OutputStream os = new BufferedOutputStream(httpServletResponse.getOutputStream());
+            wb.write(os);
+            os.flush();
+            os.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    private void setTitle(HSSFWorkbook workbook, HSSFSheet sheet){
+        HSSFRow row = sheet.createRow(0);
+        //设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
+        sheet.setColumnWidth(0, 10*256);
+        sheet.setColumnWidth(1, 20*256);
+        sheet.setColumnWidth(2, 20*256);
+        sheet.setColumnWidth(3, 100*256);
 
+        //设置为居中加粗
+        HSSFCellStyle style = workbook.createCellStyle();
+        HSSFFont font = workbook.createFont();
+        font.setBold(true);
+        style.setFont(font);
+
+        HSSFCell cell;
+        cell = row.createCell(0);
+        cell.setCellValue("序号");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(1);
+        cell.setCellValue("单选");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(2);
+        cell.setCellValue("多选");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(3);
+        cell.setCellValue("简答");
+        cell.setCellStyle(style);
+    }
 }
