@@ -26,7 +26,6 @@ public class UserStateScheduler{
     public void calculateUserState() {
         System.out.println("计算用户身体状况，任务执行时间：" + dateFormat.format(new Date()));
 
-
         //计算累积易感指数的部分
         Integer account = userDao.getUserAccount();//获取当前用户数量
         int n=1;
@@ -38,20 +37,24 @@ public class UserStateScheduler{
                for(Report report:userReportList){
                    sum+=report.getCovIndex();//对易感指数求和
                }
-               Integer average=sum/userReportList.size();//求平均
-               if(average<21){
-                   userDao.setUserConditionWuFengXian(uid);//无风险
-               }
-               else if(average<70){
-                   userDao.setUserConditionYiGan(uid);//易感
-               }
-               else if(average<=90){
-                   userDao.setUserConditionGaoduYiGan(uid);//高度易感
-               }
-               else if(average<=100){
-                   userDao.setUserConditionYiSi(uid);//疑似
-               }
-
+                Integer average= null;//求平均
+                try {
+                    average = sum/userReportList.size();
+                    if(average<21){
+                        userDao.setUserConditionWuFengXian(uid);//无风险
+                    }
+                    else if(average<70){
+                        userDao.setUserConditionYiGan(uid);//易感
+                    }
+                    else if(average<=90){
+                        userDao.setUserConditionGaoduYiGan(uid);//高度易感
+                    }
+                    else if(average<=100){
+                        userDao.setUserConditionYiSi(uid);//疑似
+                    }
+                } catch (ArithmeticException e) {
+                    e.printStackTrace();
+                }
             }
             n+=1;//新一轮
         }
