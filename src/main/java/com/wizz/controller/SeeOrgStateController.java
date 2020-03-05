@@ -23,7 +23,6 @@ public class SeeOrgStateController {//按组织查看疫情信息
     @ResponseBody
     @RequestMapping(path = "user/seeorgstate/", method = RequestMethod.POST)
     public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgname") String orgid){
-        seeStateService.calculate();//计算易感指数
         List<User> illUsers =seeStateService.getIllUser(orggrade,orgid);//确诊人数
         List<User> SuspectedUsers=seeStateService.getSuspectedUser(orggrade,orgid);//疑似患者
         List<User> HdangerUsers=seeStateService.getHdangerUser(orggrade,orgid);//高度易感
