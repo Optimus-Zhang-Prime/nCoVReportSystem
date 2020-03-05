@@ -20,6 +20,15 @@ public class DataBaseProperties {
     private String databaseQuery;
     private String databaseAdd;
     private String cloudFunction;
+    private String databaseCount;
+
+    public String getDatabaseCount() {
+        return databaseCount;
+    }
+
+    public void setDatabaseCount(String databaseCount) {
+        this.databaseCount = databaseCount;
+    }
 
     public String getCloudFunction() {
         return cloudFunction;

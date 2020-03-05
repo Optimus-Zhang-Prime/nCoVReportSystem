@@ -1,6 +1,8 @@
 package com.wizz.utils;
 import com.wizz.dao.ReportDao;
 import com.wizz.dao.UserDao;
+import com.wizz.dao.impl.ReportDaoImpl;
+import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.entity.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,9 +17,9 @@ public class UserStateScheduler{
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
-    ReportDao reportDao;
+    ReportDaoImpl reportDao;
     @Autowired
-    UserDao userDao;
+    UserDaoImpl userDao;
 
     //每天晚上18点05执行（为Application类添加@EnableScheduling注释后启动）
     @Scheduled(cron = "0 05 18 ? * *")
@@ -29,25 +31,25 @@ public class UserStateScheduler{
         Integer account = userDao.getUserAccount();//获取当前用户数量
         int n=1;
         while (n*900<account){//为满足数据库一千条的限制，一次取900
-            List<String> userIDList=UserDao.getUserid(n);//分页取用户id列表
+            List<String> userIDList=userDao.getUserid(n);//分页取用户id列表
             for (String uid:userIDList){//每个用户执行一次
-               List<Report> userReportList=getReportByUserId(uid);//该用户所有汇报
+               List<Report> userReportList=reportDao.getReportByUserId(uid);//该用户所有汇报
                int sum=0;
                for(Report report:userReportList){
-                   sum+=report.index;//对易感指数求和
+                   sum+=report.getCovIndex();//对易感指数求和
                }
                Integer average=sum/userReportList.size();//求平均
                if(average<21){
-                   UserDao.setUserConditionWuFengXian(uid);//无风险
+                   userDao.setUserConditionWuFengXian(uid);//无风险
                }
                else if(average<70){
-                   UserDao.setUserConditionYiGan(uid);//易感
+                   userDao.setUserConditionYiGan(uid);//易感
                }
                else if(average<=90){
-                   UserDao.setUserConditionGaoduYiGan(uid);//高度易感
+                   userDao.setUserConditionGaoduYiGan(uid);//高度易感
                }
                else if(average<=100){
-                   UserDao.setUserConditionYiSi(uid);//疑似
+                   userDao.setUserConditionYiSi(uid);//疑似
                }
 
             }

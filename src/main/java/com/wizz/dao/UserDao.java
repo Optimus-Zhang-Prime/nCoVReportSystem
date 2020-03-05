@@ -3,6 +3,7 @@ package com.wizz.dao;
 
 import com.wizz.entity.User;
 
+import java.util.List;
 
 
 public interface UserDao {
@@ -15,4 +16,10 @@ public interface UserDao {
     void setUserIndex90(String id);//将该用户的易感指数设为90（后来改成91了）
     void setUserIndex50(String id);//将该用户的易感指数设为50
     void setUserIndex75(String id);//将该用户的易感指数设为75
+    Integer getUserAccount (); // 获取用户数量
+    List<String> getUserid(Integer n);
+    void setUserConditionWuFengXian (String uid);
+    void setUserConditionYiGan(String uid);
+    void setUserConditionGaoduYiGan(String uid);
+    void setUserConditionYiSi(String uid);
 }

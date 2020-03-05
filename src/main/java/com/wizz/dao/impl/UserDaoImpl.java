@@ -2,16 +2,23 @@ package com.wizz.dao.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.wizz.dao.UserDao;
+import com.wizz.entity.FinalStatus;
+import com.wizz.entity.Project;
+import com.wizz.entity.Report;
 import com.wizz.entity.User;
 import com.wizz.entity.jsonReturn.QueryReturn;
 import com.wizz.entity.jsonReturn.UpdateReturn;
 import com.wizz.exception.DbErrorException;
 import com.wizz.property.DataBaseProperties;
+import com.wizz.utils.DataBasePageUtils;
+import com.wizz.utils.DataBaseUtils;
 import com.wizz.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +33,10 @@ public class UserDaoImpl implements UserDao {
     private DataBaseProperties dataBaseProperties;
     @Autowired
     private TokenUtils tokenUtils;
+    @Autowired
+    DataBaseUtils dataBaseUtils;
+    @Autowired
+    DataBasePageUtils dataBasePageUtils;
     RestTemplate restTemplate = new RestTemplate();
     @Override
     public User getUserById(String id) {
@@ -113,8 +124,51 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public void setUserConditionWuFengXian(String uid) {
+        dataBaseUtils.updateData("db.collection('user-1').where({_openid: '%s'}).update({data:{finalStatus: '%s'}})",uid, FinalStatus.WUFENGXIAN.toString());
+    }
 
+    @Override
+    public void setUserConditionYiGan(String uid) {
+        dataBaseUtils.updateData("db.collection('user-1').where({_openid: '%s'}).update({data:{finalStatus: '%s'}})",uid,FinalStatus.YIGAN.toString());
+    }
 
+    @Override
+    public void setUserConditionGaoduYiGan(String uid) {
+        dataBaseUtils.updateData("db.collection('user-1').where({_openid: '%s'}).update({data:{finalStatus: '%s'}})",uid,FinalStatus.GAODUYIGAN.toString());
+    }
+
+    @Override
+    public void setUserConditionYiSi(String uid) {
+        dataBaseUtils.updateData("db.collection('user-1').where({_openid: '%s'}).update({data:{finalStatus: '%s'}})",uid,FinalStatus.YISIGANRAN.toString());
+    }
+
+    @Override
+    public List<String> getUserid(Integer n) {
+        Integer skip = dataBasePageUtils.getSkip(n);
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').skip(%d).limit(50).field({_openid: true}).get()", skip);
+        List<String> strOutput = queryReturn.getData();
+
+        String errcode = queryReturn.getErrcode();
+
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException("");
+        }
+        List<String> tempList = new ArrayList<>();
+        // 转换包装
+        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+            String temp = iterator.next();
+            User temp1 = JSON.parseObject(temp, User.class);
+            tempList.add(temp1.get_openid());
+        }
+        return tempList;
+    }
+
+    @Override
+    public Integer getUserAccount() {
+         return dataBaseUtils.getCount("db.collection('user-1').count()","");
+    }
 
 
 //    @Override

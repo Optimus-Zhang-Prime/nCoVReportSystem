@@ -2,6 +2,7 @@ package com.wizz.dao.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.wizz.dao.UserStateDao;
+import com.wizz.entity.FinalStatus;
 import com.wizz.entity.User;
 import com.wizz.entity.jsonReturn.QueryReturn;
 import com.wizz.exception.DbErrorException;
@@ -64,17 +65,17 @@ public class UserStateDaoImpl implements UserStateDao {
 
     @Override
     public List<User> getClassASuspectedUser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(90), _.lte(100)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classA: '%s'}).get()", FinalStatus.YISIGANRAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassBSuspectedUser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(90), _.lte(100)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classB: '%s'}).get()", FinalStatus.YISIGANRAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassCSuspectedUser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(90), _.lte(100)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s'}).get()", FinalStatus.YISIGANRAN.toString(),orgid);
     }
 
 
@@ -82,48 +83,48 @@ public class UserStateDaoImpl implements UserStateDao {
 //    @Select({"select * from user where (index BETWEEN 70 AND 100) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassAHdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(89)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classA: '%s'}).get()", FinalStatus.GAODUYIGAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassBHdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(89)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classB: '%s'}).get()", FinalStatus.GAODUYIGAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassCHdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(70), _.lte(89)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s'}).get()", FinalStatus.GAODUYIGAN.toString(),orgid);
     }
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassAMdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(21), _.lte(69)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classA: '%s'}).get()", FinalStatus.YIGAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassBMdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(21), _.lte(69)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classB: '%s'}).get()", FinalStatus.YIGAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassCMdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(21), _.lte(69)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s'}).get()", FinalStatus.YIGAN.toString(),orgid);
     }
 
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     @Override
     public List<User> getClassALdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(0), _.lte(20)),classA: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classA: '%s'}).get()", FinalStatus.WUFENGXIAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassBLdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(0), _.lte(20)),classB: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classB: '%s'}).get()", FinalStatus.WUFENGXIAN.toString(),orgid);
     }
 
     @Override
     public List<User> getClassCLdangeruser(String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({index: _.and(_.gte(0), _.lte(20)),classC: '%s'}).get()", orgid);
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s'}).get()", FinalStatus.WUFENGXIAN.toString(),orgid);
     }
 //    @Select({"select * from user where classA=#{orgid}" })
     @Override

@@ -1,10 +1,7 @@
 package com.wizz.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.wizz.entity.jsonReturn.AddReturn;
-import com.wizz.entity.jsonReturn.DeleteReturn;
-import com.wizz.entity.jsonReturn.QueryReturn;
-import com.wizz.entity.jsonReturn.UpdateReturn;
+import com.wizz.entity.jsonReturn.*;
 import com.wizz.exception.DbErrorException;
 import com.wizz.property.DataBaseProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +74,7 @@ public class DataBaseUtils {
             throw new DbErrorException(errmsg);
         }
     }
+    //删除
     public void deleteData (String query,Object ...args) {
         String access_token = tokenUtils.getAccessToken();
         String queryString = dataBaseProperties.getDatabaseDelete()  + access_token;
@@ -93,5 +91,24 @@ public class DataBaseUtils {
         if (!"0".equals(errcode)) {
             throw new DbErrorException(errmsg);
         }
+    }
+    // 获得集合数量
+    public Integer getCount (String query,Object ... args) {
+        String access_token = tokenUtils.getAccessToken();
+        String queryString = dataBaseProperties.getDatabaseCount()  + access_token;
+        Map<String,Object> map = dataBaseProperties.getDbBody();
+        // 组织post body
+        map.put("query",String.format(query,args));
+        // json返回值
+        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+        // json对象映射
+        CountReturn countReturn = JSON.parseObject(rawOutput, CountReturn.class);
+        // 获得errcode
+        String errcode = countReturn.getErrcode();
+        String errmsg = countReturn.getErrmsg();
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errmsg);
+        }
+        return countReturn.getCount();
     }
 }

@@ -41,6 +41,16 @@ public class User {
     private String department;
     private Boolean haveHouse;
 
+    public String getFinalStatus() {
+        return finalStatus;
+    }
+
+    public void setFinalStatus(String finalStatus) {
+        this.finalStatus = finalStatus;
+    }
+
+    private String finalStatus; // 14天总结的身体状况
+
     public Integer getPushTimes() {
         return pushTimes;
     }
@@ -94,10 +104,11 @@ public class User {
                 ", parentPhone='" + parentPhone + '\'' +
                 ", department='" + department + '\'' +
                 ", haveHouse=" + haveHouse +
+                ", finalStatus='" + finalStatus + '\'' +
                 '}';
     }
 
-    public User(Integer pushTimes, Boolean isPushed, String password, String _id, String _openid, String phone, String name, String number, Integer index, Boolean gender, Boolean sick, String classA, String classB, String classC, String createTime, String userType, String status, ArrayList<IspInfo> ispInfo, Boolean inSchool, String idNumber, String province, String city, String town, String location, String counselor, String school, String clas, String dormitory, String parentPhone, String department, Boolean haveHouse) {
+    public User(Integer pushTimes, Boolean isPushed, String password, String _id, String _openid, String phone, String name, String number, Integer index, Boolean gender, Boolean sick, String classA, String classB, String classC, String createTime, String userType, String status, ArrayList<IspInfo> ispInfo, Boolean inSchool, String idNumber, String province, String city, String town, String location, String counselor, String school, String clas, String dormitory, String parentPhone, String department, Boolean haveHouse, String finalStatus) {
         this.pushTimes = pushTimes;
         this.isPushed = isPushed;
         this.password = password;
@@ -129,6 +140,7 @@ public class User {
         this.parentPhone = parentPhone;
         this.department = department;
         this.haveHouse = haveHouse;
+        this.finalStatus = finalStatus;
     }
 
     public String getPassword() {
