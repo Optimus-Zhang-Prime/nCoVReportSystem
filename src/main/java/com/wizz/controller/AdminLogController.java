@@ -24,33 +24,49 @@ public class AdminLogController {
 
     @ResponseBody//发送验证码
     @RequestMapping(path = "yanzheng/", method = RequestMethod.POST)
-    public String yanZheng(@RequestParam("tel") String tel) {
+    public Integer yanZheng(@RequestParam("tel") String tel,HttpSession httpSession) {
         try {
             //随机生成验证码
             String code = String.valueOf(new Random().nextInt(9999));
             SendMess.sendCode(tel,code);
             //将验证码存到session中,同时存入创建时间
             //以json存放，这里使用的是阿里的fastjson
-            //JSONObject json = new JSONObject();
-            //json.put("memPhone", tel);
-            //json.put("code", code);
-            //json.put("createTime", System.currentTimeMillis());
+            JSONObject json = new JSONObject();
+            json.put("tel", tel);
+            json.put("code", code);
             // 将认证码存入SESSION
-            //httpSession.setAttribute("code", json);
-            return code;
+            httpSession.setAttribute("code", json);
+            return 1000;
         } catch (Exception e) {
             e.printStackTrace();
-            return "10000";
+            return 1006;
         }
     }
 
     @ResponseBody//获取用户管理的所有组织
     @RequestMapping(path = "getorgbyadmin/", method = RequestMethod.POST)
-    public JSONObject getOrgByUser(@RequestParam("tel") String tel) {
-        List<Org> orgList=adminlogService.getOrgByAdmin(tel);
+    public JSONObject getOrgByUser(@RequestParam("tel") String tel,@RequestParam("code") String code,HttpSession httpSession,HttpServletResponse response) {
+        JSONObject userCode = (JSONObject)httpSession.getAttribute("code");
+        String acode=userCode.get("code").toString();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("orgList", orgList);
-        return jsonObject;
+        if(code.equals(acode)){
+            Cookie cookie = new Cookie("name", tel);
+            response.addCookie(cookie);
+            jsonObject.put("code", 1000);
+            try {
+                List<Org> orgList = adminlogService.getOrgByAdmin(tel);
+                jsonObject.put("orgList", orgList);
+            }
+            catch (Exception e){
+                jsonObject.put("orgList", "");
+            }
+            return jsonObject;
+        }
+        else{
+            jsonObject.put("code", 1006);
+            return jsonObject;
+        }
+//
     }
 //    @ResponseBody//登录
 //    @RequestMapping(path = "login/", method = RequestMethod.POST)
