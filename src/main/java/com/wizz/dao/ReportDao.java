@@ -3,6 +3,7 @@ package com.wizz.dao;
 
 import com.wizz.entity.Location;
 import com.wizz.entity.Report;
+import com.wizz.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -31,4 +32,5 @@ public interface ReportDao {//每日汇报信息
      //修改指定id的report,多了交通班次参数
      void changeReport2(String reportId,String Address,Boolean symptom,String status,String subversion,String travelNumber);
 //     List<Location> getUserLocation (String id);
+
 }

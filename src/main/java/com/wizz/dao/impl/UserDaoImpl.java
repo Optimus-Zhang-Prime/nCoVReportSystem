@@ -164,6 +164,32 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<User> UserWithoutReport(Integer orggrade, String orgid) {
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').limit(1000).where({isPushed: %s}).get()", false);
+
+        List<String> strOutput = queryReturn.getData();
+
+        String errcode = queryReturn.getErrcode();
+
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errcode);
+        }
+        List<User> tempList = new ArrayList<>();
+        // 转换包装
+        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
+            String temp = iterator.next();
+            User temp1 = JSON.parseObject(temp, User.class);
+            tempList.add(temp1);
+        }
+        return tempList;
+    }
+
+    @Override
+    public void setUserTel(String openid, String tel) {
+        dataBaseUtils.updateData("db.collection('user-1').where({_openid: '%s'}).update({data:{phone: '%s'}})",openid,tel);
+    }
+
+    @Override
     public List<String> getUserid(Integer n) {
         Integer skip = dataBasePageUtils.getSkip(n);
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').skip(%d).limit(50).field({_openid: true}).get()", skip);
