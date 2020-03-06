@@ -22,13 +22,13 @@ public class CloudFunctionUtils {
     @Autowired
     private TokenUtils tokenUtils;
     private RestTemplate restTemplate = new RestTemplate();
-    public String InvokeFunction (String func,Map<String,String>argMap) {
+    public String InvokeFunction (String func,Map<String,Object>argMap) {
         String token = tokenUtils.getAccessToken();
         String Rawurl = dataBaseProperties.getCloudFunction() + token;
         String url = String.format(Rawurl+"&env=%s&name=%s",dataBaseProperties.getDbBody().get("env"),func);
-        Map<String,String> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         map.putAll(argMap);
-        System.out.println(url);
+//        System.out.println(url);
         CloudFunctionReturn cloudFunctionReturn = restTemplate.postForObject(url, map, CloudFunctionReturn.class);
         String errcode = cloudFunctionReturn.getErrcode();
         // 这里实际上可以使用注解进行校验  参考codesheep

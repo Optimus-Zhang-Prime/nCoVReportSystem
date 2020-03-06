@@ -22,4 +22,5 @@ public interface UserDao {
     void setUserConditionYiGan(String uid);
     void setUserConditionGaoduYiGan(String uid);
     void setUserConditionYiSi(String uid);
+    void setUserIndex(String id,Integer index); // 设置用户的易感指数
 }

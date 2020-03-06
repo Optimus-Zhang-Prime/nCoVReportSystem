@@ -40,7 +40,9 @@ public class UserStateScheduler{
                }
                 Integer average= null;//求平均
                 try {
-                    average = sum/userReportList.size();
+                    average = sum/userReportList.size(); // 得到该用户的特定易感指数
+                    // 存储该用户的平均易感指数到user-1表中的index属性中
+                    userDao.setUserIndex(uid,average);
                     if(average<21){
                         userDao.setUserConditionWuFengXian(uid);//无风险
                     }

@@ -89,7 +89,7 @@ public class OrgDaoImpl implements OrgDao {
     }
     @Override
     public void deleteAdmin(String orgID, String tel) {
-        Map<String,String> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         map.put("orgid",orgID);
         map.put("tel",tel);
         String listDelete = cloudFunctionUtils.InvokeFunction("listDelete", map);

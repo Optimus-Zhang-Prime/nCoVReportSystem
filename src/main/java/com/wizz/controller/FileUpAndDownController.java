@@ -1,6 +1,9 @@
 package com.wizz.controller;
 
+import com.wizz.entity.ExcelContent;
+import com.wizz.entity.jsonReturn.ReportsByDate;
 import com.wizz.property.FileProperties;
+import com.wizz.service.SeeStateService;
 import com.wizz.utils.ExcelParseUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -21,6 +24,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @descrip：资源文件的上传与下载
@@ -35,6 +40,8 @@ public class FileUpAndDownController {
     FileProperties fileProperties;
     @Autowired
     ExcelParseUtil excelParseUtil;
+    @Autowired
+    SeeStateService seeStateService;
     @PostMapping("/uploadSheet")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
@@ -58,10 +65,22 @@ public class FileUpAndDownController {
         }
         return null;
     }
-    //
+    //还需要一个时间参数，期待的时间参数是月份+日即可
     @RequestMapping(path = "excel/",method = RequestMethod.POST)
-    public void exportExcel(@RequestParam("orggrade")Integer orggrade, @RequestParam("orgname") String orgid,HttpServletRequest request,HttpServletResponse response) {
-
-        excelParseUtil.writeExcel("学生信息.xlsx",response);
+    public void exportExcel(@RequestParam("orggrade")Integer orggrade, @RequestParam("orgname") String orgid,@RequestParam("month") String month, @RequestParam("day") String day, HttpServletRequest request,HttpServletResponse response) {
+        List<ReportsByDate> reports = seeStateService.getReportsByDate(orggrade, orgid, month, day);
+        String fileName = String.format("%s-%s-%s",orgid,month,day);
+        List<String> columnNames = new ArrayList<>();
+        columnNames.add("日期");
+        columnNames.add("姓名");
+        columnNames.add("学号");
+        columnNames.add("手机号");
+        columnNames.add("地理位置");
+        columnNames.add("身体状况");
+        columnNames.add("接触情况");
+        columnNames.add("就医记录");
+        String workBookName = month+"月"+day+"日"+"打卡信息";
+        ExcelContent<List<ReportsByDate>> excel = new ExcelContent(fileName,8,columnNames,workBookName,reports);
+        excelParseUtil.writeExcel(excel,response);
     }
 }

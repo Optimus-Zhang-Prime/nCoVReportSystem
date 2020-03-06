@@ -145,6 +145,25 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void setUserIndex(String id, Integer index) {
+        // 获取必须的access_token
+        String access_token = tokenUtils.getAccessToken();
+        String queryString = dataBaseProperties.getDatabaseUpdate()  + access_token;
+        Map<String,Object> map = dataBaseProperties.getDbBody();
+        // 组织post body
+        map.put("query",String.format("db.collection('user-1').where({_openid: '%s'}).update({data:{index: %d}})",id,index));
+        // json返回值
+        String rawOutput = restTemplate.postForObject(queryString,map,String.class);
+        // json对象映射
+        UpdateReturn updateReturn = JSON.parseObject(rawOutput, UpdateReturn.class);
+        // 获得errcode
+        String errcode = updateReturn.getErrcode();
+        if (!"0".equals(errcode)) {
+            throw new DbErrorException(errcode);
+        }
+    }
+
+    @Override
     public List<String> getUserid(Integer n) {
         Integer skip = dataBasePageUtils.getSkip(n);
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').skip(%d).limit(50).field({_openid: true}).get()", skip);

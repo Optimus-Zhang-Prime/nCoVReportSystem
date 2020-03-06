@@ -1,5 +1,7 @@
 package com.wizz.utils;
 
+import com.wizz.entity.ExcelContent;
+import com.wizz.entity.jsonReturn.ReportsByDate;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -11,10 +13,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.List;
 
 /**
  * @descrip：解析Excel的工具类
@@ -83,23 +83,28 @@ public class ExcelParseUtil {
         }
 
     }
-    public void writeExcel(String fileName, HttpServletResponse httpServletResponse){
+    public void writeExcel(ExcelContent<List<ReportsByDate>> excelContent, HttpServletResponse httpServletResponse){
         HSSFWorkbook wb = new HSSFWorkbook();
         //创建一个工作本
-        HSSFSheet sheet = wb.createSheet("成员信息");
-        setTitle(wb,sheet);
-        for (int i = 0; i < 100; i++) {
+        HSSFSheet sheet = wb.createSheet(excelContent.getWorkBookName());
+        //设置表头
+        setTitle(excelContent,wb,sheet);
+        for (int i = 0; i < excelContent.getContent().size(); i++) {
             // 创建HSSFRow对象
             HSSFRow row = sheet.createRow(i + 1);
             // 创建HSSFCell对象 设置单元格的值
-            row.createCell(0).setCellValue("xx" + i);
-            row.createCell(1).setCellValue(i);
-            row.createCell(2).setCellValue("xx" + i);
-            row.createCell(3).setCellValue("xx" + i);
+            row.createCell(0).setCellValue(excelContent.getContent().get(i).getCreateTime_str());
+            row.createCell(1).setCellValue(excelContent.getContent().get(i).getUser().get(0).getName());
+            row.createCell(2).setCellValue(excelContent.getContent().get(i).getUser().get(0).getNumber());
+            row.createCell(3).setCellValue(excelContent.getContent().get(i).getUser().get(0).getPhone());
+            row.createCell(4).setCellValue(excelContent.getContent().get(i).getAddress());
+            row.createCell(5).setCellValue(excelContent.getContent().get(i).getSymptom());
+            row.createCell(6).setCellValue(excelContent.getContent().get(i).getStatus());
+            row.createCell(7).setCellValue(excelContent.getContent().get(i).getSubversionStatus());
         }
         // 清空response
         httpServletResponse.reset();
-        httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ fileName);
+        httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ excelContent.getFileNames());
         httpServletResponse.setContentType("application/vnd.ms-excel;charset=gb2312");
 //        response.setHeader("Content-Disposition", "attchement;filename=" + new String("人员信息.xls".getBytes("gb2312"), "ISO8859-1"));
 //        response.setContentType("application/msexcel");
@@ -112,35 +117,24 @@ public class ExcelParseUtil {
             e.printStackTrace();
         }
     }
-    private void setTitle(HSSFWorkbook workbook, HSSFSheet sheet){
+    private void setTitle(ExcelContent<List<ReportsByDate>> excelContent,HSSFWorkbook workbook, HSSFSheet sheet){
+        // 创建第一行
         HSSFRow row = sheet.createRow(0);
         //设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
-        sheet.setColumnWidth(0, 10*256);
-        sheet.setColumnWidth(1, 20*256);
-        sheet.setColumnWidth(2, 20*256);
-        sheet.setColumnWidth(3, 100*256);
-
+        for (int i = 0; i <excelContent.getColumnNumber(); i++) {
+            sheet.setColumnWidth(i, 50*256);
+        }
         //设置为居中加粗
         HSSFCellStyle style = workbook.createCellStyle();
         HSSFFont font = workbook.createFont();
         font.setBold(true);
         style.setFont(font);
-
+        // 设置第一行的单元块
         HSSFCell cell;
-        cell = row.createCell(0);
-        cell.setCellValue("序号");
-        cell.setCellStyle(style);
-
-        cell = row.createCell(1);
-        cell.setCellValue("单选");
-        cell.setCellStyle(style);
-
-        cell = row.createCell(2);
-        cell.setCellValue("多选");
-        cell.setCellStyle(style);
-
-        cell = row.createCell(3);
-        cell.setCellValue("简答");
-        cell.setCellStyle(style);
+        for (int i = 0;i < excelContent.getColumnNumber(); i++) {
+            cell = row.createCell(i);
+            cell.setCellValue(excelContent.getColumnName().get(i));
+            cell.setCellStyle(style);
+        }
     }
 }

@@ -1,16 +1,23 @@
 package com.wizz.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.wizz.dao.impl.OrgDaoImpl;
 import com.wizz.dao.impl.ReportDaoImpl;
 import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.dao.impl.UserStateDaoImpl;
 import com.wizz.entity.Org;
+import com.wizz.entity.Report;
 import com.wizz.entity.User;
+import com.wizz.entity.jsonReturn.ReportsByDate;
+import com.wizz.utils.CloudFunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SeeStateService {//按组织查看疫情信息
@@ -23,6 +30,8 @@ public class SeeStateService {//按组织查看疫情信息
     ReportDaoImpl reportDao;
     @Autowired
     OrgDaoImpl orgDao;
+    @Autowired
+    CloudFunctionUtils cloudFunctionUtils;
 
     public List<User> getIllUser(Integer orggrade, String orgid) {
         if (orggrade == 1) {
@@ -108,7 +117,29 @@ public class SeeStateService {//按组织查看疫情信息
         return orgList;
     }
     //导出组织内用户打卡消息
-    // 需要注意的问题就是 组织内用户会有很多，全部导出其全部的数据
+    // 注意参数中的orgid同样有特殊要求
+    public List<ReportsByDate> getReportsByDate (Integer orggrade, String orgid, String month, String day) {
+        // 使用云函数的方式获得数据
+        // 参数：
+        // month
+        // day
+        // orggrade
+        // orgid
+        Map<String,Object> map = new HashMap<>();
+        map.put("orggrade",orggrade);
+        map.put("orgid",orgid);
+        map.put("month",month);
+        map.put("day",day);
+        String report = cloudFunctionUtils.InvokeFunction("getSpecificReport", map);
+        List lists = JSON.parseObject(report, List.class);
+        List<ReportsByDate> reportList= new ArrayList<>();
+        for ( Object list: lists) {
+            String s = JSON.toJSONString(list);
+            ReportsByDate reports = JSON.parseObject(s, ReportsByDate.class);
+            reportList.add(reports);
+        }
+        return reportList;
+    }
 }
 
 
