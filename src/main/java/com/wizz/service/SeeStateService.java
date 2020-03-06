@@ -14,6 +14,8 @@ import com.wizz.utils.CloudFunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,6 +138,12 @@ public class SeeStateService {//按组织查看疫情信息
         for ( Object list: lists) {
             String s = JSON.toJSONString(list);
             ReportsByDate reports = JSON.parseObject(s, ReportsByDate.class);
+            if(reports.getSymptom()) {
+                reports.setSymptoms("体温高于37.3℃");
+            } else {
+                reports.setSymptoms("体温低于37.3℃，且无不适症状");
+            }
+            reports.setCreateTime_str(reports.getCreateTime_str().split("T")[0]);
             reportList.add(reports);
         }
         return reportList;

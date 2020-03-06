@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -98,17 +99,19 @@ public class ExcelParseUtil {
             row.createCell(2).setCellValue(excelContent.getContent().get(i).getUser().get(0).getNumber());
             row.createCell(3).setCellValue(excelContent.getContent().get(i).getUser().get(0).getPhone());
             row.createCell(4).setCellValue(excelContent.getContent().get(i).getAddress());
-            row.createCell(5).setCellValue(excelContent.getContent().get(i).getSymptom());
+            row.createCell(5).setCellValue(excelContent.getContent().get(i).getSymptoms());
             row.createCell(6).setCellValue(excelContent.getContent().get(i).getStatus());
             row.createCell(7).setCellValue(excelContent.getContent().get(i).getSubversionStatus());
         }
-        // 清空response
-        httpServletResponse.reset();
-        httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ excelContent.getFileNames());
-        httpServletResponse.setContentType("application/vnd.ms-excel;charset=gb2312");
+
+
 //        response.setHeader("Content-Disposition", "attchement;filename=" + new String("人员信息.xls".getBytes("gb2312"), "ISO8859-1"));
 //        response.setContentType("application/msexcel");
         try {
+            // 清空response
+            httpServletResponse.reset();
+            httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ new String(excelContent.getFileNames().getBytes("UTF-8"),"ISO-8859-1"));
+            httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
             OutputStream os = new BufferedOutputStream(httpServletResponse.getOutputStream());
             wb.write(os);
             os.flush();

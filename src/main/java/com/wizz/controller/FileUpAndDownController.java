@@ -66,10 +66,11 @@ public class FileUpAndDownController {
         return null;
     }
     //还需要一个时间参数，期待的时间参数是月份+日即可
+    // 注意参数的格式！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
     @RequestMapping(path = "excel/",method = RequestMethod.POST)
     public void exportExcel(@RequestParam("orggrade")Integer orggrade, @RequestParam("orgname") String orgid,@RequestParam("month") String month, @RequestParam("day") String day, HttpServletRequest request,HttpServletResponse response) {
         List<ReportsByDate> reports = seeStateService.getReportsByDate(orggrade, orgid, month, day);
-        String fileName = String.format("%s-%s-%s",orgid,month,day);
+        String fileName = String.format("%s-%s-%s.xlsx",orgid,month,day);
         List<String> columnNames = new ArrayList<>();
         columnNames.add("日期");
         columnNames.add("姓名");

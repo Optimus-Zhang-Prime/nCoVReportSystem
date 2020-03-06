@@ -19,8 +19,11 @@ public class ReportsByDate {
     private String status;
     private String subversionStatus;
     private Boolean isSymptom;
+    private String symptoms;
     private Integer month;
     private List<User> user;
+
+
 
     public String get_id() {
         return _id;
@@ -105,7 +108,15 @@ public class ReportsByDate {
     public ReportsByDate() {
     }
 
-    public ReportsByDate(String _id, String _openid, String address, String createTime_str, Integer dayOfMonth, String status, String subversionStatus, Boolean isSymptom, Integer month, List<User> user) {
+    public String getSymptoms() {
+        return symptoms;
+    }
+
+    public void setSymptoms(String symptoms) {
+        this.symptoms = symptoms;
+    }
+
+    public ReportsByDate(String _id, String _openid, String address, String createTime_str, Integer dayOfMonth, String status, String subversionStatus, Boolean isSymptom, String symptoms, Integer month, List<User> user) {
         this._id = _id;
         this._openid = _openid;
         this.address = address;
@@ -114,6 +125,7 @@ public class ReportsByDate {
         this.status = status;
         this.subversionStatus = subversionStatus;
         this.isSymptom = isSymptom;
+        this.symptoms = symptoms;
         this.month = month;
         this.user = user;
     }
