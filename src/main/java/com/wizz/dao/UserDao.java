@@ -23,6 +23,6 @@ public interface UserDao {
     void setUserConditionGaoduYiGan(String uid);
     void setUserConditionYiSi(String uid);
     void setUserIndex(String id,Integer index); // 设置用户的易感指数
-    List<User> UserWithoutReport (Integer orggrade,String orgid);
+    List<User> UserWithoutReport (String orgfathername,Integer orggrade,String orgid);
     void setUserTel (String openid,String tel);
 }

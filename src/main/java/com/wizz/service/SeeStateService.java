@@ -1,21 +1,16 @@
 package com.wizz.service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.wizz.dao.impl.OrgDaoImpl;
 import com.wizz.dao.impl.ReportDaoImpl;
 import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.dao.impl.UserStateDaoImpl;
 import com.wizz.entity.Org;
-import com.wizz.entity.Report;
 import com.wizz.entity.User;
 import com.wizz.entity.jsonReturn.ReportsByDate;
 import com.wizz.utils.CloudFunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,71 +30,71 @@ public class SeeStateService {//按组织查看疫情信息
     @Autowired
     CloudFunctionUtils cloudFunctionUtils;
 
-    public List<User> getIllUser(Integer orggrade, String orgid) {
+    public List<User> getIllUser(Integer orggrade, String orgfathername,String orgname) {
         if (orggrade == 1) {
-            return userStateDao.getClassAilluser(orgid);//获取一级组织生病的学生
+            return userStateDao.getClassAilluser(orgname);//获取一级组织生病的学生
         } else if (orggrade == 2) {
-            return userStateDao.getClassBilluser(orgid);
+            return userStateDao.getClassBilluser(orgfathername,orgname);
         } else {
-            return userStateDao.getClassCilluser(orgid);
+            return userStateDao.getClassCilluser(orgfathername,orgname);
         }
 
     }
 
-    public List<User> getHdangerUser(Integer orggrade, String orgid) {
+    public List<User> getHdangerUser(Integer orggrade,String orgfathername, String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassAHdangeruser(orgid);//获取高度易感用户
         } else if (orggrade == 2) {
-            return userStateDao.getClassBHdangeruser(orgid);//
+            return userStateDao.getClassBHdangeruser(orgfathername,orgid);//
         } else {
-            return userStateDao.getClassCHdangeruser(orgid);
+            return userStateDao.getClassCHdangeruser(orgfathername,orgid);
         }
 
     }
 
-    public List<User> getMdangerUser(Integer orggrade, String orgid) {
+    public List<User> getMdangerUser(Integer orggrade,String orgfathername, String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassAMdangeruser(orgid);//获取易感用户
         }
         if (orggrade == 2) {
-            return userStateDao.getClassBMdangeruser(orgid);
+            return userStateDao.getClassBMdangeruser(orgfathername,orgid);
         } else {
-            return userStateDao.getClassCMdangeruser(orgid);
+            return userStateDao.getClassCMdangeruser(orgfathername,orgid);
         }
 
     }
 
-    public List<User> getLdangerUser(Integer orggrade, String orgid) {
+    public List<User> getLdangerUser(Integer orggrade,String orgfathername, String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassALdangeruser(orgid);//获取无风险用户
         }
         if (orggrade == 2) {
-            return userStateDao.getClassBLdangeruser(orgid);
+            return userStateDao.getClassBLdangeruser(orgfathername,orgid);
         } else {
-            return userStateDao.getClassCLdangeruser(orgid);
+            return userStateDao.getClassCLdangeruser(orgfathername,orgid);
         }
     }
-    public List<User> getSuspectedUser(Integer orggrade, String orgid) {
+    public List<User> getSuspectedUser(Integer orggrade, String orgfathername,String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassASuspectedUser(orgid);//获取疑似用户，90-100
         }
         if (orggrade == 2) {
-            return userStateDao.getClassBSuspectedUser(orgid);
+            return userStateDao.getClassBSuspectedUser(orgfathername,orgid);
         } else {
-            return userStateDao.getClassCSuspectedUser(orgid);
+            return userStateDao.getClassCSuspectedUser(orgfathername,orgid);
         }
     }
 
 
 
-    public List<User> getAllUser(Integer orggrade, String orgid,Integer page) {
+    public List<User> getAllUser(Integer orggrade,String orgfathername, String orgid,Integer page) {
         if (orggrade == 1) {
             return userStateDao.getClassAAllUser(orgid,page);//获取一级组织用户
         }
         if (orggrade == 2) {
-            return userStateDao.getClassBAllUser(orgid,page);//二级组织用户
+            return userStateDao.getClassBAllUser(orgfathername,orgid,page);//二级组织用户
         } else {
-            return userStateDao.getClassCAllUser(orgid,page);
+            return userStateDao.getClassCAllUser(orgfathername,orgid,page);
         }
     }
 
