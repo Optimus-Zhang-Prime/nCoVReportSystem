@@ -58,8 +58,8 @@ public class UserStateDaoImpl implements UserStateDao {
     }
 
     @Override
-    public List<User> getClassCilluser(String orgfathername,String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({sick: %s,classC: '%s',classB: '%s'}).get()", true, orgid,orgfathername);
+    public List<User> getClassCilluser(String orggrandfathername,String orgfathername,String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({sick: %s,classC: '%s',classB: '%s',classA: '%s'}).get()", true, orgid,orgfathername,orggrandfathername);
     }
 
 
@@ -74,8 +74,8 @@ public class UserStateDaoImpl implements UserStateDao {
     }
 
     @Override
-    public List<User> getClassCSuspectedUser(String orgfathername,String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s',classB:'%s'}).get()", FinalStatus.YISIGANRAN.toString(),orgid,orgfathername);
+    public List<User> getClassCSuspectedUser(String orggrandfathername,String orgfathername,String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s',classB:'%s',classA: '%s'}).get()", FinalStatus.YISIGANRAN.toString(),orgid,orgfathername,orggrandfathername);
     }
 
 
@@ -92,8 +92,8 @@ public class UserStateDaoImpl implements UserStateDao {
     }
 
     @Override
-    public List<User> getClassCHdangeruser(String orgfathername,String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s',classB: '%s'}).get()", FinalStatus.GAODUYIGAN.toString(),orgid,orgfathername);
+    public List<User> getClassCHdangeruser(String orggrandfathername,String orgfathername,String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s',classB: '%s',classA: '%s'}).get()", FinalStatus.GAODUYIGAN.toString(),orgid,orgfathername,orggrandfathername);
     }
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
     @Override
@@ -107,8 +107,8 @@ public class UserStateDaoImpl implements UserStateDao {
     }
 
     @Override
-    public List<User> getClassCMdangeruser(String orgfathername,String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s',classB: '%s'}).get()", FinalStatus.YIGAN.toString(),orgid,orgfathername);
+    public List<User> getClassCMdangeruser(String orggrandfathername,String orgfathername,String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s',classB: '%s',classA: '%s'}).get()", FinalStatus.YIGAN.toString(),orgid,orgfathername,orggrandfathername);
     }
 
 //    @Select({"select * from user where (index BETWEEN 21 AND 69) AND (classA=#{orgid})"})
@@ -123,8 +123,8 @@ public class UserStateDaoImpl implements UserStateDao {
     }
 
     @Override
-    public List<User> getClassCLdangeruser(String orgfathername,String orgid) {
-        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s', classB: '%s'}).get()", FinalStatus.WUFENGXIAN.toString(),orgid,orgfathername);
+    public List<User> getClassCLdangeruser(String orggrandfathername,String orgfathername,String orgid) {
+        return getData("db.collection('user-1').limit(1000).where({finalStatus: '%s',classC: '%s', classB: '%s',classA: '%s'}).get()", FinalStatus.WUFENGXIAN.toString(),orgid,orgfathername,orggrandfathername);
     }
 //    @Select({"select * from user where classA=#{orgid}" })
     @Override
@@ -140,8 +140,8 @@ public class UserStateDaoImpl implements UserStateDao {
     }
 
     @Override
-    public List<User> getClassCAllUser(String orgfathername,String orgid,Integer page) {
+    public List<User> getClassCAllUser(String orggrandfathername,String orgfathername,String orgid,Integer page) {
         Integer skip = dataBasePageUtils.getSkip(page);
-        return getData("db.collection('user-1').skip(%d).limit(50).where({classC: '%s',classB: '%s'}).get()", skip,orgid,orgfathername);
+        return getData("db.collection('user-1').skip(%d).limit(50).where({classC: '%s',classB: '%s',classA: '%s'}).get()", skip,orgid,orgfathername,orggrandfathername);
     }
 }

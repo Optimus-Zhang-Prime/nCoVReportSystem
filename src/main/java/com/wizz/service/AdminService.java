@@ -35,10 +35,7 @@ public class AdminService {
 
     public String showProject(){
         List<Project> allProject=projectDao.getAll();
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("allProject", allProject);
         String jsonObject = JSON.toJSONString(allProject);
-//        System.out.println(jsonObject);
         return jsonObject;
     }
 

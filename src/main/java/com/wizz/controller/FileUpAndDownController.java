@@ -5,9 +5,6 @@ import com.wizz.entity.jsonReturn.ReportsByDate;
 import com.wizz.property.FileProperties;
 import com.wizz.service.SeeStateService;
 import com.wizz.utils.ExcelParseUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,6 +31,7 @@ import java.util.List;
 
 @Controller
 public class FileUpAndDownController {
+    // 文件上传的功能暂时不用
     // 上传文件的存储路径
     @Autowired
     FileProperties fileProperties;
@@ -43,33 +40,28 @@ public class FileUpAndDownController {
     @Autowired
     SeeStateService seeStateService;
     @PostMapping("/uploadSheet")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    public String singleFileUpload(@RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes) {
         // 上传文件为空
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return null;
         }
-
         try {
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
             Path path = Paths.get(fileProperties.getPath() + file.getOriginalFilename());
             Files.write(path, bytes);
 
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
+            redirectAttributes.addFlashAttribute("message","You successfully uploaded '" + file.getOriginalFilename() + "'");
         } catch (IOException  e) {
             e.printStackTrace();
         }
         return null;
     }
     //还需要一个时间参数，期待的时间参数是月份+日即可
-    // 注意参数的格式！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
     @RequestMapping(path = "excel/",method = RequestMethod.POST)
-    public void exportExcel(@RequestParam("orggrade")Integer orggrade, @RequestParam("orgname") String orgid,@RequestParam("month") String month, @RequestParam("day") String day, HttpServletRequest request,HttpServletResponse response) {
-        List<ReportsByDate> reports = seeStateService.getReportsByDate(orggrade, orgid, month, day);
+    public void exportExcel(@RequestParam("orggrade")Integer orggrade, @RequestParam("orggrandfathername") String orggrandfathername,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname") String orgid,@RequestParam("month") String month, @RequestParam("day") String day, HttpServletRequest request,HttpServletResponse response) {
+        List<ReportsByDate> reports = seeStateService.getReportsByDate(orggrandfathername,orgfathername,orggrade, orgid, month, day);
         String fileName = String.format("%s-%s-%s.xlsx",orgid,month,day);
         List<String> columnNames = new ArrayList<>();
         columnNames.add("日期");

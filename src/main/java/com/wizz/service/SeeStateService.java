@@ -30,71 +30,71 @@ public class SeeStateService {//按组织查看疫情信息
     @Autowired
     CloudFunctionUtils cloudFunctionUtils;
 
-    public List<User> getIllUser(Integer orggrade, String orgfathername,String orgname) {
+    public List<User> getIllUser(String orggrandfathername,Integer orggrade, String orgfathername,String orgname) {
         if (orggrade == 1) {
             return userStateDao.getClassAilluser(orgname);//获取一级组织生病的学生
         } else if (orggrade == 2) {
             return userStateDao.getClassBilluser(orgfathername,orgname);
         } else {
-            return userStateDao.getClassCilluser(orgfathername,orgname);
+            return userStateDao.getClassCilluser(orggrandfathername,orgfathername,orgname);
         }
 
     }
 
-    public List<User> getHdangerUser(Integer orggrade,String orgfathername, String orgid) {
+    public List<User> getHdangerUser(String orggrandfathername,Integer orggrade,String orgfathername, String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassAHdangeruser(orgid);//获取高度易感用户
         } else if (orggrade == 2) {
             return userStateDao.getClassBHdangeruser(orgfathername,orgid);//
         } else {
-            return userStateDao.getClassCHdangeruser(orgfathername,orgid);
+            return userStateDao.getClassCHdangeruser(orggrandfathername,orgfathername,orgid);
         }
 
     }
 
-    public List<User> getMdangerUser(Integer orggrade,String orgfathername, String orgid) {
+    public List<User> getMdangerUser(String orggrandfathername,Integer orggrade,String orgfathername, String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassAMdangeruser(orgid);//获取易感用户
         }
         if (orggrade == 2) {
             return userStateDao.getClassBMdangeruser(orgfathername,orgid);
         } else {
-            return userStateDao.getClassCMdangeruser(orgfathername,orgid);
+            return userStateDao.getClassCMdangeruser(orggrandfathername,orgfathername,orgid);
         }
 
     }
 
-    public List<User> getLdangerUser(Integer orggrade,String orgfathername, String orgid) {
+    public List<User> getLdangerUser(String orggrandfathername,Integer orggrade,String orgfathername, String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassALdangeruser(orgid);//获取无风险用户
         }
         if (orggrade == 2) {
             return userStateDao.getClassBLdangeruser(orgfathername,orgid);
         } else {
-            return userStateDao.getClassCLdangeruser(orgfathername,orgid);
+            return userStateDao.getClassCLdangeruser(orggrandfathername,orgfathername,orgid);
         }
     }
-    public List<User> getSuspectedUser(Integer orggrade, String orgfathername,String orgid) {
+    public List<User> getSuspectedUser(String orggrandfathername,Integer orggrade, String orgfathername,String orgid) {
         if (orggrade == 1) {
             return userStateDao.getClassASuspectedUser(orgid);//获取疑似用户，90-100
         }
         if (orggrade == 2) {
             return userStateDao.getClassBSuspectedUser(orgfathername,orgid);
         } else {
-            return userStateDao.getClassCSuspectedUser(orgfathername,orgid);
+            return userStateDao.getClassCSuspectedUser(orggrandfathername,orgfathername,orgid);
         }
     }
 
 
 
-    public List<User> getAllUser(Integer orggrade,String orgfathername, String orgid,Integer page) {
+    public List<User> getAllUser(String orggrandfathername,Integer orggrade,String orgfathername, String orgid,Integer page) {
         if (orggrade == 1) {
             return userStateDao.getClassAAllUser(orgid,page);//获取一级组织用户
         }
         if (orggrade == 2) {
             return userStateDao.getClassBAllUser(orgfathername,orgid,page);//二级组织用户
         } else {
-            return userStateDao.getClassCAllUser(orgfathername,orgid,page);
+            return userStateDao.getClassCAllUser(orggrandfathername,orgfathername,orgid,page);
         }
     }
 
@@ -115,18 +115,21 @@ public class SeeStateService {//按组织查看疫情信息
     }
     //导出组织内用户打卡消息
     // 注意参数中的orgid同样有特殊要求
-    public List<ReportsByDate> getReportsByDate (Integer orggrade, String orgid, String month, String day) {
+    public List<ReportsByDate> getReportsByDate (String orggrandfathername,String orgfathername,Integer orggrade, String orgid, String month, String day) {
         // 使用云函数的方式获得数据
         // 参数：
         // month
         // day
         // orggrade
         // orgid
+        // orgfathername
         Map<String,Object> map = new HashMap<>();
         map.put("orggrade",orggrade);
         map.put("orgid",orgid);
         map.put("month",month);
         map.put("day",day);
+        map.put("orgfathername",orgfathername);
+        map.put("orggrandfathername",orggrandfathername);
         String report = cloudFunctionUtils.InvokeFunction("getSpecificReport", map);
         List lists = JSON.parseObject(report, List.class);
         List<ReportsByDate> reportList= new ArrayList<>();

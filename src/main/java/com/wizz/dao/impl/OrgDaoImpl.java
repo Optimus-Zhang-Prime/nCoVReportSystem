@@ -37,7 +37,7 @@ public class OrgDaoImpl implements OrgDao {
         String errcode = queryReturn.getErrcode();
         // 这里实际上可以使用注解进行校验  参考codesheep
         if (!"0".equals(errcode)) {
-            throw new DbErrorException("org数据库访问出错了");
+            throw new DbErrorException("org数据库访问出错了--getAdminUser_Org");
         }
         List<Org> tempList = new ArrayList<>();
         // 转换包装

@@ -22,9 +22,7 @@ public class UserReportController {
     @RequestMapping(path = "user/seeuserreport/", method = RequestMethod.POST)
     public String seeUserReport(@RequestParam("userid")String userid){
         List<Report> reportList=dailyReportService.seeUserReport(userid);
-//        JSONObject jsonObject = new JSONObject();
         String result = JSON.toJSONString(reportList);
-//        jsonObject.put("allReport", reportList);
         return result;
     }
     @ResponseBody//代替用户打卡，无出行

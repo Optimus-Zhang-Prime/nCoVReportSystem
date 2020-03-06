@@ -22,12 +22,12 @@ public class SeeOrgStateController {//按组织查看疫情信息
 
     @ResponseBody
     @RequestMapping(path = "user/seeorgstate/", method = RequestMethod.POST)
-    public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname") String orgname){
-        List<User> illUsers =seeStateService.getIllUser(orggrade,orgfathername,orgname);//确诊人数
-        List<User> SuspectedUsers=seeStateService.getSuspectedUser(orggrade,orgfathername,orgname);//疑似患者
-        List<User> HdangerUsers=seeStateService.getHdangerUser(orggrade,orgfathername,orgname);//高度易感
-        List<User> MdangerUsers=seeStateService.getMdangerUser(orggrade,orgfathername,orgname);//易感
-        List<User> LdangerUsers=seeStateService.getLdangerUser(orggrade,orgfathername,orgname);//无风险用户
+    public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orggrandfathername") String orggrandfathername,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname") String orgname){
+        List<User> illUsers =seeStateService.getIllUser(orggrandfathername,orggrade,orgfathername,orgname);//确诊人数
+        List<User> SuspectedUsers=seeStateService.getSuspectedUser(orggrandfathername,orggrade,orgfathername,orgname);//疑似患者
+        List<User> HdangerUsers=seeStateService.getHdangerUser(orggrandfathername,orggrade,orgfathername,orgname);//高度易感
+        List<User> MdangerUsers=seeStateService.getMdangerUser(orggrandfathername,orggrade,orgfathername,orgname);//易感
+        List<User> LdangerUsers=seeStateService.getLdangerUser(orggrandfathername,orggrade,orgfathername,orgname);//无风险用户
 //        JSONObject ajsonObject = new JSONObject();
         Map<String,List<User>> map = new HashMap<>();
         map.put("illUsers", illUsers);
@@ -41,8 +41,8 @@ public class SeeOrgStateController {//按组织查看疫情信息
 
     @ResponseBody
     @RequestMapping(path = "user/seealluser/", method = RequestMethod.POST)
-    public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname") String orgname,@RequestParam("page")Integer page){
-        List<User> allUsers =seeStateService.getAllUser(orggrade,orgfathername,orgname,page);//组织内全部用户
+    public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orggrandfathername") String orggrandfathername,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname") String orgname,@RequestParam("page")Integer page){
+        List<User> allUsers =seeStateService.getAllUser(orggrandfathername,orggrade,orgfathername,orgname,page);//组织内全部用户
         String result = JSON.toJSONString(allUsers);
         return result;
     }
