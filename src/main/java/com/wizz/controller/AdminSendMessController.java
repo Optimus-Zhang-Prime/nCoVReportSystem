@@ -25,17 +25,17 @@ public class AdminSendMessController {
 
     @ResponseBody//获取组织内未打卡成员
     @RequestMapping(path = "getuserwithoutreport/", method = RequestMethod.POST)
-    public JSONObject getUserWithoutReport(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgname")String orgname) {
+    public JSONObject getUserWithoutReport(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname")String orgname) {
         //返回未打卡用户列表
-        List<User> userList=userDao.UserWithoutReport(orggrade,orgname);
+        List<User> userList=userDao.UserWithoutReport(orggrade,orgfathername,orgname);
         JSONObject ajsonObject = new JSONObject();
         ajsonObject.put("userWithoutReport", userList);
         return ajsonObject;
     }
     @ResponseBody//获取组织内未打卡且没绑定电话用户
     @RequestMapping(path = "getuserwithoutreportandtel/", method = RequestMethod.POST)
-    public JSONObject getUserWithoutReportAndTel(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgname")String orgname) {
-        List<User> userWithoutReportList=userDao.UserWithoutReport(orggrade,orgname);
+    public JSONObject getUserWithoutReportAndTel(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname")String orgname) {
+        List<User> userWithoutReportList=userDao.UserWithoutReport(orggrade,orgfathername,orgname);
         List<User> userWithoutReportAndTel=new ArrayList<User>();
         try {
             for (User user : userWithoutReportList) {
@@ -60,8 +60,8 @@ public class AdminSendMessController {
     }
     @ResponseBody//发送短信提醒
     @RequestMapping(path = "sendmess/", method = RequestMethod.POST)
-    public Integer setUserTel(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgname")String orgname) {
-        List<User> userWithoutReportList=userDao.UserWithoutReport(orggrade,orgname);
+    public Integer setUserTel(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname")String orgname) {
+        List<User> userWithoutReportList=userDao.UserWithoutReport(orggrade,orgfathername,orgname);
             int FailSending=0;
             for(User user:userWithoutReportList){
                 try{
