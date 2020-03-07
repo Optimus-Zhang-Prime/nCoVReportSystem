@@ -1,5 +1,5 @@
 #新冠疫情监测系统  
-使用：springboot+mybatis
+使用：springboot
 版本以pom文件为准  
  
 
