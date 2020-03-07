@@ -1,6 +1,8 @@
 package com.wizz.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wizz.dao.YanzhengDao;
+import com.wizz.dao.impl.YanzhengDaoImpl;
 import com.wizz.entity.Org;
 import com.wizz.service.AdminlogService;
 import com.wizz.utils.ForumUtils;
@@ -23,7 +25,7 @@ public class AdminLogController {
     AdminlogService adminlogService;
     
     @Autowired
-    YanzhengDao yanzhengdao;
+    YanzhengDaoImpl yanzhengdao;
     
     @ResponseBody//发送验证码
     @RequestMapping(path = "yanzheng/", method = RequestMethod.POST)
@@ -32,7 +34,7 @@ public class AdminLogController {
             //随机生成验证码
             String code = String.valueOf(new Random().nextInt(9999));
             SendMess.sendCode(tel,code);
-            yanzhengDao.save(tel,code);//保存或修改
+            yanzhengdao.save(tel,code);//保存或修改
             return 1000;
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,10 +46,12 @@ public class AdminLogController {
     @RequestMapping(path = "getorgbyadmin/", method = RequestMethod.POST)
     public JSONObject getOrgByUser(@RequestParam("tel") String tel,@RequestParam("code") String code,HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
+        String acode = "";
         try{
-            String acode=yanzhengDao.get(tel);//获取验证码
+            acode=yanzhengdao.get(tel);//获取验证码
+
         }
-        catch(Exception){
+        catch(Exception e){
             jsonObject.put("code", 1006);
             return jsonObject;
         }
