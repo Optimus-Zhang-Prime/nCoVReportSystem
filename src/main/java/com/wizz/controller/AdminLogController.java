@@ -21,21 +21,18 @@ public class AdminLogController {
 
     @Autowired
     AdminlogService adminlogService;
-
+    
+    @Autowired
+    YanzhengDao yanzhengdao;
+    
     @ResponseBody//发送验证码
     @RequestMapping(path = "yanzheng/", method = RequestMethod.POST)
-    public Integer yanZheng(@RequestParam("tel") String tel,HttpSession httpSession) {
+    public Integer yanZheng(@RequestParam("tel") String tel) {
         try {
             //随机生成验证码
             String code = String.valueOf(new Random().nextInt(9999));
             SendMess.sendCode(tel,code);
-            //将验证码存到session中,同时存入创建时间
-            //以json存放，这里使用的是阿里的fastjson
-            JSONObject json = new JSONObject();
-            json.put("tel", tel);
-            json.put("code", code);
-            // 将认证码存入SESSION
-            httpSession.setAttribute("code", json);
+            yanzhengDao.save(tel,code);//保存或修改
             return 1000;
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,10 +42,15 @@ public class AdminLogController {
 
     @ResponseBody//获取用户管理的所有组织
     @RequestMapping(path = "getorgbyadmin/", method = RequestMethod.POST)
-    public JSONObject getOrgByUser(@RequestParam("tel") String tel,@RequestParam("code") String code,HttpSession httpSession,HttpServletResponse response) {
-        JSONObject userCode = (JSONObject)httpSession.getAttribute("code");
-        String acode=userCode.get("code").toString();
+    public JSONObject getOrgByUser(@RequestParam("tel") String tel,@RequestParam("code") String code,HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
+        try{
+            String acode=yanzhengDao.get(tel);//获取验证码
+        }
+        catch(Exception){
+            jsonObject.put("code", 1006);
+            return jsonObject;
+        }
         if(code.equals(acode)){
             Cookie cookie = new Cookie("name", tel);
             response.addCookie(cookie);
