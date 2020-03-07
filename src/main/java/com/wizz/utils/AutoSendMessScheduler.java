@@ -53,7 +53,7 @@ public class AutoSendMessScheduler {
         for (Org org : orgList) {//每个组织
             List<User> userWithoutReportList = userDao.UserWithoutReport(org.getClassB(), 3, org.getName());
             Integer num = userWithoutReportList.size();
-            for (String tel : org.getAdmins) {//该组织的每个管理员
+            for (String tel : org.getAdmins()) {//该组织的每个管理员
                 try {
                     SendMess.sendNoticeToAdmin(tel,num);
                 } catch (Exception e) {
@@ -64,8 +64,5 @@ public class AutoSendMessScheduler {
         }
         System.out.println(FailSending);
     }
-}
-
-
 }
 

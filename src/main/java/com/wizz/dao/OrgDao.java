@@ -32,4 +32,5 @@ public interface OrgDao {//组织
     void deleteOrg (String orgId);
     List<Org> getClassBOrgByParentClass (String orgId);
     List<Org> getClassCOrgByParentClass (String orgId);
+    List<Org> getclassCOrg ();
 }
