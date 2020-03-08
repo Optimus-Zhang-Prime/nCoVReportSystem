@@ -34,6 +34,7 @@ public class DataBaseUtils {
         // 组织post body
         map.put("query",String.format(query,args));
         logger.info("数据库query "+ queryString);
+        System.out.println(map);
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
 //        System.out.println(rawOutput);
