@@ -27,6 +27,7 @@ public class DailyReportService {
             return 1000;
         }
         catch (Exception e){
+            e.printStackTrace();
             return 1006;
         }
     }
@@ -38,6 +39,7 @@ public class DailyReportService {
             return 1000;
         }
         catch (Exception e){
+            e.printStackTrace();
             return 1006;
         }
     }
@@ -47,6 +49,7 @@ public class DailyReportService {
             return 1000;
         }
         catch (Exception e){
+            e.printStackTrace();
             return 1006;
         }
     }
@@ -56,6 +59,7 @@ public class DailyReportService {
             return 1000;
         }
         catch (Exception e){
+            e.printStackTrace();
             return 1006;
         }
     }

@@ -4,6 +4,8 @@ import com.wizz.dao.UserDao;
 import com.wizz.dao.impl.ReportDaoImpl;
 import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.entity.Report;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,12 +22,11 @@ public class UserStateScheduler{
     ReportDaoImpl reportDao;
     @Autowired
     UserDaoImpl userDao;
-
+    private Logger logger = LoggerFactory.getLogger(getClass());
     //每天晚上18点05执行（为Application类添加@EnableScheduling注释后启动）
     @Scheduled(cron = "0 05 18 ? * *")
     public void calculateUserState() {
-        System.out.println("计算用户身体状况，任务执行时间：" + dateFormat.format(new Date()));
-
+        logger.info("计算用户身体状况，任务执行时间：" + dateFormat.format(new Date()));
         //计算累积易感指数的部分
         Integer account = userDao.getUserAccount();//获取当前用户数量
         System.out.println(account);

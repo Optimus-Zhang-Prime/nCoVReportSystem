@@ -3,16 +3,22 @@ package com.wizz.controller;
 
 import com.wizz.service.AdminService;
 import com.wizz.utils.ForumUtils;
+import org.hibernate.validator.constraints.Length;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 
 @Controller
+@Validated
 public class CreateOrgController {
     @Autowired
     AdminService adminService;
@@ -40,13 +46,13 @@ public class CreateOrgController {
 
     @ResponseBody//添加组织管理员
     @RequestMapping(path = "user/addAdmin/", method = RequestMethod.POST)
-    public String addOrgAdmin(@RequestParam("orgid") String orgid,@RequestParam("tel") String tel)  throws JSONException {
+    public String addOrgAdmin(@RequestParam("orgid") String orgid,@Valid @Length(min = 11,max = 11,message = "手机号不符合规范")@RequestParam("tel")  String tel)  throws JSONException {
         Integer code = adminService.addAdmin(orgid, tel);
         return ForumUtils.toJsonString(code);
     }
     @ResponseBody//删除组织管理员
     @RequestMapping(path = "user/deleteAdmin/", method = RequestMethod.POST)
-    public String deleteOrgAdmin(@RequestParam("orgid") String orgid,@RequestParam("tel") String tel)  throws JSONException {
+    public String deleteOrgAdmin(@RequestParam("orgid") String orgid,@Valid @Length(min = 11,max = 11,message = "手机号不符合规范")@RequestParam("tel") String tel)  throws JSONException {
         Integer code = adminService.deleteAdmin(orgid, tel);
         return ForumUtils.toJsonString(code);
     }

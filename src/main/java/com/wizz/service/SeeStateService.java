@@ -115,7 +115,7 @@ public class SeeStateService {//按组织查看疫情信息
     }
     //导出组织内用户打卡消息
     // 注意参数中的orgid同样有特殊要求
-    public List<ReportsByDate> getReportsByDate (String orggrandfathername,String orgfathername,Integer orggrade, String orgid, String month, String day) {
+    public List<ReportsByDate> getReportsByDate (String orggrandfathername,String orgfathername,Integer orggrade, String orgid, Integer month, Integer day) {
         // 使用云函数的方式获得数据
         // 参数：
         // month

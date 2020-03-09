@@ -1,10 +1,14 @@
 package com.wizz.component;
 
 import com.wizz.exception.DbErrorException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartException;
+
+import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,5 +40,16 @@ public class MyExceptionHandler {
         message.put("errCode",500);
         message.put("message",e.getMessage());
         return message;
+    }
+    /** @Description: 参数校验异常
+    * @Param: [e]
+    * @return: org.springframework.http.ResponseEntity<java.lang.String>
+    * @Author: 李佳
+    * @Date: 2020/3/9
+    */
+    
+    @ExceptionHandler(ConstraintViolationException.class)
+    ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

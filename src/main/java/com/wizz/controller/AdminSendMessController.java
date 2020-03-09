@@ -8,17 +8,21 @@ import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.entity.Report;
 import com.wizz.entity.User;
 import com.wizz.utils.SendMess;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Validated
 public class AdminSendMessController {
     @Autowired
     UserDaoImpl userDao;
@@ -47,6 +51,7 @@ public class AdminSendMessController {
             }
         }
         catch (Exception e){
+            e.printStackTrace();
             System.out.println("");
         }
         JSONObject ajsonObject = new JSONObject();
@@ -55,7 +60,7 @@ public class AdminSendMessController {
     }
     @ResponseBody//用户电话
     @RequestMapping(path = "setusertel/", method = RequestMethod.POST)
-    public Integer setUserTel(@RequestParam("useropenid") String useropenid,@RequestParam("tel")String tel) {
+    public Integer setUserTel(@RequestParam("useropenid") String useropenid,@Valid @Length(min = 11,max = 11,message = "手机号不符合规范")@RequestParam("tel")String tel) {
         //设置用户电话
         userDao.setUserTel(useropenid,tel);
         return 1000;
@@ -70,6 +75,7 @@ public class AdminSendMessController {
                     SendMess.sendNotice(user.getPhone());
                 }
                 catch (Exception e){
+                    e.printStackTrace();
                     FailSending+=1;
                 }
             }

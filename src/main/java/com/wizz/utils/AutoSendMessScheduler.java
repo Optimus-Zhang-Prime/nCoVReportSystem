@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.wizz.dao.OrgDao;
 import com.wizz.dao.ReportDao;
 import com.wizz.dao.UserDao;
+import com.wizz.dao.impl.OrgDaoImpl;
+import com.wizz.dao.impl.ReportDaoImpl;
+import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.entity.Org;
 import com.wizz.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +21,11 @@ public class AutoSendMessScheduler {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
-    ReportDao reportDao;
+    ReportDaoImpl reportDao;
     @Autowired
-    UserDao userDao;
+    UserDaoImpl userDao;
     @Autowired
-    OrgDao orgDao;
+    OrgDaoImpl orgDao;
 
     //每天晚上18点05自动执行（为Application类添加@EnableScheduling注释后启动）
     //@Scheduled(cron = "0 00 18 ? * *")
@@ -36,6 +39,7 @@ public class AutoSendMessScheduler {
                 try {
                     SendMess.sendNotice(user.getPhone());
                 } catch (Exception e) {
+                    e.printStackTrace();
                     FailSending += 1;
                 }
             }
@@ -57,6 +61,7 @@ public class AutoSendMessScheduler {
                 try {
                     SendMess.sendNoticeToAdmin(tel,num);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     FailSending += 1;
                 }
             }

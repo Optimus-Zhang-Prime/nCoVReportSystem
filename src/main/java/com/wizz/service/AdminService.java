@@ -23,13 +23,14 @@ public class AdminService {
     }
     public Integer deleteProject(String projectid) {
         try{
-        projectDao.deleteProject(projectid);
-        projectDao.deleteOrgByProject(projectid);
-        return 1000;//删除项目成功
+            projectDao.deleteProject(projectid);
+            projectDao.deleteOrgByProject(projectid);
+            return 1000;//删除项目成功
         }
         catch(Exception e){
+            e.printStackTrace();
             return 1006;//删除失败
-            }
+        }
     }
 
 
@@ -59,6 +60,7 @@ public class AdminService {
             return 1000;
         }
         catch (Exception e){
+            e.printStackTrace();
             return 1006;
         }
     }
@@ -68,7 +70,7 @@ public class AdminService {
             return 1000;
         }
         catch (Exception e){
-//            System.out.println(e);
+            e.printStackTrace();
             return 1006;
         }
     }
@@ -77,6 +79,7 @@ public class AdminService {
             orgdao.deleteOrg(orgId);
             return 1000;
         } catch (Exception e) {
+            e.printStackTrace();
             return 1006;
         }
     }
