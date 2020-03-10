@@ -10,10 +10,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -84,6 +88,17 @@ public class ExcelParseUtil {
         }
 
     }
+    private String encodeFilename(final String filename)
+    {
+        try{
+            URI uri = new URI(null, null, filename, null);
+            String encodedName = uri.toASCIIString();
+            return encodedName;
+        }
+        catch(URISyntaxException ex){
+            return filename;
+        }
+    }
     public void writeExcel(ExcelContent<List<ReportsByDate>> excelContent, HttpServletResponse httpServletResponse){
         HSSFWorkbook wb = new HSSFWorkbook();
         //创建一个工作本
@@ -110,7 +125,9 @@ public class ExcelParseUtil {
         try {
             // 清空response
             httpServletResponse.reset();
-            httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ new String(excelContent.getFileNames().getBytes("UTF-8"),"ISO-8859-1"));
+//            httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ new String(excelContent.getFileNames().getBytes("UTF-8"),"iso-8859-1"));
+//            String encodedFileName = encodeFilename(excelContent.getFileNames());
+            httpServletResponse.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(excelContent.getFileNames(),"utf-8"));
             httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
             OutputStream os = new BufferedOutputStream(httpServletResponse.getOutputStream());
             wb.write(os);

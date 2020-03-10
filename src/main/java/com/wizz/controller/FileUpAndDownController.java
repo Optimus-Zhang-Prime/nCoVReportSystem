@@ -68,7 +68,11 @@ public class FileUpAndDownController {
     @RequestMapping(path = "excel/",method = RequestMethod.POST)
     public void exportExcel(@RequestParam("orggrade")Integer orggrade, @RequestParam("orggrandfathername") String orggrandfathername, @RequestParam("orgfathername") String orgfathername, @RequestParam("orgname") String orgid, @Valid @Range(min = 1,max = 12,message = "月份不符合规范")@RequestParam("month") Integer month, @Valid @Range(min = 1,max = 31,message = "日份不符合规范")@RequestParam("day") Integer day, HttpServletRequest request, HttpServletResponse response) {
         List<ReportsByDate> reports = seeStateService.getReportsByDate(orggrandfathername,orgfathername,orggrade, orgid, month, day);
-        String fileName = String.format("%s-%s-%s.xlsx",orgid,month,day);
+        if("研究生".equals(orgid)) {
+            orgid = "Postgraduate";
+        }
+        String fileName = String.format("%s-%s-%s.xls",orgid,month,day);
+        System.out.println(fileName);
         List<String> columnNames = new ArrayList<>();
         columnNames.add("日期");
         columnNames.add("姓名");
