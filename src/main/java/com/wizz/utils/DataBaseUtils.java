@@ -33,8 +33,7 @@ public class DataBaseUtils {
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
         map.put("query",String.format(query,args));
-        logger.info("数据库query "+ queryString);
-        System.out.println(map);
+        logger.info("数据库query "+ queryString + map.toString());
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
 //        System.out.println(rawOutput);
@@ -48,6 +47,7 @@ public class DataBaseUtils {
         String queryString = dataBaseProperties.getDatabaseAdd()  + access_token;
         Map<String,Object> map = dataBaseProperties.getDbBody();
         map.put("query",String.format(query,args));
+        logger.info("数据库add "+ queryString + map.toString());
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射
@@ -67,8 +67,7 @@ public class DataBaseUtils {
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
         map.put("query",String.format(query,args));
-        System.out.println(queryString);
-        System.out.println(map);
+        logger.info("数据库update "+ queryString + map.toString());
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射
@@ -87,6 +86,7 @@ public class DataBaseUtils {
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
         map.put("query",String.format(query,args));
+        logger.info("数据库delete "+ queryString + map.toString());
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射
@@ -105,6 +105,7 @@ public class DataBaseUtils {
         Map<String,Object> map = dataBaseProperties.getDbBody();
         // 组织post body
         map.put("query",String.format(query,args));
+        logger.info("数据库getCount "+ queryString + map.toString());
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
         // json对象映射

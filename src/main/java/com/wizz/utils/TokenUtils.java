@@ -7,6 +7,8 @@ import com.wizz.exception.DbErrorException;
 import com.wizz.property.DataBaseProperties;
 import com.wizz.property.RedisCacheProperties;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +22,8 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +37,7 @@ public class TokenUtils {
     @Autowired
     private RedisCacheProperties redisCacheProperties;
     RestTemplate restTemplate = new RestTemplate();
+    Logger logger = LoggerFactory.getLogger(getClass());
     public String getAccessToken () {
         HttpHeaders headers = new HttpHeaders();
         String url = redisCacheProperties.getUrl();
@@ -42,12 +47,15 @@ public class TokenUtils {
         map.add("nonce", nonce);
         map.add("sign",getMD5(nonce+"yiqingtong2020"));
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+        long before = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
         ResponseEntity<String> response = restTemplate.postForEntity(url, request , String.class );
+        long after = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        logger.debug("请求时间" + String.valueOf(after-before));
         if (response.getStatusCodeValue() != 200) {
             throw new DbErrorException("redis缓存获取失败");
         }
         RedisCacheReturn result = JSON.parseObject(response.getBody(), RedisCacheReturn.class);
-        System.out.println(result);
+        logger.debug(result.toString());
         return result.getAccess_token();
     }
     public String getMD5(String str) {
