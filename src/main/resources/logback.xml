@@ -95,5 +95,11 @@
         <appender-ref ref="FileErrorLog"/>
         <appender-ref ref="FileDebugLog"/>
     </logger>
+    <logger name="com.wizz.utils.DataBaseUtils" level="debug">
+        <!--        内部有默认的console输出-->
+        <appender-ref ref="FileInfoLog"/>
+        <appender-ref ref="FileErrorLog"/>
+        <appender-ref ref="FileDebugLog"/>
+    </logger>
 
 </configuration>
