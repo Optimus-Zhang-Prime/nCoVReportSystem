@@ -25,7 +25,7 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/Info/DenseTubeManage_Info_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/Info/noCov_Info_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <!--日志文件保留天数-->
             <MaxHistory>30</MaxHistory>
             <!--日志文件最大的大小-->
@@ -49,7 +49,7 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/Error/DenseTubeManage_Error_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/Error/noCov_Error_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <!--日志文件保留天数-->
             <MaxHistory>30</MaxHistory>
             <!--日志文件最大的大小-->
@@ -70,7 +70,7 @@
         </filter>
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME}/Debug/DenseTubeManage_Debug_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/Debug/noCov_Debug_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxHistory>30</MaxHistory>
             <MaxFileSize>5MB</MaxFileSize>
         </rollingPolicy>
@@ -96,6 +96,12 @@
         <appender-ref ref="FileDebugLog"/>
     </logger>
     <logger name="com.wizz.utils.DataBaseUtils" level="debug">
+        <!--        内部有默认的console输出-->
+        <appender-ref ref="FileInfoLog"/>
+        <appender-ref ref="FileErrorLog"/>
+        <appender-ref ref="FileDebugLog"/>
+    </logger>
+    <logger name="com.wizz.utils.UserStateScheduler" level="debug">
         <!--        内部有默认的console输出-->
         <appender-ref ref="FileInfoLog"/>
         <appender-ref ref="FileErrorLog"/>

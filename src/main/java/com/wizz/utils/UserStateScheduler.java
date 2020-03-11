@@ -24,20 +24,22 @@ public class UserStateScheduler{
     UserDaoImpl userDao;
     private Logger logger = LoggerFactory.getLogger(getClass());
     //每天晚上18点05执行（为Application类添加@EnableScheduling注释后启动）
-    @Scheduled(cron = "0 05 18 ? * *")
+//    @Scheduled(cron = "0 05 18 ? * *")
+    @Scheduled(fixedRate = 1800000)
     public void calculateUserState() {
         logger.info("计算用户身体状况，任务执行时间：" + dateFormat.format(new Date()));
         //计算累积易感指数的部分
         Integer account = userDao.getUserAccount();//获取当前用户数量
-        System.out.println(account);
         int n=1;
         while (n<=account/50 + 1){//为满足数据库一千条的限制，一次取50
             List<String> userIDList=userDao.getUserid(n);//分页取用户id列表
             for (String uid:userIDList){//每个用户执行一次
                List<Report> userReportList=reportDao.getReportByUserId(uid);//该用户所有汇报
                int sum=0;
-               for(Report report:userReportList){
-                   sum+=report.getCovIndex();//对易感指数求和
+               for (Report report : userReportList) {
+                   if (report.getCovIndex() != null) {
+                       sum += report.getCovIndex();//对易感指数求和
+                   }
                }
                 Integer average= null;//求平均
                 try {
