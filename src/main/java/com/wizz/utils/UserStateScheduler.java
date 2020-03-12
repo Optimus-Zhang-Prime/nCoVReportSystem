@@ -1,6 +1,4 @@
 package com.wizz.utils;
-import com.wizz.dao.ReportDao;
-import com.wizz.dao.UserDao;
 import com.wizz.dao.impl.ReportDaoImpl;
 import com.wizz.dao.impl.UserDaoImpl;
 import com.wizz.entity.Report;

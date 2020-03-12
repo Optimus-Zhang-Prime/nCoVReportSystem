@@ -54,7 +54,9 @@ public class TokenUtils {
         if (response.getStatusCodeValue() != 200) {
             throw new DbErrorException("redis缓存获取失败");
         }
-        RedisCacheReturn result = JSON.parseObject(response.getBody(), RedisCacheReturn.class);
+        Object parse = JSON.parse(response.getBody());
+        String parseBody = JSON.toJSONString(parse);
+        RedisCacheReturn result = JSON.parseObject(parseBody, RedisCacheReturn.class);
         logger.debug(result.toString());
         return result.getAccess_token();
     }
