@@ -1,6 +1,7 @@
 package com.wizz.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.wizz.entity.jsonReturn.GetTokenReturn;
 import com.wizz.entity.jsonReturn.RedisCacheReturn;
 import com.wizz.exception.DbErrorException;
@@ -54,7 +55,14 @@ public class TokenUtils {
         if (response.getStatusCodeValue() != 200) {
             throw new DbErrorException("redis缓存获取失败");
         }
-        Object parse = JSON.parse(response.getBody());
+        // 利用catch检测下为什么会出现com.alibaba.fastjson.JSONException: syntax error, pos 9, json : SignError的错误
+        Object parse = null;
+        try {
+            parse = JSON.parse(response.getBody());
+        } catch(JSONException e) {
+            logger.error(e.getMessage() + "-----" + response.getBody());
+            throw new RuntimeException(e.getMessage());
+        }
         String parseBody = JSON.toJSONString(parse);
         RedisCacheReturn result = JSON.parseObject(parseBody, RedisCacheReturn.class);
         logger.debug(result.toString());

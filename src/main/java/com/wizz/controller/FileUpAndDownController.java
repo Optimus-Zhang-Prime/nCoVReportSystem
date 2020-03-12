@@ -72,7 +72,6 @@ public class FileUpAndDownController {
             orgid = "Postgraduate";
         }
         String fileName = String.format("%s-%s-%s.xls",orgid,month,day);
-        System.out.println(fileName);
         List<String> columnNames = new ArrayList<>();
         columnNames.add("日期");
         columnNames.add("姓名");
