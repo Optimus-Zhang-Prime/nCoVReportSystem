@@ -125,6 +125,7 @@ public class ExcelParseUtil {
         try {
             // 清空response
             httpServletResponse.reset();
+            httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 //            httpServletResponse.addHeader("Content-Disposition", "attachment;filename="+ new String(excelContent.getFileNames().getBytes("UTF-8"),"iso-8859-1"));
 //            String encodedFileName = encodeFilename(excelContent.getFileNames());
             httpServletResponse.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(excelContent.getFileNames(),"utf-8"));
