@@ -14,9 +14,14 @@ public class CorsConfiguration implements WebMvcConfigurer{
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        // 设置要暴露的header，因为非同源的情况下，不能获取全部头部信息
+        String [] headers = {"set-cookie","Access-Control-Request-Method",
+                "Access-Control-Request-Headers","Origin","accept","Access-Control-Allow-Origin","Content-Disposition","Content-Type","X-Requested-With"};
         registry.addMapping("/**")
                 .allowedHeaders("*")
                 .allowedMethods("*")
-                .allowedOrigins("*");
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .exposedHeaders(headers);
     }
 }
