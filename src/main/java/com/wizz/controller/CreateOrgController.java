@@ -1,6 +1,6 @@
 package com.wizz.controller;
 
-
+import com.wizz.entity.Org;
 import com.wizz.service.AdminService;
 import com.wizz.utils.ForumUtils;
 import org.hibernate.validator.constraints.Length;
@@ -22,7 +22,8 @@ import javax.validation.constraints.NotNull;
 public class CreateOrgController {
     @Autowired
     AdminService adminService;
-
+    @Autowired
+    SeeStateService seeStateService;
 
     @ResponseBody//创建一级组织
     @RequestMapping(path = "user/createorg1/", method = RequestMethod.POST)
@@ -59,7 +60,14 @@ public class CreateOrgController {
     @ResponseBody//删除组织
     @RequestMapping(path = "user/deleteorg/", method = RequestMethod.POST)
     public String deleteOrg(@RequestParam("orgid")String orgid) throws JSONException {
+        Org org=seeStateService.getorgByid(orgid);
+        Integer grade=org.getGrade();//获取该组织的级数，用于找到子组织
         Integer code = adminService.deleteOrg(orgid);
+        List<Org> orgToDelete = seeStateService.getorgByParentClass(grade,orgid);
+        for(Org org:orgToDelete){//逐个删除子组织
+            adminService.deleteOrg(org.get_id());
+        }
         return ForumUtils.toJsonString(code);
     }
+
 }
