@@ -98,6 +98,11 @@ public class SeeStateService {//按组织查看疫情信息
         }
     }
 
+    public Org getorgByid(String _id){//通过_id查找组织(3月14日新增）
+        Org org=orgDao.getorgByid(_id);
+        return org;
+    }    
+
     public List<Org> getorgByProject(String projectid){//获取项目下所有组织
         List<Org> orgList=orgDao.gerOrgByProjectId(projectid);
         return orgList;
