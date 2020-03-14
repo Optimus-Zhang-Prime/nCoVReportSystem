@@ -80,10 +80,19 @@ public class AdminLogController {
             jsonObject.put("code", 1000);
             try {
                 List<Org> orgList = adminlogService.getOrgByAdmin(tel);
+                Integer grade=3;
+                for(Org org:orgList){//管理员所管理的最高级组织的等级
+                    Integer g=org.getGrade();
+                    if(g<grade){
+                        grade=g;
+                    }
+                }
+                jsonObject.put("grade", grade);
                 jsonObject.put("orgList", orgList);
             }
             catch (Exception e){
                 e.printStackTrace();
+                jsonObject.put("grade", "");
                 jsonObject.put("orgList", "");
             }
             return jsonObject;
