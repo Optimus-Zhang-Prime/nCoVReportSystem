@@ -34,17 +34,30 @@ public class AdminLogController {
     
     @ResponseBody//发送验证码
     @RequestMapping(path = "yanzheng/", method = RequestMethod.POST)
-    public Integer yanZheng(@Valid @Length(min = 11,max = 11,message = "手机号不符合规范") @RequestParam("tel") String tel) {
+    public JSONObject yanZheng(@Valid @Length(min = 11,max = 11,message = "手机号不符合规范") @RequestParam("tel") String tel) {
+        JSONObject jsonObject = new JSONObject();
+        try{         
+            List<Org> orgList = adminlogService.getOrgByAdmin(tel);           
+            if(orgList == null || orgList.size() == 0 ){
+                jsonObject.put("code", 1004);
+                return jsonObject;
+            }
+        } catch(Exception e) {
+            jsonObject.put("code", 1004);
+            return jsonObject;
+        }
         try {
             //随机生成验证码
             String code = String.valueOf(new Random().nextInt(9999));
             SendMess.sendCode(tel,code);
             yanzhengdao.save(tel,code);//保存或修改
-            return 1000;
+            jsonObject.put("code", 1000);
+            return jsonObject;
         } catch (Exception e) {
 //            throw new ControllerException(e.getMessage());
             e.printStackTrace();
-            return 1006;
+            jsonObject.put("code", 1006);
+            return jsonObject;
         }
     }
 
