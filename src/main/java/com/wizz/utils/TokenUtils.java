@@ -45,8 +45,9 @@ public class TokenUtils {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
         String nonce = RandomStringUtils.randomAlphanumeric(5);
+        String md5 = getMD5(nonce+"yiqingtong2020");
         map.add("nonce", nonce);
-        map.add("sign",getMD5(nonce+"yiqingtong2020"));
+        map.add("sign",md5);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
         long before = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
         ResponseEntity<String> response = restTemplate.postForEntity(url, request , String.class );
@@ -61,6 +62,8 @@ public class TokenUtils {
             parse = JSON.parse(response.getBody());
         } catch(JSONException e) {
             logger.error(e.getMessage() + "-----" + response.getBody());
+            logger.error("nonce" + nonce);
+            logger.error("md5" + md5);
             throw new RuntimeException(e.getMessage());
         }
         String parseBody = JSON.toJSONString(parse);
