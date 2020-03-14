@@ -55,7 +55,7 @@ public class OrgDaoImpl implements OrgDao {
     }
 
     @Override
-    public Org getOrgById(String id) {
+    public Org getorgByid(String id) {
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(100).where({_id: '%s'}).get()",id);
         // 获得data字段
         List<String> strOutput = queryReturn.getData();
@@ -67,7 +67,7 @@ public class OrgDaoImpl implements OrgDao {
         } else if (strOutput.isEmpty()) {
             throw new DbErrorException("此组织不存在");
         }
-        // 获得唯一的用户信息 json
+        // 获得唯一的组织信息 json
         String output = strOutput.get(0);
         Org org = JSON.parseObject(output,Org.class);
         return org;

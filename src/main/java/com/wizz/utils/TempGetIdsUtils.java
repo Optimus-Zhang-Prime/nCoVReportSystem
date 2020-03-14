@@ -89,7 +89,6 @@ public class TempGetIdsUtils {
                 String classC = number.substring(0,2);
                 String classA = "研究生";
                 map.put("query",String.format("db.collection('user').add({data:[{number: '%s', name: '%s',classB: '%s',classC: '%s',classA: '%s'}]})",number,name,classB,classC,classA));
-                System.out.println(name);
                 // json返回值
                 String rawOutput = restTemplate.postForObject(queryString,map,String.class);
                 // json对象映射

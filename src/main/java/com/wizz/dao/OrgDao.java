@@ -17,7 +17,7 @@ public interface OrgDao {//组织
 
     void addAdmin(String orgid, String tel);//为某组织添加管理员电话
 
-    Org getOrgById(String id);//根据id查找组织
+    Org getorgByid(String id);//根据id查找组织
 
 
     //前端传过来的参数数量不同，若创建的是一级组织则无classA，二级组织无classAB

@@ -2,6 +2,7 @@ package com.wizz.controller;
 
 import com.wizz.entity.Org;
 import com.wizz.service.AdminService;
+import com.wizz.service.SeeStateService;
 import com.wizz.utils.ForumUtils;
 import org.hibernate.validator.constraints.Length;
 import org.json.JSONException;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Controller
@@ -64,8 +65,8 @@ public class CreateOrgController {
         Integer grade=org.getGrade();//获取该组织的级数，用于找到子组织
         Integer code = adminService.deleteOrg(orgid);
         List<Org> orgToDelete = seeStateService.getorgByParentClass(grade,orgid);
-        for(Org org:orgToDelete){//逐个删除子组织
-            adminService.deleteOrg(org.get_id());
+        for(Org org1:orgToDelete){//逐个删除子组织
+            adminService.deleteOrg(org1.get_id());
         }
         return ForumUtils.toJsonString(code);
     }
