@@ -18,11 +18,11 @@ public interface ReportDao {//每日汇报信息
     List<Report> getReportByUserId(String id);//查找该用户所有每日填报信息
 
 
-     void saveReport(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String createTime);
+     void saveReport(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String createTime,String openid);
      //参数分别为：用户id，地址是否有症状，“是否有下列情况”，“就医记录”,"创建时间
 
 
-     void saveReport2(String userid,ReportLocation Address,Boolean symptom,String status,String subversion,String travelNumber,String createTime)  ;
+     void saveReport2(String userid,ReportLocation Address,Boolean symptom,String status,String subversion,String travelNumber,String createTime,String openid)  ;
 
 
      List<String> getSymptomUserid();//获取填报信息中有症状的用户id，用于计算易感指数
