@@ -5,9 +5,7 @@ import com.wizz.entity.Project;
 import com.wizz.utils.TempGetIdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +21,12 @@ public class TempGetIdsController {
     @Autowired
     TempGetIdsUtils tempGetIdsUtils;
     @ResponseBody
-    @RequestMapping("/ids-lijia-dd-11663")
+    @RequestMapping(path = "/ids-lijia-dd-11663",method = RequestMethod.GET)
     public String test () {
         return tempGetIdsUtils.dbTransfer();
     }
     @ResponseBody
-    @RequestMapping("/ids-11663343536")
+    @RequestMapping(path = "/ids-11663343536", method = RequestMethod.GET)
     public String test1 () {
         return tempGetIdsUtils.dbTransferDepartment();
     }

@@ -5,17 +5,19 @@ import com.wizz.dao.ReportDao;
 import com.wizz.entity.Location;
 import com.wizz.entity.Report;
 
+import com.wizz.entity.ReportLocation;
 import com.wizz.entity.ReportStatus;
 import com.wizz.entity.jsonReturn.QueryReturn;
 
 import com.wizz.exception.DbErrorException;
+import com.wizz.property.TencentAPIProperties;
+import com.wizz.utils.CloudFunctionUtils;
 import com.wizz.utils.DataBaseUtils;
+import com.wizz.utils.GetAdcode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -27,7 +29,10 @@ import java.util.List;
 public class ReportDaoImpl implements ReportDao {
     @Autowired
     DataBaseUtils dataBaseUtils;
-
+    @Autowired
+    TencentAPIProperties tencentAPIProperties;
+    @Autowired
+    CloudFunctionUtils cloudFunctionUtils;
     @Override
     public List<String> getStatus123Userid() {
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(1000).field({_openid: true}).where({status: _.and(_.neq('%s'),_.neq('%s'))}).get()", ReportStatus.FIFTH.toString(),ReportStatus.FOURTH.toString());
@@ -67,8 +72,6 @@ public class ReportDaoImpl implements ReportDao {
         }
         return tempList;
     }
-
-    //    @Select({"select * from report where uid=#{id}"})
     @Override
     public List<Report> getReportByUserId(String id) {
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(1000).where({_openid: '%s'}).get()", id);
@@ -89,19 +92,17 @@ public class ReportDaoImpl implements ReportDao {
         }
         return tempList;
     }
-//    @Insert({"insert into report"})//添加填报信息
+    // 前段暂未用到这个
     @Override
-    public void saveReport(String userid, String Address, Boolean symptom, String status, String subversion, String createTime) {
+    public void saveReport(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String createTime) {
+
         dataBaseUtils.addData("db.collection('report').add({data:[{_openid: '%s', address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s' ,createTime: '%s'}]})",userid,Address,symptom,status,subversion,createTime);
     }
-//    @Insert({"insert into report"})//添加填报信息，重载，多了交通工具班次参数
+    // 前段暂时未用到这个
     @Override
-    public void saveReport2(String userid, String Address, Boolean symptom, String status, String subversion, String travelNumber, String createTime) {
+    public void saveReport2(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String travelNumber, String createTime) {
         dataBaseUtils.addData("db.collection('report').add({data:[{_openid: '%s', address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s' ,createTime: '%s', travelNumber: '%s'}]})",userid,Address,symptom,status,subversion,createTime,travelNumber);
     }
-
-    // 待验证
-//    @Select({"select uid from report where isSymptom=True"})
     @Override
     public List<String> getSymptomUserid() {
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('report').limit(1000).field({_openid: true}).where({isSymptom: %s}).get()", true);
@@ -121,34 +122,69 @@ public class ReportDaoImpl implements ReportDao {
         }
         return tempList;
     }
-//    @Update({"update report         where id=#{reportId}"})
-    @Override
-    public void changeReport(String reportId, String Address, Boolean symptom, String status, String subversion) {
-        dataBaseUtils.updateData("db.collection('report').where({_id: '%s'}).update({data:{address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s'}})",reportId,Address,symptom,status,subversion);
-    }
-//    @Update({"update report         where id=#{reportId}"})
-    @Override
-    public void changeReport2(String reportId, String Address, Boolean symptom, String status, String subversion, String travelNumber) {
-        dataBaseUtils.updateData("db.collection('report').where({_id: '%s'}).update({data:{address: '%s',isSymptom: '%s',status: '%s',subversionStatus: '%s',travelNumber: '%s'}})",reportId,Address,symptom,status,subversion,travelNumber);
-    }
 
-//    @Override
-//    public List<Location> getUserLocation(String id) {
-//        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('community').limit(1000).field({_openid: true}).where({isSymptom: %s}).get()", true);
-//
-//        List<String> strOutput = queryReturn.getData();
-//        String errcode = queryReturn.getErrcode();
-//
-//        if (!"0".equals(errcode)) {
-//            throw new DbErrorException(errcode);
-//        }
-//        List<String> tempList = new ArrayList<>();
-//        // 转换包装
-//        for (Iterator<String> iterator = strOutput.iterator(); iterator.hasNext();) {
-//            String temp = iterator.next();
-//            Report temp1 = JSON.parseObject(temp, Report.class);
-//            tempList.add(temp1.get_openid());
-//        }
-//        return tempList;
-//    }
+    @Override
+    public void changeReport(String reportId, ReportLocation Address, Boolean symptom, String status, String subversion,String openid) {
+        String lon = Address.getLng();
+        String lat = Address.getLat();
+        String key = tencentAPIProperties.getKey();
+        Map<String, String> adcodeMap = GetAdcode.getAdcode(lon, lat, key);
+        String address = adcodeMap.get("address");
+        String code = adcodeMap.get("adcode");
+        // 需要调用计算地区易感指数
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("longitude",Double.valueOf(lon));
+        paramMap.put("latitude",Double.valueOf(lat));
+        paramMap.put("districtCode",code);
+        String getRegionalIndex = cloudFunctionUtils.InvokeFunction("getRegionalIndex", paramMap);
+        String regionalIndex = JSON.parseObject(getRegionalIndex).getString("result");
+
+        // 需要调用计算易感指数
+        Map<String,Object> paramMap1 = new HashMap<>();
+        paramMap1.put("longitude",Double.valueOf(lon));
+        paramMap1.put("latitude",Double.valueOf(lat));
+        paramMap1.put("adcode",code);
+        paramMap1.put("_openid",openid);
+        String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
+        String index = JSON.parseObject(covIndexCalcualate).getString("index");
+        Boolean hasSick = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("hasSick"));
+        Boolean isDg1 = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("isDistancegt1"));
+        dataBaseUtils.updateData("db.collection('report')." +
+                "where({_id: '%s'})." +
+                "update({data:{address: '%s',isSymptom: '%s',status: '%s'," +
+                "subversionStatus: '%s',isTravel: %s,address: '%s',adcode: '%s'," +
+                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s}})",reportId,Address,symptom,status,subversion,false,address,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1);
+    }
+    @Override
+    public void changeReport2(String reportId, ReportLocation Address, Boolean symptom, String status, String subversion, String travelNumber,String openid) {
+        String lon = Address.getLng();
+        String lat = Address.getLat();
+        String key = tencentAPIProperties.getKey();
+        Map<String, String> adcodeMap = GetAdcode.getAdcode(lon, lat, key);
+        String address = adcodeMap.get("address");
+        String code = adcodeMap.get("adcode");
+        // 需要调用计算地区易感指数
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("longitude",Double.valueOf(lon));
+        paramMap.put("latitude",Double.valueOf(lat));
+        paramMap.put("districtCode",code);
+        String getRegionalIndex = cloudFunctionUtils.InvokeFunction("getRegionalIndex", paramMap);
+        String regionalIndex = JSON.parseObject(getRegionalIndex).getString("result");
+
+        // 需要调用计算易感指数
+        Map<String,Object> paramMap1 = new HashMap<>();
+        paramMap1.put("longitude",Double.valueOf(lon));
+        paramMap1.put("latitude",Double.valueOf(lat));
+        paramMap1.put("adcode",code);
+        paramMap1.put("_openid",openid);
+        String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
+        String index = JSON.parseObject(covIndexCalcualate).getString("index");
+        Boolean hasSick = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("hasSick"));
+        Boolean isDg1 = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("isDistancegt1"));
+        dataBaseUtils.updateData("db.collection('report')." +
+                "where({_id: '%s'})." +
+                "update({data:{address: '%s',isSymptom: '%s',status: '%s'," +
+                "subversionStatus: '%s',isTravel: %s,address: '%s',adcode: '%s'," +
+                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,travelNumber: '%s'}})",reportId,Address,symptom,status,subversion,true,address,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,travelNumber);
+    }
 }

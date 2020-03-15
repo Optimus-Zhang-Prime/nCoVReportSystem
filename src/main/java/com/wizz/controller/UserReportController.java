@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wizz.entity.Report;
 import com.wizz.entity.Location;
+import com.wizz.entity.ReportLocation;
 import com.wizz.service.DailyReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,24 +28,24 @@ public class UserReportController {
     }
     @ResponseBody//代替用户打卡，无出行
     @RequestMapping(path = "user/adminreport1/", method = RequestMethod.POST)
-    public Integer adminHelpReport(@RequestParam("userid")String userid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion){
+    public Integer adminHelpReport(@RequestParam("userid")String userid, @RequestParam("address") ReportLocation Address, @RequestParam("symbol")Boolean symbol, @RequestParam("status")String status, @RequestParam("subversion") String subversion){
         return dailyReportService.helpReport(userid,Address,symbol,status,subversion);
     }
     @ResponseBody//代替用户打卡,有出行
     @RequestMapping(path = "user/adminreport2/", method = RequestMethod.POST)
-    public Integer adminHelpReport2(@RequestParam("userid")String userid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
+    public Integer adminHelpReport2(@RequestParam("userid")String userid,@RequestParam("address")ReportLocation Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
         return dailyReportService.helpReport(userid,Address,symbol,status,subversion,travelNumber);
     }
 
     @ResponseBody//修改用户打卡,无出行
     @RequestMapping(path = "user/changereport1/", method = RequestMethod.POST)
-    public Integer changeReport(@RequestParam("reportid")String reportid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion){
-        return dailyReportService.changeReport(reportid,Address,symbol,status,subversion);
+    public Integer changeReport(@RequestParam("reportid")String reportid,@RequestParam("address")ReportLocation Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("openid") String openid){
+        return dailyReportService.changeReport(reportid,Address,symbol,status,subversion,openid);
     }
     @ResponseBody//修改用户打卡,有出行
     @RequestMapping(path = "user/changereport2/", method = RequestMethod.POST)
-    public Integer changeReport2(@RequestParam("reportid")String reportid,@RequestParam("address")String Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber){
-        return dailyReportService.changeReport(reportid,Address,symbol,status,subversion,travelNumber);
+    public Integer changeReport2(@RequestParam("reportid")String reportid,@RequestParam("address")ReportLocation Address,@RequestParam("symbol")Boolean symbol,@RequestParam("status")String status,@RequestParam("subversion") String subversion,@RequestParam("travelNumber")String travelNumber,@RequestParam("openid") String openid){
+        return dailyReportService.changeReport(reportid,Address,symbol,status,subversion,travelNumber,openid);
     }
 //    @ResponseBody//查看用户地理信息
 //    @RequestMapping(path = "user/location/", method = RequestMethod.POST)

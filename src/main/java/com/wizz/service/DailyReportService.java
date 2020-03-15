@@ -4,6 +4,7 @@ package com.wizz.service;
 import com.wizz.dao.impl.ReportDaoImpl;
 import com.wizz.entity.Report;
 import com.wizz.entity.Location;
+import com.wizz.entity.ReportLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class DailyReportService {
     public List<Report> seeUserReport(String id) {
             return reportDao.getReportByUserId(id);
     }
-    public Integer helpReport(String userid,String Address,Boolean symbol,String status,String subversion){
+    public Integer helpReport(String userid, ReportLocation Address, Boolean symbol, String status, String subversion){
         try {
             Date day=new Date();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -31,7 +32,7 @@ public class DailyReportService {
             return 1006;
         }
     }
-    public Integer helpReport(String userid,String Address,Boolean symbol,String status,String subversion,String travelNumber){
+    public Integer helpReport(String userid,ReportLocation Address,Boolean symbol,String status,String subversion,String travelNumber){
         try{
             Date day=new Date();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -43,9 +44,9 @@ public class DailyReportService {
             return 1006;
         }
     }
-    public Integer changeReport(String reportId,String Address,Boolean symbol,String status,String subversion){
+    public Integer changeReport(String reportId,ReportLocation Address,Boolean symbol,String status,String subversion,String openid){
         try {
-            reportDao.changeReport(reportId, Address, symbol, status, subversion);
+            reportDao.changeReport(reportId, Address, symbol, status, subversion,openid);
             return 1000;
         }
         catch (Exception e){
@@ -53,9 +54,9 @@ public class DailyReportService {
             return 1006;
         }
     }
-    public Integer changeReport(String reportId,String Address,Boolean symbol,String status,String subversion,String travelNumber){
+    public Integer changeReport(String reportId,ReportLocation Address,Boolean symbol,String status,String subversion,String travelNumber,String openid){
         try {
-            reportDao.changeReport2(reportId, Address, symbol, status, subversion,travelNumber);
+            reportDao.changeReport2(reportId, Address, symbol, status, subversion,travelNumber,openid);
             return 1000;
         }
         catch (Exception e){
