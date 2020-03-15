@@ -12,6 +12,13 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 public class MyConverter implements Converter<String, ReportLocation> {
+    /** @Description: 用于把address请求参数转变为ReportLocation类型进行解析
+    * @Param: [s]
+    * @return: com.wizz.entity.ReportLocation
+    * @Author: 李佳
+    * @Date: 2020/3/15
+    */
+    
     @Override
     public ReportLocation convert(String s) {
         return JSON.parseObject(s, ReportLocation.class);

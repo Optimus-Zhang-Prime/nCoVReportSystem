@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  **/
 @Configuration
 public class CorsConfiguration implements WebMvcConfigurer{
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // 设置要暴露的header，因为非同源的情况下，不能获取全部头部信息
