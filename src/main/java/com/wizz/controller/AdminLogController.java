@@ -35,16 +35,12 @@ public class AdminLogController {
     @ResponseBody//发送验证码
     @RequestMapping(path = "yanzheng/", method = RequestMethod.POST)
     public JSONObject yanZheng(@Valid @Length(min = 11,max = 11,message = "手机号不符合规范") @RequestParam("tel") String tel) {
-        JSONObject jsonObject = new JSONObject();
-        try{         
-            List<Org> orgList = adminlogService.getOrgByAdmin(tel);           
-            if(orgList == null || orgList.size() == 0 ){
+        JSONObject jsonObject = new JSONObject();         
+        List<Org> orgList = adminlogService.getOrgByAdmin(tel);           
+        if(orgList == null || orgList.size() == 0 ){
                 jsonObject.put("code", 1004);
+                jsonObject.put("msg", "该电话不具有管理员权限");
                 return jsonObject;
-            }
-        } catch(Exception e) {
-            jsonObject.put("code", 1004);
-            return jsonObject;
         }
         try {
             //随机生成验证码
@@ -52,11 +48,13 @@ public class AdminLogController {
             SendMess.sendCode(tel,code);
             yanzhengdao.save(tel,code);//保存或修改
             jsonObject.put("code", 1000);
+            jsonObject.put("msg", "短信发送成功");
             return jsonObject;
         } catch (Exception e) {
 //            throw new ControllerException(e.getMessage());
             e.printStackTrace();
             jsonObject.put("code", 1006);
+            jsonObject.put("msg", "短信发送失败");
             return jsonObject;
         }
     }
@@ -72,12 +70,14 @@ public class AdminLogController {
         catch(Exception e){
             e.printStackTrace();
             jsonObject.put("code", 1006);
+            jsonObject.put("msg", "未找到验证码");
+            jsonObject.put("grade", "");
+            jsonObject.put("orgList", "");
             return jsonObject;
         }
         if(code.equals(acode)){
             Cookie cookie = new Cookie("name", tel);
             response.addCookie(cookie);
-            jsonObject.put("code", 1000);
             try {
                 List<Org> orgList = adminlogService.getOrgByAdmin(tel);
                 Integer grade=3;
@@ -87,11 +87,16 @@ public class AdminLogController {
                         grade=g;
                     }
                 }
+                jsonObject.put("code", 1000);
+                jsonObject.put("msg", "验证成功");
                 jsonObject.put("grade", grade);
                 jsonObject.put("orgList", orgList);
+
             }
             catch (Exception e){
                 e.printStackTrace();
+                jsonObject.put("code", 1006);
+                jsonObject.put("msg", "验证失败，请联系系统管理员");
                 jsonObject.put("grade", "");
                 jsonObject.put("orgList", "");
             }
@@ -99,6 +104,9 @@ public class AdminLogController {
         }
         else{
             jsonObject.put("code", 1006);
+            jsonObject.put("msg", "验证码错误");
+            jsonObject.put("grade", "");
+            jsonObject.put("orgList", "");
             return jsonObject;
         }
 //
