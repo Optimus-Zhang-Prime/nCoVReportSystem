@@ -28,7 +28,7 @@ public class AutoSendMessScheduler {
     OrgDaoImpl orgDao;
 
     //每天晚上18点05自动执行（为Application类添加@EnableScheduling注释后启动）
-    //@Scheduled(cron = "0 00 18 ? * *")
+    @Scheduled(cron = "0 00 18 ? * *")
     public void SendMessToUser() {
         int FailSending = 0;
         System.out.println("向未打卡用户发送消息提醒，任务执行时间：" + dateFormat.format(new Date()));
@@ -49,7 +49,7 @@ public class AutoSendMessScheduler {
     }
 
     //每天晚上10点自动执行（为Application类添加@EnableScheduling注释后启动）
-    //@Scheduled(cron = "0 00 22 ? * *")
+    @Scheduled(cron = "0 00 22 ? * *")
     public void SendMessToAdmin() {
         int FailSending = 0;
         System.out.println("向三级组织管理员发送消息提醒，任务执行时间：" + dateFormat.format(new Date()));
