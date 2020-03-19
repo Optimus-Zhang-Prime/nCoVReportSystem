@@ -1,6 +1,9 @@
 package com.wizz.utils;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
+import com.github.qcloudsms.SmsMultiSender;
+import com.github.qcloudsms.SmsMultiSenderResult;
+
 
 import java.util.Random;
 
@@ -38,9 +41,8 @@ public class SendMess {
         String smsSign = "疫卡通"; // NOTE: 签名参数使用的是`签名内容`，而不是`签名ID`。这里的签名"腾讯云"只是示例，真实的签名需要在短信控制台申请
         try {
             String[] params = {};
-            SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
-            SmsSingleSenderResult result = ssender.sendWithParam("86", phoneNumbers,
-                    templateId, params, smsSign, "", "");
+            SmsMultiSender msender = new SmsMultiSender(appid, appkey);
+        SmsMultiSenderResult result =  msender.sendWithParam("86", phoneNumbers,templateId, params, smsSign, "", "");
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
