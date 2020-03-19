@@ -14,6 +14,7 @@ public class Org//组织
     private String parent;//所属的项目
     private String classA;
     private String classB;
+    public Integer num;//人数，数据库里没有这个
 
     public String getOrgIdForClassB() {
         return orgIdForClassB;
