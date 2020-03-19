@@ -97,8 +97,8 @@ public class OrgDaoImpl implements OrgDao {
     }
 
     @Override
-    public List<Org> gerOrgByProjectId(String projectID) {
-        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(1000).where({parent: '%s'}).get()",projectID);
+    public List<Org> gerOrgByProjectId(String projectID) {//只返回一级组织
+        QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(1000).where({parent: '%s',grade: %d}).get()",projectID,1);
         // 获得data字段
         List<String> strOutput = queryReturn.getData();
         // 获得errcode
