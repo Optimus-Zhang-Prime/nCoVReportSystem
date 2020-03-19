@@ -98,23 +98,33 @@ public class SeeStateService {//按组织查看疫情信息
         }
     }
 
-    public Org getorgByid(String _id){//通过_id查找组织(3月14日新增）
+    public Org getorgByid(String _id){//通过_id查找组织(3
         Org org=orgDao.getorgByid(_id);
         return org;
     }    
 
     public List<Org> getorgByProject(String projectid){//获取项目下所有组织
-        List<Org> orgList=orgDao.gerOrgByProjectId(projectid);
+        
+        List<Org> orgList=orgDao.gerOrgByProjectId(projectid);//组织列表
+        for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
+            org.num=orgDao.getUserAccount(org.get_id());    
+        }
         return orgList;
     }
 
-    public List<Org> getorgByParentClass(Integer orggrade,String orgid){//获取项目下所有组织
+    public List<Org> getorgByParentClass(Integer orggrade,String orgid){//获取组织下所有组织
         List<Org> orgList = new ArrayList<>();
         if(orggrade==1){
             orgList=orgDao.getClassBOrgByParentClass(orgid);
+            for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
+                org.num=orgDao.getUserAccount(org.get_id());    
+            }
         }
         else if(orggrade==2){
             orgList=orgDao.getClassCOrgByParentClass(orgid);
+            for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
+                org.num=orgDao.getUserAccount(org.get_id());    
+            }
         }
         return orgList;
     }
