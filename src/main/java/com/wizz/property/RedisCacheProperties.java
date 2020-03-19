@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
- * @descrip：redis缓存配置
+ * @descrip：redis缓存获取access_token的配置
  * @author: 李佳
  * @create： 2020-03-08-08:41
  **/

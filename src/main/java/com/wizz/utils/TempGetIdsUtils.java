@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * @descrip：临时获得ids数据，注意只是项目初始化的时候，可以使用
+ * @descrip：临时获得学校提供的ids数据，注意只是项目初始化的时候，可以使用
  * @author: 李佳
  * @create： 2020-02-27-19:01
  **/
@@ -29,7 +29,7 @@ public class TempGetIdsUtils {
     @Autowired
     private IdsProperties idsProperties;
     RestTemplate restTemplate = new RestTemplate();
-    /** @Description: 获得ids的access_token
+    /** @Description: 获得ids的access_token，需要注意的是使用ids的过程中并未判断accessToken是否失效
     * @Param: []
     * @return: java.lang.String
     * @Author: 李佳
@@ -47,6 +47,13 @@ public class TempGetIdsUtils {
         String output = (String) idsReturn.getResult().get("access_token");
         return output;
     }
+    /** @Description: 分页查询学生数据
+    * @Param: [accessToken, page]
+    * @return: com.alibaba.fastjson.JSONArray
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+
     public JSONArray getPageData (String accessToken, String page) {
         String url = idsProperties.getGetIdsData() + accessToken + "&per_page=" + idsProperties.getGetIdsTokenParams() +"&page=" + page;
         String rawOutput = restTemplate.getForObject(url,String.class);
@@ -59,6 +66,13 @@ public class TempGetIdsUtils {
             return (JSONArray) result.get("data");
         }
     }
+    /** @Description: 分页查询院系组织数据
+    * @Param: [accessToken, page]
+    * @return: com.alibaba.fastjson.JSONArray
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+
     public JSONArray getPageDataDepartment (String accessToken, String page) {
         String url = idsProperties.getGetIdsDepartment() + accessToken + "&per_page=" + idsProperties.getGetIdsTokenParams() +"&page=" + page;
         String rawOutput = restTemplate.getForObject(url,String.class);
@@ -71,7 +85,13 @@ public class TempGetIdsUtils {
             return (JSONArray) result.get("data");
         }
     }
-    // 从ids导入学生信息
+    /** @Description: 向数据库导入学生信息
+    * @Param: []
+    * @return: java.lang.String
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+
     public String dbTransfer () {
         String accessToken = getIdsAccessToken();
         Integer page = 1;
@@ -83,6 +103,7 @@ public class TempGetIdsUtils {
             Map<String,Object> map = dataBaseProperties.getDbBody();
             for (Iterator<Object> iterator = data.iterator(); iterator.hasNext();) {
                 JSONObject jsonObject = (JSONObject) iterator.next();
+                // 数据库字段的信息的预解析
                 String name = jsonObject.getString("XM");
                 String number = jsonObject.getString("XH");
                 String classB = jsonObject.getString("YXDM");
@@ -104,7 +125,13 @@ public class TempGetIdsUtils {
         }
         return "成功";
     }
-    // 用来从ids中导入学院数据
+    /** @Description: 向数据库中导入院系组织信息
+    * @Param: []
+    * @return: java.lang.String
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+
     public String dbTransferDepartment () {
         String accessToken = getIdsAccessToken();
         Integer page = 1;
@@ -116,7 +143,6 @@ public class TempGetIdsUtils {
             Map<String,Object> map = dataBaseProperties.getDbBody();
             for (Iterator<Object> iterator = data.iterator(); iterator.hasNext();) {
                 JSONObject jsonObject = (JSONObject) iterator.next();
-//                System.out.println(jsonObject);
                 String depID = jsonObject.getString("XSH");
                 String depName = jsonObject.getString("XSM");
                 map.put("query",String.format("db.collection('department').add({data:[{depId: '%s', depName: '%s'}]})",depID,depName));

@@ -26,9 +26,10 @@ public class CloudFunctionUtils {
         String token = tokenUtils.getAccessToken();
         String Rawurl = dataBaseProperties.getCloudFunction() + token;
         String url = String.format(Rawurl+"&env=%s&name=%s",dataBaseProperties.getDbBody().get("env"),func);
+        // 云函数参数
         Map<String,Object> map = new HashMap<>();
         map.putAll(argMap);
-//        System.out.println(url);
+        // 执行云函数
         CloudFunctionReturn cloudFunctionReturn = restTemplate.postForObject(url, map, CloudFunctionReturn.class);
         String errcode = cloudFunctionReturn.getErrcode();
         // 这里实际上可以使用注解进行校验  参考codesheep

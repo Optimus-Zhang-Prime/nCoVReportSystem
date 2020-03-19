@@ -28,6 +28,13 @@ import java.util.List;
  **/
 @Component
 public class ExcelParseUtil {
+    /** @Description: Excel解析，目前未使用
+    * @Param: [inputStream, fileName]
+    * @return: void
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+    
     public static void  ExcelParseUtil (InputStream inputStream, String fileName){
         /**
          * 这个inputStream文件可以来源于本地文件的流，
@@ -88,6 +95,13 @@ public class ExcelParseUtil {
         }
 
     }
+    /** @Description: 文件名的编码，为了解决中文名的编码问题，但是并无卵用
+    * @Param: [filename]
+    * @return: java.lang.String
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+    
     private String encodeFilename(final String filename)
     {
         try{
@@ -99,6 +113,13 @@ public class ExcelParseUtil {
             return filename;
         }
     }
+    /** @Description: 写Excel内容，目前仅支持ReportsByDate的数据格式的写入，其实应该定义高一层的数据接口
+    * @Param: [excelContent, httpServletResponse]
+    * @return: void
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+    
     public void writeExcel(ExcelContent<List<ReportsByDate>> excelContent, HttpServletResponse httpServletResponse){
         HSSFWorkbook wb = new HSSFWorkbook();
         //创建一个工作本

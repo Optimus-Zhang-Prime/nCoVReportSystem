@@ -77,23 +77,26 @@ public class OrgDaoImpl implements OrgDao {
     public void addOrg1(String project, String name, Integer grade) {
         dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d}]})",project,name,grade);
     }
-// 第二级组织是院系，需要进行院系代码与院系名字的转换
+
     @Override
     public void addOrg2(String project, String name, Integer grade, String classA) {
+        // 添加组织信息的时候，需要把院系的标准化名字转为院系代码，添加到组织信息中，便于对应用户
         String departmentid = departmentMapUtils.getDepartmentid(name);
         dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s',orgIdForClassB: '%s'}]})",project,name,grade,classA,departmentid);
     }
+
     @Override
     public void addOrg3(String project, String name, Integer grade, String classA, String classB) {
         dataBaseUtils.addData("db.collection('org').add({data:[{parent: '%s', name: '%s',grade: %d,classA: '%s',classB: '%s'}]})",project,name,grade,classA,classB);
     }
+
     @Override
     public void deleteAdmin(String orgID, String tel) {
         Map<String,Object> map = new HashMap<>();
         map.put("orgid",orgID);
         map.put("tel",tel);
-        String listDelete = cloudFunctionUtils.InvokeFunction("listDelete", map);
-        System.out.println(listDelete);
+        // 之所以这里使用云函数是因为小程序数据库奇葩地不支持删除数组中的成员的操作
+        cloudFunctionUtils.InvokeFunction("listDelete", map);
     }
 
     @Override
@@ -170,7 +173,6 @@ public class OrgDaoImpl implements OrgDao {
         List<String> strOutput = queryReturn.getData();
         // 获得errcode
         String errcode = queryReturn.getErrcode();
-        // 这里实际上可以使用注解进行校验  参考codesheep
         if (!"0".equals(errcode)) {
             throw new DbErrorException("org数据库访问出错了----getclassCOrg");
         }
@@ -183,34 +185,17 @@ public class OrgDaoImpl implements OrgDao {
         }
         return tempList;
     }
-    /** @Description: 三级组织人数查询
-    * @Param: [classA, classB, classC]
-    * @return: java.lang.Integer
-    * @Author: 李佳
-    * @Date: 2020/3/19
-    */
 
     @Override
     public Integer getUserAccount(String classA,String classB,String classC) {
         return dataBaseUtils.getCount("db.collection('user-1').where({classA:'%s',classB:'%s',classC:'%s'}).count()",classA,classB,classC);
     }
-/** @Description: 二级组织查询
-* @Param: [classA, classB]
-* @return: java.lang.Integer
-* @Author: 李佳
-* @Date: 2020/3/19
-*/
 
     @Override
     public Integer getUserAccount(String classA, String classB) {
         return dataBaseUtils.getCount("db.collection('user-1').where({classA:'%s',classB:'%s'}).count()",classA,classB);
     }
-/** @Description: 一级组织查询
-* @Param: [classA]
-* @return: java.lang.Integer
-* @Author: 李佳
-* @Date: 2020/3/19
-*/
+
     @Override
     public Integer getUserAccount(String classA) {
         return dataBaseUtils.getCount("db.collection('user-1').where({classA:'%s'}).count()",classA);

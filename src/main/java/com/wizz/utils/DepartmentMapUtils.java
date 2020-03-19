@@ -25,9 +25,8 @@ public class DepartmentMapUtils {
         List<String> strOutput = queryReturn.getData();
         // 获得errcode
         String errcode = queryReturn.getErrcode();
-        // 这里实际上可以使用注解进行校验  参考codesheep
         if (!"0".equals(errcode)) {
-            throw new DbErrorException("");
+            throw new DbErrorException("department表查询失败");
         } else if (strOutput.isEmpty()) {
             throw new DbErrorException("此院系不存在");
         }

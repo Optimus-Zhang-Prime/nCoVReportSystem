@@ -91,7 +91,7 @@ public class ReportDaoImpl implements ReportDao {
         return tempList;
     }
     @Override
-    public void saveReport(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String createTime,String openid) {
+    public void saveReport(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String createTime) {
         String lon = Address.getLng();
         String lat = Address.getLat();
         String key = tencentAPIProperties.getKey();
@@ -111,7 +111,7 @@ public class ReportDaoImpl implements ReportDao {
         paramMap1.put("longitude",Double.valueOf(lon));
         paramMap1.put("latitude",Double.valueOf(lat));
         paramMap1.put("adcode",code);
-        paramMap1.put("_openid",openid);
+        paramMap1.put("_openid",userid);
         String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
         String index = JSON.parseObject(covIndexCalcualate).getString("index");
         Boolean hasSick = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("hasSick"));
@@ -121,7 +121,7 @@ public class ReportDaoImpl implements ReportDao {
                 "createTime: '%s',adcode: '%s',covIndex: %d,hasSick: %s,isDistancegt1: %s, isTravel: %s,regionalIndex: %d,sick: %s}]})",userid,address,symptom,status,subversion,createTime,code,Integer.valueOf(index),hasSick,isDg1,false,Integer.valueOf(regionalIndex),false);
     }
     @Override
-    public void saveReport2(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String travelNumber, String createTime,String openid) {
+    public void saveReport2(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String travelNumber, String createTime) {
         String lon = Address.getLng();
         String lat = Address.getLat();
         String key = tencentAPIProperties.getKey();
@@ -141,7 +141,7 @@ public class ReportDaoImpl implements ReportDao {
         paramMap1.put("longitude",Double.valueOf(lon));
         paramMap1.put("latitude",Double.valueOf(lat));
         paramMap1.put("adcode",code);
-        paramMap1.put("_openid",openid);
+        paramMap1.put("_openid",userid);
         String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
         String index = JSON.parseObject(covIndexCalcualate).getString("index");
         Boolean hasSick = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("hasSick"));

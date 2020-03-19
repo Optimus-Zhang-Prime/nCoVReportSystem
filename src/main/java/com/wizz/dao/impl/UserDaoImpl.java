@@ -164,12 +164,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> UserWithoutReport(String orgfathername,Integer orggrade, String orgid) {
+    public List<User> UserWithoutReport(String orgfathername,Integer orggrade, String orgid,String orggrandfathername) {
         QueryReturn queryReturn = null;
         if (orggrade == 2) {
             queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').limit(1000).where({isPushed: %s,classB: '%s',classA: '%s'}).get()", false,orgid,orgfathername);
         } else if (orggrade == 3) {
-            queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').limit(1000).where({isPushed: %s,classC: '%s',classB: '%s'}).get()", false,orgid,orgfathername);
+            queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').limit(1000).where({isPushed: %s,classC: '%s',classB: '%s',classA: '%s'}).get()", false,orgid,orgfathername,orggrandfathername);
         } else if (orggrade == 1) {
             queryReturn = dataBaseUtils.getQueryResult("db.collection('user-1').limit(1000).where({isPushed: %s,classA: '%s'}).get()", false,orgid);
         }

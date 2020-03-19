@@ -38,7 +38,7 @@ public class AutoSendMessScheduler {
         List<String> list=new ArrayList();//用户电话列表
         
         for (Org org : orgList) {//每个组织
-            List<User> userWithoutReportList = userDao.UserWithoutReport(org.getClassB(), 3, org.getName());
+            List<User> userWithoutReportList = userDao.UserWithoutReport(orgDao.getorgByid(org.getClassB()).getOrgIdForClassB(), 3, org.getName(),orgDao.getorgByid(org.getClassA()).getName());
             for (User user : userWithoutReportList) {//每个用户
                 try {
                     list.add(user.getPhone());
@@ -63,7 +63,7 @@ public class AutoSendMessScheduler {
         System.out.println("向三级组织管理员发送消息提醒，任务执行时间：" + dateFormat.format(new Date()));
         List<Org> orgList = orgDao.getclassCOrg();// 返回所有三级组织
         for (Org org : orgList) {//每个组织
-            List<User> userWithoutReportList = userDao.UserWithoutReport(org.getClassB(), 3, org.getName());
+            List<User> userWithoutReportList = userDao.UserWithoutReport(orgDao.getorgByid(org.getClassB()).getOrgIdForClassB(), 3, org.getName(),orgDao.getorgByid(org.getClassA()).getName());
             Integer num = userWithoutReportList.size();
             for (String tel : org.getAdmins()) {//该组织的每个管理员
                 try {

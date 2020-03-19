@@ -51,7 +51,7 @@ public class ProjectDaoImpl  implements ProjectDao {
     public void deleteProject(String projectId) {
         dataBaseUtils.deleteData("db.collection('project').where({_id:'%s'}).remove()",projectId);
     }
-    //删除“parent”字段为该projectid的所有组织
+
     @Override
     public void deleteOrgByProject(String projectId) {
         dataBaseUtils.deleteData("db.collection('org').where({parent:'%s'}).remove()",projectId);

@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 /**
- * @descrip：数据库查询的工具类
+ * @descrip：小程序云开发数据库CRUD的工具类
  * @author: 李佳
  * @create： 2020-02-28-16:31
  **/
@@ -36,7 +36,6 @@ public class DataBaseUtils {
         logger.info("数据库query "+ queryString + map.toString());
         // json返回值
         String rawOutput = restTemplate.postForObject(queryString,map,String.class);
-//        System.out.println(rawOutput);
         // json对象映射
         QueryReturn queryReturn = JSON.parseObject(rawOutput, QueryReturn.class);
         return queryReturn;
@@ -54,7 +53,6 @@ public class DataBaseUtils {
         AddReturn addReturn = JSON.parseObject(rawOutput, AddReturn.class);
         // 获得errcode
         String errcode = addReturn.getErrcode();
-        // 这里实际上可以使用注解进行校验  参考codesheep
         if (!"0".equals(errcode)) {
             throw new DbErrorException(addReturn.getErrmsg());
         }
@@ -74,9 +72,8 @@ public class DataBaseUtils {
         UpdateReturn updateReturn = JSON.parseObject(rawOutput, UpdateReturn.class);
         // 获得errcode
         String errcode = updateReturn.getErrcode();
-        String errmsg = updateReturn.getErrmsg();
         if (!"0".equals(errcode)) {
-            throw new DbErrorException(errmsg);
+            throw new DbErrorException(updateReturn.getErrmsg());
         }
     }
     //删除
@@ -93,9 +90,8 @@ public class DataBaseUtils {
         DeleteReturn deleteReturn = JSON.parseObject(rawOutput, DeleteReturn.class);
         // 获得errcode
         String errcode = deleteReturn.getErrcode();
-        String errmsg = deleteReturn.getErrmsg();
         if (!"0".equals(errcode)) {
-            throw new DbErrorException(errmsg);
+            throw new DbErrorException(deleteReturn.getErrmsg());
         }
     }
     // 获得集合数量
@@ -112,9 +108,8 @@ public class DataBaseUtils {
         CountReturn countReturn = JSON.parseObject(rawOutput, CountReturn.class);
         // 获得errcode
         String errcode = countReturn.getErrcode();
-        String errmsg = countReturn.getErrmsg();
         if (!"0".equals(errcode)) {
-            throw new DbErrorException(errmsg);
+            throw new DbErrorException(countReturn.getErrmsg());
         }
         return countReturn.getCount();
     }

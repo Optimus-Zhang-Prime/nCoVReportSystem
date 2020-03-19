@@ -5,9 +5,13 @@ import com.wizz.entity.User;
 
 import java.util.List;
 
-
-public interface UserStateDao {//按组织查看学生身体状况
-
+/*
+*按组织查看学生身体状况
+* 如果是一级组织的话，orgid是本科生/研究生 orgfathername可为空 orggrandfathername可为空
+* 如果是二级组织的话，orgid是院系代码 orgfathername研究生、本科生 orggrandfathername可为空
+* 如果是三级组织的话，orgid是17、18、19 orgfathername为院系代码 orggrandfathername为研究生或者本科生
+ */
+public interface UserStateDao {
 
     List<User> getClassAilluser(String orgid);//返回一级组织（组织id为orgid）确诊用户
 

@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 public class DataBasePageUtils {
+    /** @Description: 简单地计算分页，一页50条数据，得到的是skip的参数值
+    * @Param: [page]
+    * @return: java.lang.Integer
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
     public Integer getSkip (Integer page) {
         return 50 * (page -1);
     }

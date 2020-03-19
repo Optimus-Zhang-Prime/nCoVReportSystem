@@ -2,10 +2,8 @@ package com.wizz.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
-import com.wizz.entity.jsonReturn.GetTokenReturn;
 import com.wizz.entity.jsonReturn.RedisCacheReturn;
 import com.wizz.exception.DbErrorException;
-import com.wizz.property.DataBaseProperties;
 import com.wizz.property.RedisCacheProperties;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
@@ -25,11 +23,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * @descrip：获取云开发数据库的access_token
+ * @descrip：获取云开发数据库的access_token，使用的是韩翔宇的Redis服务
  * @author: 李佳
  * @create： 2020-02-26-03:02
  **/
@@ -42,10 +38,12 @@ public class TokenUtils {
     public String getAccessToken () {
         HttpHeaders headers = new HttpHeaders();
         String url = redisCacheProperties.getUrl();
+        // 使用form_urlencode的请求体格式
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
         String nonce = RandomStringUtils.randomAlphanumeric(5);
         String md5 = getMD5(nonce+"yiqingtong2020");
+        // 在请求体重加入签名
         map.add("nonce", nonce);
         map.add("sign",md5);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
@@ -71,6 +69,13 @@ public class TokenUtils {
         logger.debug(result.toString());
         return result.getAccess_token();
     }
+    /** @Description: md5计算
+    * @Param: [str]
+    * @return: java.lang.String
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+    
     public String getMD5(String str) {
         byte[] secretBytes = null;
         try {
