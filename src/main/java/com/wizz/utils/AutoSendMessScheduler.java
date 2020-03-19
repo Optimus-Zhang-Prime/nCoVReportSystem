@@ -27,17 +27,20 @@ public class AutoSendMessScheduler {
     @Autowired
     OrgDaoImpl orgDao;
 
-    //每天晚上18点05自动执行（为Application类添加@EnableScheduling注释后启动）
+    //每天晚上18点00自动执行（为Application类添加@EnableScheduling注释后启动）
     @Scheduled(cron = "0 00 18 ? * *")
     public void SendMessToUser() {
         int FailSending = 0;
         System.out.println("向未打卡用户发送消息提醒，任务执行时间：" + dateFormat.format(new Date()));
         List<Org> orgList = orgDao.getclassCOrg();// 返回所有三级组织
+        
+        List<String> list=new ArrayList();//用户电话列表
+        
         for (Org org : orgList) {//每个组织
             List<User> userWithoutReportList = userDao.UserWithoutReport(org.getClassB(), 3, org.getName());
             for (User user : userWithoutReportList) {//每个用户
                 try {
-                    SendMess.sendNotice(user.getPhone());
+                    list.add(user.getPhone());
                 } catch (Exception e) {
                     e.printStackTrace();
                     FailSending += 1;
@@ -45,6 +48,10 @@ public class AutoSendMessScheduler {
             }
 
         }
+        String[] phoneNumbers=new String[list.size()];
+    	phoneNumbers=list.toArray(phoneNumbers);
+        SendMess.sendNotice(phoneNumbers);//发送短信
+        
         System.out.println(FailSending);
     }
 
