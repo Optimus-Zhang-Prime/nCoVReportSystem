@@ -183,4 +183,36 @@ public class OrgDaoImpl implements OrgDao {
         }
         return tempList;
     }
+    /** @Description: 三级组织人数查询
+    * @Param: [classA, classB, classC]
+    * @return: java.lang.Integer
+    * @Author: 李佳
+    * @Date: 2020/3/19
+    */
+
+    @Override
+    public Integer getUserAccount(String classA,String classB,String classC) {
+        return dataBaseUtils.getCount("db.collection('user-1').where({classA:'%s',classB:'%s',classC:'%s'}).count()",classA,classB,classC);
+    }
+/** @Description: 二级组织查询
+* @Param: [classA, classB]
+* @return: java.lang.Integer
+* @Author: 李佳
+* @Date: 2020/3/19
+*/
+
+    @Override
+    public Integer getUserAccount(String classA, String classB) {
+        return dataBaseUtils.getCount("db.collection('user-1').where({classA:'%s',classB:'%s'}).count()",classA,classB);
+    }
+/** @Description: 一级组织查询
+* @Param: [classA]
+* @return: java.lang.Integer
+* @Author: 李佳
+* @Date: 2020/3/19
+*/
+    @Override
+    public Integer getUserAccount(String classA) {
+        return dataBaseUtils.getCount("db.collection('user-1').where({classA:'%s'}).count()",classA);
+    }
 }

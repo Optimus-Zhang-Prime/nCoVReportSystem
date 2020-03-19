@@ -39,8 +39,7 @@ public class SendMess {
         try {
             String[] params = {};
             SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
-            SmsSingleSenderResult result = ssender.sendWithParam("86", phoneNumbers,
-                    templateId, params, smsSign, "", "");
+            SmsSingleSenderResult result = ssender.sendWithParam("86", phoneNumbers, templateId, params, smsSign, "", "");
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();

@@ -107,7 +107,17 @@ public class SeeStateService {//按组织查看疫情信息
         
         List<Org> orgList=orgDao.gerOrgByProjectId(projectid);//组织列表
         for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
-            org.num=orgDao.getUserAccount(org.get_id());    
+            switch (org.getGrade()){
+                case 1:
+                    org.setNum(orgDao.getUserAccount(org.getName()));
+                    break;
+                case 2:
+                    org.setNum(orgDao.getUserAccount(getorgByid(org.getClassA()).getName(),org.getOrgIdForClassB()));
+                    break;
+                case 3:
+                    org.setNum(orgDao.getUserAccount(getorgByid(org.getClassA()).getName(),getorgByid(org.getClassB()).getName(),org.getName()));
+                    break;
+            }
         }
         return orgList;
     }
@@ -117,13 +127,13 @@ public class SeeStateService {//按组织查看疫情信息
         if(orggrade==1){
             orgList=orgDao.getClassBOrgByParentClass(orgid);
             for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
-                org.num=orgDao.getUserAccount(org.get_id());    
+                org.setNum(orgDao.getUserAccount(org.getName()));
             }
         }
         else if(orggrade==2){
             orgList=orgDao.getClassCOrgByParentClass(orgid);
             for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
-                org.num=orgDao.getUserAccount(org.get_id());    
+                org.setNum(orgDao.getUserAccount(getorgByid(org.getClassA()).getName(),org.getOrgIdForClassB()));
             }
         }
         return orgList;

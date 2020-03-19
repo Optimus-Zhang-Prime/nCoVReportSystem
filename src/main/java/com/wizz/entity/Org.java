@@ -14,7 +14,15 @@ public class Org//组织
     private String parent;//所属的项目
     private String classA;
     private String classB;
-    public Integer num;//人数，数据库里没有这个
+    private Integer num;//人数，数据库里没有这个
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
 
     public String getOrgIdForClassB() {
         return orgIdForClassB;
@@ -24,7 +32,7 @@ public class Org//组织
         this.orgIdForClassB = orgIdForClassB;
     }
 
-    public Org(String _id, String _openid, String name, String owner, String orgIdForClassB, ArrayList<String> admins, Integer grade, String parent, String classA, String classB) {
+    public Org(String _id, String _openid, String name, String owner, String orgIdForClassB, ArrayList<String> admins, Integer grade, String parent, String classA, String classB, Integer num) {
         this._id = _id;
         this._openid = _openid;
         this.name = name;
@@ -35,6 +43,7 @@ public class Org//组织
         this.parent = parent;
         this.classA = classA;
         this.classB = classB;
+        this.num = num;
     }
 
     public Org() {

@@ -33,4 +33,7 @@ public interface OrgDao {//组织
     List<Org> getClassBOrgByParentClass (String orgId);
     List<Org> getClassCOrgByParentClass (String orgId);
     List<Org> getclassCOrg ();
+    Integer getUserAccount (String classA,String classB,String classC); // 三级
+    Integer getUserAccount (String classA,String classB); // 二级
+    Integer getUserAccount (String classA); // 一级
 }
