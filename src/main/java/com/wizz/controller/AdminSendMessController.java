@@ -69,16 +69,20 @@ public class AdminSendMessController {
     @RequestMapping(path = "sendmess/", method = RequestMethod.POST)
     public Integer setUserTel(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname")String orgname) {
         List<User> userWithoutReportList=userDao.UserWithoutReport(orgfathername,orggrade,orgname);
+        List<String> list=new ArrayList();//用户电话列表
             int FailSending=0;
             for(User user:userWithoutReportList){
                 try{
-                    SendMess.sendNotice(user.getPhone());
+                    list.add(user.getPhone());
                 }
                 catch (Exception e){
                     e.printStackTrace();
                     FailSending+=1;
                 }
             }
-            return  FailSending;
+        String[] phoneNumbers=new String[list.size()];
+    	phoneNumbers=list.toArray(phoneNumbers);
+        SendMess.sendNotice(phoneNumbers);//发送短信
+        return  FailSending;
     }
 }
