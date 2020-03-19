@@ -103,21 +103,11 @@ public class SeeStateService {//按组织查看疫情信息
         return org;
     }    
 
-    public List<Org> getorgByProject(String projectid){//获取项目下所有组织
+    public List<Org> getorgByProject(String projectid){//获取项目下所有一级组织
         
         List<Org> orgList=orgDao.gerOrgByProjectId(projectid);//组织列表
         for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
-            switch (org.getGrade()){
-                case 1:
-                    org.setNum(orgDao.getUserAccount(org.getName()));
-                    break;
-                case 2:
-                    org.setNum(orgDao.getUserAccount(getorgByid(org.getClassA()).getName(),org.getOrgIdForClassB()));
-                    break;
-                case 3:
-                    org.setNum(orgDao.getUserAccount(getorgByid(org.getClassA()).getName(),getorgByid(org.getClassB()).getOrgIdForClassB(),org.getName()));
-                    break;
-            }
+            org.setNum(orgDao.getUserAccount(org.getName()));
         }
         return orgList;
     }
