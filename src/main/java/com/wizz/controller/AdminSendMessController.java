@@ -38,6 +38,7 @@ public class AdminSendMessController {
         ajsonObject.put("userWithoutReport", userList);
         return ajsonObject;
     }
+    
     @ResponseBody//获取组织内未打卡且没绑定电话用户
     @RequestMapping(path = "getuserwithoutreportandtel/", method = RequestMethod.POST)
     public JSONObject getUserWithoutReportAndTel(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname")String orgname,@RequestParam("orggrandfathername") String orggrandfathername) {
@@ -45,19 +46,20 @@ public class AdminSendMessController {
         List<User> userWithoutReportAndTel=new ArrayList<User>();
         try {
             for (User user : userWithoutReportList) {
-                if (user.getPhone() == null || user.getPhone().equals("")){
+                if (user.getPhone() == null || user.getPhone().equals("")){//没有电话
                     userWithoutReportAndTel.add(user);
                 }
             }
         }
         catch (Exception e){
             e.printStackTrace();
-            System.out.println("");
+            System.out.println("getuserwithoutreportandtel/接口错误");
         }
         JSONObject ajsonObject = new JSONObject();
         ajsonObject.put("userWithoutReportAndTel", userWithoutReportAndTel);
         return ajsonObject;
     }
+
     @ResponseBody//用户电话
     @RequestMapping(path = "setusertel/", method = RequestMethod.POST)
     public Integer setUserTel(@RequestParam("useropenid") String useropenid,@Valid @Length(min = 11,max = 11,message = "手机号不符合规范")@RequestParam("tel")String tel) {
@@ -65,6 +67,7 @@ public class AdminSendMessController {
         userDao.setUserTel(useropenid,tel);
         return 1000;
     }
+    
     @ResponseBody//发送短信提醒
     @RequestMapping(path = "sendmess/", method = RequestMethod.POST)
     public Integer setUserTel(@RequestParam("orggrade") Integer orggrade,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname")String orgname,@RequestParam("orggrandfathername") String orggrandfathername) {
