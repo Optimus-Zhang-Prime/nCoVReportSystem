@@ -20,7 +20,7 @@ public class SeeOrgStateController {//按组织查看疫情信息
     @Autowired
     SeeStateService seeStateService;
 
-    @ResponseBody
+    @ResponseBody//组织内成员的详细状况
     @RequestMapping(path = "user/seeorgstate/", method = RequestMethod.POST)
     public String seeOrgState(@RequestParam("orggrade")Integer orggrade,@RequestParam("orggrandfathername") String orggrandfathername,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname") String orgname){
         List<User> illUsers =seeStateService.getIllUser(orggrandfathername,orggrade,orgfathername,orgname);//确诊人数
@@ -28,7 +28,6 @@ public class SeeOrgStateController {//按组织查看疫情信息
         List<User> HdangerUsers=seeStateService.getHdangerUser(orggrandfathername,orggrade,orgfathername,orgname);//高度易感
         List<User> MdangerUsers=seeStateService.getMdangerUser(orggrandfathername,orggrade,orgfathername,orgname);//易感
         List<User> LdangerUsers=seeStateService.getLdangerUser(orggrandfathername,orggrade,orgfathername,orgname);//无风险用户
-//        JSONObject ajsonObject = new JSONObject();
         Map<String,List<User>> map = new HashMap<>();
         map.put("illUsers", illUsers);
         map.put("HdangerUsers", HdangerUsers);
@@ -39,7 +38,7 @@ public class SeeOrgStateController {//按组织查看疫情信息
         return result;
     }
 
-    @ResponseBody
+    @ResponseBody//返回组织内全部用户
     @RequestMapping(path = "user/seealluser/", method = RequestMethod.POST)
     public String seeAllUser(@RequestParam("orggrade")Integer orggrade,@RequestParam("orggrandfathername") String orggrandfathername,@RequestParam("orgfathername") String orgfathername,@RequestParam("orgname") String orgname,@RequestParam("page")Integer page){
         List<User> allUsers =seeStateService.getAllUser(orggrandfathername,orggrade,orgfathername,orgname,page);//组织内全部用户
@@ -47,14 +46,14 @@ public class SeeOrgStateController {//按组织查看疫情信息
         return result;
     }
     
-    @ResponseBody
+    @ResponseBody//查看指定项目下的一级组织
     @RequestMapping(path = "user/seeorgByproject/", method = RequestMethod.POST)
     public String seeOrgInProject(@RequestParam("projectid")String projectid){
         List<Org> org =seeStateService.getorgByProject(projectid);
         String result = JSON.toJSONString(org);
         return result;
     }
-    @ResponseBody
+    @ResponseBody//查看指定组织的下一级组织
     @RequestMapping(path = "user/seeorgbyparent/", method = RequestMethod.POST)
     public String seeOrgByParentClass(@RequestParam("orggrade")Integer orggrade,@RequestParam("orgid")String orgid){
         List<Org> org =seeStateService.getorgByParentClass(orggrade,orgid);
