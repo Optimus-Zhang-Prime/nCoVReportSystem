@@ -45,13 +45,12 @@ public class AdminLogController {
         try {
             //随机生成验证码
             String code = String.valueOf(new Random().nextInt(9999));
-            SendMess.sendCode(tel,code);
+            SendMess.sendCode(tel,code);// 发送验证码
             yanzhengdao.save(tel,code);//保存或修改
             jsonObject.put("code", 1000);
             jsonObject.put("msg", "短信发送成功");
             return jsonObject;
         } catch (Exception e) {
-//            throw new ControllerException(e.getMessage());
             e.printStackTrace();
             jsonObject.put("code", 1006);
             jsonObject.put("msg", "短信发送失败");
@@ -63,7 +62,7 @@ public class AdminLogController {
     @RequestMapping(path = "getorgbyadmin/", method = RequestMethod.POST)
     public JSONObject getOrgByUser(@Valid @Length(min = 11,max = 11,message = "手机号不符合规范") @RequestParam("tel") String tel,@RequestParam("code") String code,HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
-        String acode = "";
+        String acode = "";//数据库中存的验证码
         try{
             acode=yanzhengdao.get(tel);//获取验证码
         }
@@ -75,7 +74,7 @@ public class AdminLogController {
             jsonObject.put("orgList", "");
             return jsonObject;
         }
-        if(code.equals(acode)){
+        if(code.equals(acode)){//验证成功
             Cookie cookie = new Cookie("name", tel);
             response.addCookie(cookie);
             try {
@@ -83,7 +82,7 @@ public class AdminLogController {
                 Integer grade=3;
                 for(Org org:orgList){//管理员所管理的最高级组织的等级
                     Integer g=org.getGrade();
-                    if(g<grade){
+                    if(g<grade){//选出最高级
                         grade=g;
                     }
                 }
@@ -109,23 +108,8 @@ public class AdminLogController {
             jsonObject.put("orgList", "");
             return jsonObject;
         }
-//
     }
-//    @ResponseBody//登录
-//    @RequestMapping(path = "login/", method = RequestMethod.POST)
-//    public String login(@RequestParam("tel") String tel, @RequestParam("password") String password, HttpServletResponse response,HttpSession httpSession) throws JSONException {
-//        JSONObject userCode = (JSONObject)httpSession.getAttribute("code");
-//        //验证码
-//        userCode .get("code");
-//        //手机号
-//        userCode.get("memPhone");
-//        Integer code = adminlogService.login(tel);
-//        if (code == 1000) {
-//            Cookie cookie = new Cookie("name", tel);
-//            response.addCookie(cookie);
-//        }
-//        return ForumUtils.toJsonString(code);
-//    }
+
 
     @ResponseBody//退出
     @RequestMapping(path = "user/logout/", method = RequestMethod.POST)
