@@ -65,13 +65,18 @@ public class AutoSendMessScheduler {
         for (Org org : orgList) {//每个组织
             List<User> userWithoutReportList = userDao.UserWithoutReport(orgDao.getorgByid(org.getClassB()).getOrgIdForClassB(), 3, org.getName(),orgDao.getorgByid(org.getClassA()).getName());
             Integer num = userWithoutReportList.size();
-            for (String tel : org.getAdmins()) {//该组织的每个管理员
-                try {
-                    SendMess.sendNoticeToAdmin(tel,num);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    FailSending += 1;
+            try{           
+                for (String tel : org.getAdmins()) {//该组织的每个管理员
+                    try {
+                        SendMess.sendNoticeToAdmin(tel,num);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        FailSending += 1;
+                    }
                 }
+            }catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("有组织没有管理员");
             }
 
         }
