@@ -106,9 +106,6 @@ public class SeeStateService {//按组织查看疫情信息
     public List<Org> getorgByProject(String projectid){//获取项目下所有一级组织
         
         List<Org> orgList=orgDao.gerOrgByProjectId(projectid);//组织列表
-        for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
-            org.setNum(orgDao.getUserAccount(org.getName()));
-        }
         return orgList;
     }
 
@@ -116,15 +113,9 @@ public class SeeStateService {//按组织查看疫情信息
         List<Org> orgList = new ArrayList<>();
         if(orggrade==1){
             orgList=orgDao.getClassBOrgByParentClass(orgid);
-            for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
-                org.setNum(orgDao.getUserAccount(getorgByid(org.getClassA()).getName(),org.getOrgIdForClassB()));
-            }
         }
         else if(orggrade==2){
             orgList=orgDao.getClassCOrgByParentClass(orgid);
-            for(Org org:orgList){//逐个组织查询用户数量，orgDao.getUserAccount（）参数可添加/修改
-                org.setNum(orgDao.getUserAccount(getorgByid(org.getClassA()).getName(),getorgByid(org.getClassB()).getOrgIdForClassB(),org.getName()));
-            }
         }
         return orgList;
     }
