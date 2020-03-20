@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class SendMess {
 
-    public static void sendCode(String tel,String code) {
+    public static void sendCode(String tel,String code) {//发送短信验证码
         // 短信应用 SDK AppID
         int appid = 1400332073; // SDK AppID 以1400开头
         // 短信应用 SDK AppKey
