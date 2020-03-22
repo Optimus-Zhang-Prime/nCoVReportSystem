@@ -21,9 +21,9 @@ public class UserStateScheduler{
     @Autowired
     UserDaoImpl userDao;
     private Logger logger = LoggerFactory.getLogger(getClass());
-    //每天晚上18点05执行（为Application类添加@EnableScheduling注释后启动）
-//    @Scheduled(cron = "0 05 18 ? * *")
-    @Scheduled(fixedRate = 1800000)
+    //每天凌晨03点05执行（为Application类添加@EnableScheduling注释后启动）
+    @Scheduled(cron = "0 05 03 ? * *")
+//    @Scheduled(fixedRate = 1800000)
     public void calculateUserState() {
         logger.info("计算用户身体状况，任务执行时间：" + dateFormat.format(new Date()));
         //计算累积易感指数的部分
