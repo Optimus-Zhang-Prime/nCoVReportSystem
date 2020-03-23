@@ -27,7 +27,6 @@ public class OrgDaoImpl implements OrgDao {
     CloudFunctionUtils cloudFunctionUtils;
     @Autowired
     DataBaseUtils dataBaseUtils;
-//    @Select({"select * from org where admin数组里有该name(电话号码)"})
     @Override
     public List<Org> getAdminUser_Org(String name) {
         QueryReturn queryReturn = dataBaseUtils.getQueryResult("db.collection('org').limit(100).where({admins: '%s'}).get()",name);
@@ -48,10 +47,14 @@ public class OrgDaoImpl implements OrgDao {
         }
         return tempList;
     }
-//    @Update({"update org 把admin表加上tel where id=#{orgid}"})
     @Override
     public void addAdmin(String orgid, String tel) {
-        dataBaseUtils.updateData("db.collection('org').where({_id: '%s'}).update({data:{admins: _.push('%s') }})",orgid,tel);
+        Map<String,Object> map = new HashMap<>();
+        map.put("orgid",orgid);
+        map.put("tel",tel);
+        // 之所以这里使用云函数是因为小程序数据库奇葩地不支持添加唯一数组成员的操作
+        cloudFunctionUtils.InvokeFunction("listInsert", map);
+//        dataBaseUtils.updateData("db.collection('org').where({_id: '%s'}).update({data:{admins: _.addToSet('%s') }})",orgid,tel);
     }
 
     @Override
