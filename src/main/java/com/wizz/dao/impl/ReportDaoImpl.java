@@ -200,7 +200,7 @@ public class ReportDaoImpl implements ReportDao {
                 "where({_id: '%s'})." +
                 "update({data:{address: '%s',isSymptom: '%s',status: '%s'," +
                 "subversionStatus: '%s',isTravel: %s,adcode: '%s'," +
-                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s}})",reportId,address,symptom,status,subversion,false,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1);
+                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,location:{type: 'Point',coordinates: [%d, %d]}}})",reportId,address,symptom,status,subversion,false,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,Double.valueOf(lon),Double.valueOf(lat));
     }
     @Override
     public void changeReport2(String reportId, ReportLocation Address, Boolean symptom, String status, String subversion, String travelNumber,String openid) {
@@ -232,6 +232,6 @@ public class ReportDaoImpl implements ReportDao {
                 "where({_id: '%s'})." +
                 "update({data:{address: '%s',isSymptom: '%s',status: '%s'," +
                 "subversionStatus: '%s',isTravel: %s,adcode: '%s'," +
-                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,travelNumber: '%s'}})",reportId,address,symptom,status,subversion,true,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,travelNumber);
+                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,travelNumber: '%s',location:{type: 'Point',coordinates: [%d, %d]}}})",reportId,address,symptom,status,subversion,true,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,travelNumber,Double.valueOf(lon),Double.valueOf(lat));
     }
 }
