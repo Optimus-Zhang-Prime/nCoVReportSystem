@@ -100,16 +100,16 @@ public class ReportDaoImpl implements ReportDao {
         String code = adcodeMap.get("adcode");
         // 需要调用计算地区易感指数
         Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("longitude",Double.valueOf(lon));
-        paramMap.put("latitude",Double.valueOf(lat));
+        paramMap.put("longitude",Float.valueOf(lon));
+        paramMap.put("latitude",Float.valueOf(lat));
         paramMap.put("districtCode",code);
         String getRegionalIndex = cloudFunctionUtils.InvokeFunction("getRegionalIndex", paramMap);
         String regionalIndex = JSON.parseObject(getRegionalIndex).getString("result");
 
         // 需要调用计算易感指数
         Map<String,Object> paramMap1 = new HashMap<>();
-        paramMap1.put("longitude",Double.valueOf(lon));
-        paramMap1.put("latitude",Double.valueOf(lat));
+        paramMap1.put("longitude",Float.valueOf(lon));
+        paramMap1.put("latitude",Float.valueOf(lat));
         paramMap1.put("adcode",code);
         paramMap1.put("_openid",userid);
         String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
@@ -118,7 +118,7 @@ public class ReportDaoImpl implements ReportDao {
         Boolean isDg1 = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("isDistancegt1"));
         dataBaseUtils.addData("db.collection('report')" +
                 ".add({data:[{_openid: '%s', address: '%s',isSymptom: %s,status: '%s',subversionStatus: '%s' ," +
-                "createTime: '%s',adcode: '%s',covIndex: %d,hasSick: %s,isDistancegt1: %s, isTravel: %s,regionalIndex: %d,sick: %s}]})",userid,address,symptom,status,subversion,createTime,code,Integer.valueOf(index),hasSick,isDg1,false,Integer.valueOf(regionalIndex),false);
+                "createTime: '%s',adcode: '%s',covIndex: %d,hasSick: %s,isDistancegt1: %s, isTravel: %s,regionalIndex: %d,sick: %s,location:{type: 'Point',coordinates: [%f, %f]}}]})",userid,address,symptom,status,subversion,createTime,code,Integer.valueOf(index),hasSick,isDg1,false,Integer.valueOf(regionalIndex),false,Float.valueOf(lon),Float.valueOf(lat));
     }
     @Override
     public void saveReport2(String userid, ReportLocation Address, Boolean symptom, String status, String subversion, String travelNumber, String createTime) {
@@ -130,16 +130,16 @@ public class ReportDaoImpl implements ReportDao {
         String code = adcodeMap.get("adcode");
         // 需要调用计算地区易感指数
         Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("longitude",Double.valueOf(lon));
-        paramMap.put("latitude",Double.valueOf(lat));
+        paramMap.put("longitude",Float.valueOf(lon));
+        paramMap.put("latitude",Float.valueOf(lat));
         paramMap.put("districtCode",code);
         String getRegionalIndex = cloudFunctionUtils.InvokeFunction("getRegionalIndex", paramMap);
         String regionalIndex = JSON.parseObject(getRegionalIndex).getString("result");
 
         // 需要调用计算易感指数
         Map<String,Object> paramMap1 = new HashMap<>();
-        paramMap1.put("longitude",Double.valueOf(lon));
-        paramMap1.put("latitude",Double.valueOf(lat));
+        paramMap1.put("longitude",Float.valueOf(lon));
+        paramMap1.put("latitude",Float.valueOf(lat));
         paramMap1.put("adcode",code);
         paramMap1.put("_openid",userid);
         String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
@@ -148,7 +148,7 @@ public class ReportDaoImpl implements ReportDao {
         Boolean isDg1 = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("isDistancegt1"));
         dataBaseUtils.addData("db.collection('report')" +
                 ".add({data:[{_openid: '%s', address: '%s',isSymptom: %s,status: '%s',subversionStatus: '%s' ," +
-                "createTime: '%s',adcode: '%s',covIndex: %d,hasSick: %s,isDistancegt1: %s, isTravel: %s,regionalIndex: %d,sick: %s,travelNumber: '%s'}]})",userid,address,symptom,status,subversion,createTime,code,Integer.valueOf(index),hasSick,isDg1,false,Integer.valueOf(regionalIndex),false,travelNumber);
+                "createTime: '%s',adcode: '%s',covIndex: %d,hasSick: %s,isDistancegt1: %s, isTravel: %s,regionalIndex: %d,sick: %s,travelNumber: '%s',location:{type: 'Point',coordinates: [%f, %f]}}]})",userid,address,symptom,status,subversion,createTime,code,Integer.valueOf(index),hasSick,isDg1,false,Integer.valueOf(regionalIndex),false,travelNumber,Float.valueOf(lon),Float.valueOf(lat));
     }
     @Override
     public List<String> getSymptomUserid() {
@@ -180,16 +180,16 @@ public class ReportDaoImpl implements ReportDao {
         String code = adcodeMap.get("adcode");
         // 需要调用计算地区易感指数
         Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("longitude",Double.valueOf(lon));
-        paramMap.put("latitude",Double.valueOf(lat));
+        paramMap.put("longitude",Float.valueOf(lon));
+        paramMap.put("latitude",Float.valueOf(lat));
         paramMap.put("districtCode",code);
         String getRegionalIndex = cloudFunctionUtils.InvokeFunction("getRegionalIndex", paramMap);
         String regionalIndex = JSON.parseObject(getRegionalIndex).getString("result");
 
         // 需要调用计算易感指数
         Map<String,Object> paramMap1 = new HashMap<>();
-        paramMap1.put("longitude",Double.valueOf(lon));
-        paramMap1.put("latitude",Double.valueOf(lat));
+        paramMap1.put("longitude",Float.valueOf(lon));
+        paramMap1.put("latitude",Float.valueOf(lat));
         paramMap1.put("adcode",code);
         paramMap1.put("_openid",openid);
         String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
@@ -198,9 +198,9 @@ public class ReportDaoImpl implements ReportDao {
         Boolean isDg1 = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("isDistancegt1"));
         dataBaseUtils.updateData("db.collection('report')." +
                 "where({_id: '%s'})." +
-                "update({data:{address: '%s',isSymptom: '%s',status: '%s'," +
+                "update({data:{address: '%s',isSymptom: %s,status: '%s'," +
                 "subversionStatus: '%s',isTravel: %s,adcode: '%s'," +
-                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,location:{type: 'Point',coordinates: [%d, %d]}}})",reportId,address,symptom,status,subversion,false,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,Double.valueOf(lon),Double.valueOf(lat));
+                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,location:{type: 'Point',coordinates: [%f, %f]}}})",reportId,address,symptom,status,subversion,false,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,Float.valueOf(lon),Float.valueOf(lat));
     }
     @Override
     public void changeReport2(String reportId, ReportLocation Address, Boolean symptom, String status, String subversion, String travelNumber,String openid) {
@@ -212,16 +212,16 @@ public class ReportDaoImpl implements ReportDao {
         String code = adcodeMap.get("adcode");
         // 需要调用计算地区易感指数
         Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("longitude",Double.valueOf(lon));
-        paramMap.put("latitude",Double.valueOf(lat));
+        paramMap.put("longitude",Float.valueOf(lon));
+        paramMap.put("latitude",Float.valueOf(lat));
         paramMap.put("districtCode",code);
         String getRegionalIndex = cloudFunctionUtils.InvokeFunction("getRegionalIndex", paramMap);
         String regionalIndex = JSON.parseObject(getRegionalIndex).getString("result");
 
         // 需要调用计算易感指数
         Map<String,Object> paramMap1 = new HashMap<>();
-        paramMap1.put("longitude",Double.valueOf(lon));
-        paramMap1.put("latitude",Double.valueOf(lat));
+        paramMap1.put("longitude",Float.valueOf(lon));
+        paramMap1.put("latitude",Float.valueOf(lat));
         paramMap1.put("adcode",code);
         paramMap1.put("_openid",openid);
         String covIndexCalcualate = cloudFunctionUtils.InvokeFunction("covIndexCalculate", paramMap1);
@@ -230,8 +230,8 @@ public class ReportDaoImpl implements ReportDao {
         Boolean isDg1 = Boolean.valueOf(JSON.parseObject(covIndexCalcualate).getString("isDistancegt1"));
         dataBaseUtils.updateData("db.collection('report')." +
                 "where({_id: '%s'})." +
-                "update({data:{address: '%s',isSymptom: '%s',status: '%s'," +
+                "update({data:{address: '%s',isSymptom: %s,status: '%s'," +
                 "subversionStatus: '%s',isTravel: %s,adcode: '%s'," +
-                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,travelNumber: '%s',location:{type: 'Point',coordinates: [%d, %d]}}})",reportId,address,symptom,status,subversion,true,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,travelNumber,Double.valueOf(lon),Double.valueOf(lat));
+                "regionalIndex: %d, covIndex: %d,hasSick: %s,isDistancegt1: %s,travelNumber: '%s',location:{type: 'Point',coordinates: [%f, %f]}}})",reportId,address,symptom,status,subversion,true,code,Integer.valueOf(regionalIndex),Integer.valueOf(index),hasSick,isDg1,travelNumber,Float.valueOf(lon),Float.valueOf(lat));
     }
 }
