@@ -64,6 +64,8 @@ public class UserStateScheduler{
         }
 
 
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!需要注意的是这里的状态不能更新！！！！！！！！！！！！！！！！！！
+
         //用户有情况的部分，不管易感系数，直接设为相应的状态
         List<String> useridList1=reportDao.getStatus123Userid();//获取汇报status为“1/2/3”的用户id
         /*1.有疫区旅居史。2.接触过流行病高发地区（湖北省）人员。3.接触过疑似患者。*/

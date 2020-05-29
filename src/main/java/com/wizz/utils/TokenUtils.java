@@ -42,6 +42,7 @@ public class TokenUtils {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
         String nonce = RandomStringUtils.randomAlphanumeric(5);
+//        使用md5做一个简单的接口验证
         String md5 = getMD5(nonce+"yiqingtong2020");
         // 在请求体重加入签名
         map.add("nonce", nonce);
